@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PagesComponent implements OnInit {
 
+  private _elem = document.querySelector('#theme');
+
   constructor() { }
 
   ngOnInit(): void {
+    if(this._elem){
+      const color = localStorage.getItem('color') || 'default';
+      this._elem.setAttribute('href', `./assets/css/colors/${color}.css` );
+    }
   }
 
 }

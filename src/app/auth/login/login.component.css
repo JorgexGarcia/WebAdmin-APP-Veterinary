@@ -5,7 +5,23 @@
   height: 100%;
   width: 100%;
   padding: 10% 0;
-  position: fixed; }
+  position: fixed;
+}
+
+.tittle{
+  color: #4d4b4b;
+  text-align: center;
+  padding-top: 2rem;
+  font-size: 2rem;
+}
+
+.logo{
+  width: 50px;
+}
+
+.field{
+  padding: 12rem 3rem 3rem;
+}
 
 .login-box {
   width: 400px;
@@ -17,6 +33,14 @@
 .login-box .social {
   display: block;
   margin-bottom: 30px; }
+
+.button-login{
+  border-radius: 30px;;
+}
+.button-login:hover{
+  box-shadow: none;
+  transform: scale(110%);
+}
 
 #recoverform {
   display: none; }
