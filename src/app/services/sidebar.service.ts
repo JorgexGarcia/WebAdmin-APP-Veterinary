@@ -10,7 +10,8 @@ export class SidebarService {
       tittle: 'Menú',
       icon: "mdi mdi-arrange-send-backward",
       submenu: [
-        { tittle: 'Principal' , url : '/main'}
+        { tittle: 'Principal' , url : '/main'},
+        { tittle: 'Perfil' , url : '/main/profile'}
       ]
     }
   ]

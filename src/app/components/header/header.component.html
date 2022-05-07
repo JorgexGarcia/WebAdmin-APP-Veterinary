@@ -42,9 +42,13 @@
         <!-- ============================================================== -->
         <!-- Search -->
         <!-- ============================================================== -->
-        <li class="nav-item hidden-xs-down search-box"> <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+        <li class="nav-item hidden-xs-down search-box">
+          <a class="nav-link hidden-sm-down waves-effect waves-dark"
+             href="javascript:void(0)"><i class="ti-search"></i></a>
           <form class="app-search">
-            <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
+            <input type="text" class="form-control"
+                   placeholder="Search & enter"> <a class="srh-btn">
+            <i class="ti-close"></i></a> </form>
         </li>
         <!-- ============================================================== -->
         <!-- Comment -->
@@ -99,10 +103,15 @@
         <!-- Messages -->
         <!-- ============================================================== -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
-            <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+          <a class="nav-link dropdown-toggle waves-effect waves-dark"
+             href="" id="2" data-toggle="dropdown" aria-haspopup="true"
+             aria-expanded="false"> <i class="mdi mdi-email"></i>
+            <div class="notify"> <span class="heartbit">
+
+            </span> <span class="point"></span> </div>
           </a>
-          <div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn" aria-labelledby="2">
+          <div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn"
+               aria-labelledby="2">
             <ul>
               <li>
                 <div class="drop-title">You have 4 new messages</div>
@@ -148,26 +157,33 @@
         <!-- Profile -->
         <!-- ============================================================== -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="./assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
+          <a class="nav-link dropdown-toggle waves-effect waves-dark"
+             href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="{{imgUrl}}"
+                 alt="user" class="profile-pic" /></a>
           <div class="dropdown-menu dropdown-menu-right animated fadeIn">
             <ul class="dropdown-user">
               <li>
                 <div class="dw-user-box">
-                  <div class="u-img"><img src="./assets/images/users/1.jpg" alt="user"></div>
-                  <div class="u-text">
-                    <h4>Steave Jobs</h4>
-                    <p class="text-muted">varun@gmail.com</p><a href="" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                  <div class="u-img"><img src="{{imgUrl}}"
+                                          alt="user"></div>
+                  <div class="u-text mt-2">
+                    <h4>{{name | slice: 0:20}}
+                      {{(name.length > 20)? '...' : ''}}</h4>
+                    <p class="text-muted mt-1">{{email | slice: 0:20}}
+                      {{(email.length > 20)? '...' : ''}}</p>
+                  </div>
                 </div>
               </li>
               <li role="separator" class="divider"></li>
-              <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
+              <li><a routerLink="profile"><i class="ti-user"></i> Perfil</a></li>
               <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
               <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
               <li role="separator" class="divider"></li>
               <li><a routerLink="account-settings">
                 <i class="ti-settings"></i> Configuración</a></li>
               <li role="separator" class="divider"></li>
-              <li><a routerLink="/login">
+              <li><a (click)="logOut()" class="cursor">
                 <i class="fa fa-power-off"></i> Salir</a></li>
             </ul>
           </div>

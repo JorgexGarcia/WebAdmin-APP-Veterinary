@@ -34,11 +34,18 @@ export class LoginComponent{
 
     this.service.login(this.loginForm.value)
       .subscribe({
-        next: _ => {
-          if(this.loginForm.get('remember')!.value){
-            localStorage.setItem('email', this.loginForm.get('email')?.value);
+        next: resp => {
+          if(resp.go){
+
+            if(this.loginForm.get('remember')!.value){
+              localStorage.setItem('email', this.loginForm.get('email')?.value);
+            }else{
+              localStorage.removeItem('email');
+            }
+            this.router.navigateByUrl('/main');
+
           }else{
-            localStorage.removeItem('email');
+            Swal.fire('Error', 'No tienes permiso de acceso', 'error');
           }
         },
         error: err => {

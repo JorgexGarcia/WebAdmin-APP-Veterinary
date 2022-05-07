@@ -11,7 +11,7 @@ import {RouterModule} from "@angular/router";
   declarations: [
     BreadcrumbsComponent,
     SidebarComponent,
-    HeaderComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,

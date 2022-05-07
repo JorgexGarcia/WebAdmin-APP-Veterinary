@@ -13,7 +13,7 @@ export class User {
     public rol: string,
     public birthDate: Date,
     public dni: string,
-    public phone: [string],
+    public phone: string,
     public province: string,
     public city: string,
     public address: string,
