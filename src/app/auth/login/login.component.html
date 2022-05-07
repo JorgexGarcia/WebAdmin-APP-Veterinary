@@ -3,29 +3,40 @@
   <div class="login-box card">
     <div class="card-body field">
       <form class="form-horizontal form-material" (submit)="login()"
-            id="loginform">
+            id="loginform" [formGroup]="loginForm" autocomplete="off">
         <a class="text-center db">
-          <img src="./assets/images/logo-icon.ico"  class="logo"
+          <img src="./assets/images/logo-icon.ico" class="logo"
                alt="Logo" /><br/>
           <p class="tittle">Clínica Veterinaria</p></a>
         <div class="form-group m-t-40">
           <div class="col-xs-12">
-            <input class="form-control" type="text" required="true" placeholder="Email">
+            <input class="form-control" type="email" formControlName="email"
+                   placeholder="Email">
           </div>
         </div>
         <div class="form-group">
           <div class="col-xs-12">
-            <input class="form-control" type="password" required="true" placeholder="Contraseña">
+            <input class="form-control" type="password" formControlName="password"
+                   placeholder="Contraseña">
           </div>
         </div>
         <div class="form-group row">
           <div class="col-md-12">
             <div class="checkbox checkbox-primary pull-left p-t-0">
-              <input id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
+              <input id="checkbox-signup" type="checkbox" formControlName="remember"
+                     class="filled-in chk-col-light-blue">
               <label for="checkbox-signup">Recuerdame</label>
             </div>
           </div>
         </div>
+
+        <div class="row">
+          <div class="col text-danger">
+            <p *ngIf="fieldNoValid('email')">El email es obligatorio</p>
+            <p *ngIf="fieldNoValid('password')">La contraseña es obligatoria</p>
+          </div>
+        </div>
+
         <div class="form-group text-center m-t-20">
           <div class="col-xs-12">
             <button class="btn button-login"

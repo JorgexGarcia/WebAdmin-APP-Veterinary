@@ -8,10 +8,10 @@ const routes: Routes = [
 
   {
     path: 'main',
-    component: PagesComponent,
+    component: PagesComponent, data : {tittle: 'Home'},
     children: [
-      {path: '', component: MainComponent},
-      {path: 'account-settings', component: AccountSettingsComponent},
+      {path: '', component: MainComponent, data: {tittle : 'Principal'}},
+      {path: 'account-settings', component: AccountSettingsComponent, data: {tittle : 'Configurador'}},
     ]
   }
 

@@ -37,7 +37,7 @@
 .button-login{
   border-radius: 30px;;
 }
-.button-login:hover{
+.button-login:hover, .button-login:focus{
   box-shadow: none;
   transform: scale(110%);
 }
