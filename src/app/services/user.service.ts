@@ -54,6 +54,7 @@ export class UserService {
     return this.http.get(`${this._baseUrl}/auth/renew`,this.headers).pipe(
       map((resp:any) => {
         this._userActive = resp.user;
+        this._userActive.password = resp.password;
         localStorage.setItem('token', resp.token);
         return true;
       }),

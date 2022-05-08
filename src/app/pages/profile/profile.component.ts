@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/models/user.model";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-profile',
@@ -19,8 +20,6 @@ export class ProfileComponent implements OnInit {
     this.changeForm = this.fb.group({
       name: [user.name],
       lastName: [user.lastName],
-      password: [''],
-      confirmPassword: [''],
       birthDate: [date],
       phone: [user.phone],
       province: [user.province],
@@ -41,5 +40,16 @@ export class ProfileComponent implements OnInit {
 
   openModalImg() {
 
+  }
+
+  openModalPassword() {
+
+  }
+
+  checkDate() {
+    const date = new Date();
+    if(date < new Date(this.changeForm.get('birthDate')?.value)){
+      this.changeForm.get('birthDate')?.setValue(formatDate(date, 'yyyy-MM-dd', 'en'));
+    }
   }
 }
