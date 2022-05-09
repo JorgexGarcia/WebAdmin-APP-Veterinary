@@ -18,6 +18,9 @@
                 <div class="col-8">
                   <input class="form-control" type="text"
                          formControlName="name" id="name">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('name')">El nombre es obligatorio</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -27,6 +30,9 @@
                 <div class="col-8">
                   <input class="form-control" type="text" formControlName="lastName"
                          id="lastName">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('lastName')">Los apellidos son obligatorios</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -39,6 +45,9 @@
                   <input class="form-control" type="date" (change)="checkDate()"
                          formControlName="birthDate"
                          id="birthDate">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('birthDate')">La fecha de nacimiento es obligatoria</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -57,6 +66,9 @@
             <div class="col-10">
               <input class="form-control" type="text" formControlName="address"
                      id="address">
+              <div class="text-danger">
+                <p *ngIf="fieldNoValid('address')">La dirección es obligatoria</p>
+              </div>
             </div>
           </div>
           <div class="form-group row">
@@ -66,6 +78,9 @@
                 <div class="col-8">
                   <input class="form-control" type="text" formControlName="province"
                          id="province">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('province')">La provincia es obligatoria</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -75,6 +90,9 @@
                 <div class="col-8">
                   <input class="form-control" type="text" formControlName="city"
                          id="city">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('city')">La ciudad es obligatoria</p>
+                  </div>
                 </div>
               </div>
             </div>
