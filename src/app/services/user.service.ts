@@ -13,10 +13,13 @@ export class UserService {
 
   private _baseUrl = environment.base_url;
   private _userActive: any;
-  private _token: string = '';
 
   get userActive(){
     return this._userActive;
+  }
+
+  set userActive(user){
+    this._userActive = user;
   }
 
   get imgUrl(){
@@ -35,9 +38,13 @@ export class UserService {
   get headers(){
     return {
       headers:{
-        'token': this._token
+        'token': this.token
       }
     }
+  }
+
+  get token(){
+    return localStorage.getItem('token') || '';
   }
 
   constructor(private http: HttpClient,
@@ -49,11 +56,10 @@ export class UserService {
   }
 
   checkToken(): Observable<boolean>{
-    this._token = localStorage.getItem('token') || '';
 
     return this.http.get(`${this._baseUrl}/auth/renew`,this.headers).pipe(
       map((resp:any) => {
-        this._userActive = resp.user;
+        this._userActive = resp.data;
         this._userActive.password = resp.password;
         localStorage.setItem('token', resp.token);
         return true;
@@ -84,5 +90,9 @@ export class UserService {
           }
         })
       );
+  }
+
+  getUsers(num : number){
+    return this.http.get(`${this._baseUrl}/user?page=${num}`, this.headers);
   }
 }

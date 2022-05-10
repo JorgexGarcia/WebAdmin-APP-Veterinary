@@ -1,0 +1,131 @@
+<div class="row animated fadeIn">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input type="text"
+               placeholder="Buscar usuario ..."
+               class="form-control"
+               (keyup)="search(txtTer.value)"
+               #txtTer/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="waiting">
+  <div class="col-12">
+
+    <div class="alert alert-info text-center">
+      <h4 class="alert-heading">Cargando</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p class="mb-0">Por favor espere ...</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="row" *ngIf="!waiting">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Total de usuarios ({{total}})</h4>
+        <h6 class="card-subtitle">Usuarios registrados</h6>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead *ngIf="users.length>0">
+            <tr>
+              <th class="w100">Avatar</th>
+              <th class="w140">Nombre</th>
+              <th class="w180">Apellidos</th>
+              <th class="w100">Cumpleaños</th>
+              <th class="w100">Teléfono</th>
+              <th class="w140">Mascotas</th>
+              <th class="w140">Promociones</th>
+              <th class="w180">Comentarios</th>
+              <th class="text-nowrap w100">Acciones</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="users.length>0">
+            <tr *ngFor="let item of users">
+              <td class="text-center">
+                <img src="{{item.img!.url}}"
+                     class="avatar"
+                     alt="Avatar Usuario">
+              </td>
+              <td>{{item.name}}</td>
+              <td>{{item.lastName}}</td>
+              <td>
+                <p>{{item.birthDate.toString().split('T')[0]}}</p>
+              </td>
+              <td>{{item.phone}}</td>
+              <td *ngIf="item.listPets && item.listPets.length > 0">
+                <div class="tableUser">
+                  <div class="card cardUser" *ngFor="let pet of item.listPets">
+                    <div class="d-flex flex-column text-center" (click)="openPet(pet.id)">
+                      <div class="">
+                        <img src="{{pet.img!.url}}"
+                             class="avatar cursor"
+                             alt="Avatar Mascota">
+                      </div>
+                      <div class="align-self-center">
+                        <h5 class="">{{pet.name}}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td *ngIf="!item.listPets || item.listPets.length <= 0">
+                <div class="tableUserEmpty">
+                  Lista Vacia
+                </div>
+              </td>
+              <td *ngIf="item.promotions && item.promotions.length > 0">
+                <div class="tableUser">
+                  <div class="card cardUser" *ngFor="let promotion of item.promotions">
+                    <div class="d-flex flex-column text-center" (click)="openPet(promotion.id)">
+                      <div class="">
+                        <img src="{{promotion.img!.url}}"
+                             class="avatar cursor"
+                             alt="Avatar Promoción">
+                      </div>
+                      <div class="align-self-center">
+                        <h5 class="">{{promotion.name}}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td *ngIf="!item.promotions || item.promotions.length <= 0">
+                <div class="tableUserEmpty">
+                  Lista Vacia
+                </div>
+              </td>
+              <td>{{item.comment}}</td>
+              <td class="text-nowrap text-center">
+                <a
+                   data-toggle="tooltip" class="cursor"
+                   data-original-title="Editar perfil">
+                  <i class="fa fa-pencil text-inverse m-r-10"></i>
+                </a>
+                <a (click)="deleteUser('a')"
+                   class="cursor" data-toggle="tooltip" data-original-title="Borrar">
+                  <i class="fa fa-close text-danger"></i> </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row justify-content-around pt-4"
+             *ngIf="txtTer.value.length === 0">
+          <button class="btn btn secondary"
+                  (click)="changePage(-1)">Anteriores</button>
+          <button class="btn btn secondary"
+                  (click)="changePage(1)">Siguientes</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+

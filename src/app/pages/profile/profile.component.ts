@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
-import {User} from "../../models/models/user.model";
 import Swal from "sweetalert2";
 
 @Component({
@@ -20,7 +19,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private userService: UserService) {
-    const user: User = userService.userActive;
+    const user = userService.userActive;
     const date = user.birthDate.toString().split('T')[0];
     this._changeForm = this.fb.group({
       name: [user.name,[Validators.required, Validators.minLength(5)]],
@@ -60,7 +59,10 @@ export class ProfileComponent implements OnInit {
     }
 
     this.userService.updateUser(this.changeForm.value).subscribe({
-      next: _ => {
+      next: (resp:any )=> {
+        const user = resp.data;
+        user.password = resp.password;
+        this.userService.userActive = user;
         Swal.fire('Saved!', '', 'success')
       },
       error: _ => {
@@ -71,11 +73,7 @@ export class ProfileComponent implements OnInit {
 
   fieldNoValid(field: string):boolean {
 
-    if(this._changeForm.get(field)!.invalid && this._formSubmitted){
-      return true;
-    }else{
-      return false;
-    }
+    return this._changeForm.get(field)!.invalid && this._formSubmitted;
 
   }
 

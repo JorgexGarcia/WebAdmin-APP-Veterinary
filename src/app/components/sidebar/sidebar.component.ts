@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SidebarService} from "../../services/sidebar.service";
 import {UserService} from "../../services/user.service";
 
@@ -7,11 +7,13 @@ import {UserService} from "../../services/user.service";
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy{
 
   private _menu: any[] = [];
   public imgUrl: string = '';
   public name: string = '';
+
+  private _interval;
 
   get menu(){
     return this._menu;
@@ -20,8 +22,13 @@ export class SidebarComponent implements OnInit {
   constructor(private sidebarService: SidebarService,
               private service: UserService) {
     this._menu = sidebarService.menu;
-    this.imgUrl = this.service.imgUrl;
-    this.name = this.service.name;
+    this._interval = setInterval(() => {
+
+      this.imgUrl = service.imgUrl;
+      this.name = service.name;
+
+    },100);
+
   }
 
   ngOnInit(): void {
@@ -29,5 +36,9 @@ export class SidebarComponent implements OnInit {
 
   logOut() {
     this.service.logout();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this._interval);
   }
 }

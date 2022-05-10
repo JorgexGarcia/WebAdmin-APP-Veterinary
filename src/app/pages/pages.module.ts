@@ -7,13 +7,15 @@ import {AppRoutingModule} from "../app-routing.module";
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { ProfileComponent } from './profile/profile.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { UserComponent } from './maintenance/user/user.component';
 
 @NgModule({
   declarations:[
     PagesComponent,
     MainComponent,
     AccountSettingsComponent,
-    ProfileComponent
+    ProfileComponent,
+    UserComponent
   ],
     imports: [
         CommonModule,

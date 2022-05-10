@@ -13,6 +13,13 @@ export class SidebarService {
         { tittle: 'Principal' , url : '/main'},
         { tittle: 'Perfil' , url : '/main/profile'}
       ]
+    },
+    {
+      tittle: 'Información',
+      icon: "mdi mdi-table",
+      submenu: [
+        { tittle: 'Usuarios' , url : 'users'}
+      ]
     }
   ]
 
@@ -20,5 +27,6 @@ export class SidebarService {
     return this._menu;
   }
 
-  constructor() { }
+  constructor() {}
+
 }
