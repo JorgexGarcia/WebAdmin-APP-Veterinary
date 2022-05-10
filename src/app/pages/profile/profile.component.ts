@@ -63,7 +63,7 @@ export class ProfileComponent implements OnInit {
         const user = resp.data;
         user.password = resp.password;
         this.userService.userActive = user;
-        Swal.fire('Saved!', '', 'success')
+        Swal.fire('Actualizado!', '', 'success')
       },
       error: _ => {
         Swal.fire('Cambios no guardados', '', 'info')

@@ -5,6 +5,7 @@ import {LoginForm} from "../models/interfaces/interfacesForms.interface";
 import {catchError, Observable, of, tap} from "rxjs";
 import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
+import {User} from "../models/models/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -69,7 +70,7 @@ export class UserService {
   }
 
   createUser( formData : any ){
-    return this.http.post(`${this._baseUrl}/user`, formData);
+    return this.http.post(`${this._baseUrl}/user`, formData, this.headers);
   }
 
   updateUser( formFata: any){
@@ -92,7 +93,7 @@ export class UserService {
       );
   }
 
-  getUsers(num : number){
-    return this.http.get(`${this._baseUrl}/user?page=${num}`, this.headers);
+  getUsers(num : number, active: boolean = true){
+    return this.http.get(`${this._baseUrl}/user/${active}?page=${num}`, this.headers);
   }
 }

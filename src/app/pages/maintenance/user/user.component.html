@@ -5,7 +5,7 @@
         <input type="text"
                placeholder="Buscar usuario ..."
                class="form-control"
-               (keyup)="search(txtTer.value)"
+               (keyup)="searchUsers(txtTer.value)"
                #txtTer/>
       </div>
     </div>
@@ -31,7 +31,7 @@
         <h4 class="card-title">Total de usuarios ({{total}})</h4>
         <h6 class="card-subtitle">Usuarios registrados</h6>
         <div class="table-responsive">
-          <table class="table table-bordered">
+          <table class="table table-bordered" *ngIf="active">
             <thead *ngIf="users.length>0">
             <tr>
               <th class="w100">Avatar</th>
@@ -114,6 +114,39 @@
             </tr>
             </tbody>
           </table>
+
+          <table class="table table-bordered" *ngIf="!active">
+            <thead *ngIf="users.length>0">
+            <tr>
+              <th class="w140">Nombre</th>
+              <th class="w180">Apellidos</th>
+              <th class="w100">Fecha Eliminación</th>
+              <th class="w100">Razón</th>
+              <th class="w140">Encargado</th>
+              <th class="text-nowrap w100">Acciones</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="users.length>0">
+            <tr *ngFor="let item of users">
+              <td>{{item.name}}</td>
+              <td>{{item.lastName}}</td>
+              <td>
+                <p>{{item.deleteDate!.toString().split('T')[0]}}</p>
+              </td>
+              <td>{{item.deleteReason!}}</td>
+              <td >
+                <p>{{item.deleteUser!.name}}</p>
+              </td>
+              <td class="text-nowrap text-center">
+                <a (click)="activeUser(item)"
+                  data-toggle="tooltip" class="cursor"
+                  data-original-title="Volver activar perfil">
+                  <i class="fa fa-pencil text-inverse m-r-10"></i>
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
 
         <div class="row justify-content-around pt-4"
@@ -122,6 +155,13 @@
                   (click)="changePage(-1)">Anteriores</button>
           <button class="btn btn secondary"
                   (click)="changePage(1)">Siguientes</button>
+        </div>
+
+        <div class="row justify-content-center pt-4">
+          <button class="btn btn secondary " *ngIf="active"
+                  (click)="activeUsers(false)">Mostrar Usuarios Inactivos</button>
+          <button class="btn btn secondary " *ngIf="!active"
+                  (click)="activeUsers(true)">Mostrar Usuarios Activos</button>
         </div>
 
       </div>
