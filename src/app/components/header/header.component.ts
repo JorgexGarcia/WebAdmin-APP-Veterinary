@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../services/models/user.service";
 
 @Component({
   selector: 'app-header',

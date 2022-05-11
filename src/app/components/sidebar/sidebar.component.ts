@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SidebarService} from "../../services/sidebar.service";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../services/models/user.service";
 
 @Component({
   selector: 'app-sidebar',

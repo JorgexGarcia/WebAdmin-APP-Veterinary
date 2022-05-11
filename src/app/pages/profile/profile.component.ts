@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../services/models/user.service";
 import Swal from "sweetalert2";
+import {ModalimgService} from "../../services/modalimg.service";
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,9 @@ export class ProfileComponent implements OnInit {
   }
 
   constructor(private fb: FormBuilder,
-              private userService: UserService) {
+              private userService: UserService,
+              private modalService: ModalimgService) {
+
     const user = userService.userActive;
     const date = user.birthDate.toString().split('T')[0];
     this._changeForm = this.fb.group({
@@ -58,15 +61,16 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    this.userService.updateUser(this.changeForm.value).subscribe({
+
+    this.userService.updateSameUser(this.changeForm.value).subscribe({
       next: (resp:any )=> {
         const user = resp.data;
         user.password = resp.password;
         this.userService.userActive = user;
-        Swal.fire('Actualizado!', '', 'success')
+        Swal.fire('Actualizado!', resp.msg, 'success')
       },
-      error: _ => {
-        Swal.fire('Cambios no guardados', '', 'info')
+      error: err => {
+        Swal.fire('Cambios no guardados', err.msg, 'info')
       }
     })
   }
@@ -78,7 +82,8 @@ export class ProfileComponent implements OnInit {
   }
 
   openModalImg() {
-
+      this.modalService.openModal('user',
+        this.userService.userActive.id);
   }
 
   openModalPassword() {

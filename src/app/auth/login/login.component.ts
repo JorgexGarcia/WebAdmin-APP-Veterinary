@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormBuilder, Validators} from "@angular/forms";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../services/models/user.service";
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 export class LoginComponent{
 
   public loginForm = this.fb.group({
-    email: [localStorage.getItem('email') || "jorge1@gmail.com", [Validators.required,
+    email: [localStorage.getItem('email') || "j2@gmail.com", [Validators.required,
       Validators.pattern("[a-zA-Z0-9.-_]{2,}[@]{1}[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}")]],
     password: ["123456", [Validators.required,
       Validators.pattern("[a-zA-Z0-9.-_]{6}")]],
@@ -25,24 +25,23 @@ export class LoginComponent{
               private fb: FormBuilder,
               private service: UserService) { }
 
-  login() {
+  async login() {
     this._formSubmitted = true;
 
     if(!this.loginForm.valid){
       return;
     }
 
-    this.service.login(this.loginForm.value)
+    await this.service.login(this.loginForm.value)
       .subscribe({
         next: resp => {
           if(resp.go){
-
             if(this.loginForm.get('remember')!.value){
               localStorage.setItem('email', this.loginForm.get('email')?.value);
             }else{
               localStorage.removeItem('email');
             }
-            this.router.navigateByUrl('/main');
+            this.router.navigate(['main']);
 
           }else{
             Swal.fire('Error', 'No tienes permiso de acceso', 'error');

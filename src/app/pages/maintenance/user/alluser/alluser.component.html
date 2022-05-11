@@ -29,8 +29,14 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Total de usuarios ({{total}})</h4>
-        <h6 class="card-subtitle">Usuarios registrados</h6>
+        <div class="row justify-content-between card-subtitle">
+          <h6 class="pt-3 pl-3">Usuarios registrados</h6>
+          <button class="btn btn-danger mr-3"
+                  (click)="createUser()">Crear Usuario</button>
+        </div>
         <div class="table-responsive">
+
+          <!--Activos-->
           <table class="table table-bordered" *ngIf="active">
             <thead *ngIf="users.length>0">
             <tr>
@@ -82,7 +88,7 @@
               <td *ngIf="item.promotions && item.promotions.length > 0">
                 <div class="tableUser">
                   <div class="card cardUser" *ngFor="let promotion of item.promotions">
-                    <div class="d-flex flex-column text-center" (click)="openPet(promotion.id)">
+                    <div class="d-flex flex-column text-center" (click)="openPromotion(promotion.id)">
                       <div class="">
                         <img src="{{promotion.img!.url}}"
                              class="avatar cursor"
@@ -102,12 +108,12 @@
               </td>
               <td>{{item.comment}}</td>
               <td class="text-nowrap text-center">
-                <a
+                <a (click)="updateElement(item.id)"
                    data-toggle="tooltip" class="cursor"
                    data-original-title="Editar perfil">
                   <i class="fa fa-pencil text-inverse m-r-10"></i>
                 </a>
-                <a (click)="deleteUser('a')"
+                <a (click)="deleteUser(item.id)"
                    class="cursor" data-toggle="tooltip" data-original-title="Borrar">
                   <i class="fa fa-close text-danger"></i> </a>
               </td>
@@ -115,6 +121,7 @@
             </tbody>
           </table>
 
+          <!--Inactivos-->
           <table class="table table-bordered" *ngIf="!active">
             <thead *ngIf="users.length>0">
             <tr>
@@ -151,10 +158,14 @@
 
         <div class="row justify-content-around pt-4"
              *ngIf="txtTer.value.length === 0">
-          <button class="btn btn secondary"
-                  (click)="changePage(-1)">Anteriores</button>
-          <button class="btn btn secondary"
-                  (click)="changePage(1)">Siguientes</button>
+          <div *ngIf="users.length != 0">
+            <button class="btn btn secondary"
+                    (click)="changePage(-1)">Anteriores</button>
+          </div>
+          <div *ngIf="users.length != 0">
+            <button class="btn btn secondary"
+                    (click)="changePage(1)">Siguientes</button>
+          </div>
         </div>
 
         <div class="row justify-content-center pt-4">

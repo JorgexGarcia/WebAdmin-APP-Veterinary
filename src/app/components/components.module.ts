@@ -4,6 +4,7 @@ import {BreadcrumbsComponent} from "./breadcrumbs/breadcrumbs.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
 import {HeaderComponent} from "./header/header.component";
 import {RouterModule} from "@angular/router";
+import { ModalimgComponent } from './modalimg/modalimg.component';
 
 
 
@@ -11,7 +12,8 @@ import {RouterModule} from "@angular/router";
   declarations: [
     BreadcrumbsComponent,
     SidebarComponent,
-    HeaderComponent
+    HeaderComponent,
+    ModalimgComponent
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import {RouterModule} from "@angular/router";
     BreadcrumbsComponent,
     SidebarComponent,
     HeaderComponent,
+    ModalimgComponent
   ]
 })
 export class ComponentsModule { }

@@ -6,8 +6,9 @@ import {ComponentsModule} from "../components/components.module";
 import {AppRoutingModule} from "../app-routing.module";
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { ProfileComponent } from './profile/profile.component';
-import {ReactiveFormsModule} from "@angular/forms";
-import { UserComponent } from './maintenance/user/user.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { AlluserComponent } from './maintenance/user/alluser/alluser.component';
+import { OneuserComponent } from './maintenance/user/oneuser/oneuser.component';
 
 @NgModule({
   declarations:[
@@ -15,13 +16,15 @@ import { UserComponent } from './maintenance/user/user.component';
     MainComponent,
     AccountSettingsComponent,
     ProfileComponent,
-    UserComponent
+    AlluserComponent,
+    OneuserComponent
   ],
     imports: [
         CommonModule,
         ComponentsModule,
         AppRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormsModule
     ],
   exports:[
     PagesComponent,

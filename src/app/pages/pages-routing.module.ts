@@ -5,7 +5,8 @@ import {MainComponent} from "./main/main.component";
 import {AccountSettingsComponent} from "./account-settings/account-settings.component";
 import {AuthGuard} from "../guards/auth.guard";
 import {ProfileComponent} from "./profile/profile.component";
-import {UserComponent} from "./maintenance/user/user.component";
+import {AlluserComponent} from "./maintenance/user/alluser/alluser.component";
+import {OneuserComponent} from "./maintenance/user/oneuser/oneuser.component";
 
 const routes: Routes = [
 
@@ -19,7 +20,8 @@ const routes: Routes = [
       {path: 'profile', component: ProfileComponent, data: {tittle : 'Perfil'}},
 
       //Información
-      {path: 'users', component: UserComponent, data: {tittle : 'Usuarios'}},
+      {path: 'users', component: AlluserComponent, data: {tittle : 'Usuarios'}},
+      {path: 'user/:id', component: OneuserComponent, data: {tittle : 'Usuario'}},
     ]
   }
 

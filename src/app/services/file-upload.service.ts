@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
-import {UserService} from "./user.service";
+import {UserService} from "./models/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class FileUploadService {
           body: formData
         });
 
-        const data = await  resp.json();
+        const data = await resp.json();
 
         if(data.ok){
           return data.msg;
