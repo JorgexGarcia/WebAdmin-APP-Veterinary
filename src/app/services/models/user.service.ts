@@ -36,17 +36,6 @@ export class UserService {
     return this._userActive.email;
   }
 
-  get headers(){
-    return {
-      headers:{
-        'token': this.token
-      }
-    }
-  }
-
-  get token(){
-    return localStorage.getItem('token') || '';
-  }
 
   constructor(private http: HttpClient,
               private router: Router) { }
@@ -58,7 +47,7 @@ export class UserService {
 
   checkToken(): Observable<boolean>{
 
-    return this.http.get(`${this._baseUrl}/auth/renew`,this.headers).pipe(
+    return this.http.get(`${this._baseUrl}/auth/renew`).pipe(
       map((resp:any) => {
         this._userActive = resp.data;
         localStorage.setItem('token', resp.token);
@@ -69,7 +58,7 @@ export class UserService {
   }
 
   createUser( formData : any ): Observable<any>{
-    return this.http.post<any>(`${this._baseUrl}/user`, formData, this.headers);
+    return this.http.post<any>(`${this._baseUrl}/user`, formData);
   }
 
   updateSameUser( formData: any): Observable<any>{
@@ -78,13 +67,12 @@ export class UserService {
       email: this._userActive.email,
       ... formData
     }
-    return this.http.put<any>(`${this._baseUrl}/user/${this._userActive.id}`, data, this.headers);
+    return this.http.put<any>(`${this._baseUrl}/user/${this._userActive.id}`, data);
   }
 
   updateUser( user: User): Observable<any>{
     return this.http.put<any>(`${this._baseUrl}/user/${user.id}`,
-      user,
-      this.headers);
+      user);
   }
 
   login( formData : LoginForm): Observable<any>{
@@ -99,14 +87,14 @@ export class UserService {
   }
 
   getUsers(num : number, active: boolean = true): Observable<any>{
-    return this.http.get<any>(`${this._baseUrl}/user/all/${active}?page=${num}`, this.headers);
+    return this.http.get<any>(`${this._baseUrl}/user/all/${active}?page=${num}`);
   }
 
   getOneUser(id : string): Observable<any>{
-    return this.http.get<any>(`${this._baseUrl}/user/one/${id}`, this.headers);
+    return this.http.get<any>(`${this._baseUrl}/user/one/${id}`);
   }
 
   deleteUser(id: string): Observable<any>{
-    return this.http.delete<any>(`${this._baseUrl}/user/${id}`, this.headers);
+    return this.http.delete<any>(`${this._baseUrl}/user/${id}`);
   }
 }

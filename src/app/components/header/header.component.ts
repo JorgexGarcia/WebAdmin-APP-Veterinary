@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../../services/models/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
   public email: string = '';
   private _interval;
 
-  constructor(private service: UserService) {
+  constructor(private service: UserService,
+              private router: Router ) {
     this._interval = setInterval(() => {
 
       this.imgUrl = service.imgUrl;
@@ -33,5 +35,13 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     clearInterval(this._interval);
+  }
+
+  search(value: string) {
+    const nav = document.getElementById('nav-search');
+    if(nav) nav.click();
+    if(value.length != 0){
+      this.router.navigateByUrl(`/main/search/${value}`);
+    }
   }
 }

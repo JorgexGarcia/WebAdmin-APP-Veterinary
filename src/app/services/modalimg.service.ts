@@ -41,7 +41,7 @@ export class ModalimgService implements OnDestroy{
     switch (this._type){
       case 'user':
         this._subscription = await this.userService.getOneUser(id).pipe(
-          delay(500)
+          delay(400)
         ).subscribe({
           next: resp => {
             this._img = resp.data.img.url;
@@ -50,7 +50,6 @@ export class ModalimgService implements OnDestroy{
         })
         break;
     }
-
   }
 
   closeModal(){

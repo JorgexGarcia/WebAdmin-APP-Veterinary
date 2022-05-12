@@ -6,8 +6,7 @@ import {
   Route,
   Router,
   RouterStateSnapshot,
-  UrlSegment,
-  UrlTree
+  UrlSegment
 } from '@angular/router';
 import {Observable, tap} from 'rxjs';
 import {UserService} from "../services/models/user.service";
@@ -35,7 +34,13 @@ export class AuthGuard implements CanActivate, CanLoad {
   }
   canLoad(
     route: Route,
-    segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+    segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+    return this.service.checkToken().pipe(
+      tap( isAuth => {
+        if( !isAuth ){
+          this.router.navigateByUrl('/login');
+        }
+      })
+    );
   }
 }

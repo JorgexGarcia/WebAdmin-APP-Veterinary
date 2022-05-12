@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../../services/models/user.service";
 import Swal from "sweetalert2";
@@ -7,13 +7,12 @@ import {User} from "../../../../models/models/user.model";
 import {environment} from "../../../../../environments/environment";
 import {ModalimgService} from "../../../../services/modalimg.service";
 
-
 @Component({
   selector: 'app-oneuser',
   templateUrl: './oneuser.component.html',
   styleUrls: ['./oneuser.component.css']
 })
-export class OneuserComponent implements OnInit {
+export class OneuserComponent implements OnInit, OnDestroy {
 
   private _user: User | undefined;
   private _waiting = false;
@@ -62,9 +61,10 @@ export class OneuserComponent implements OnInit {
     this.getUser();
   }
 
-  ngOnInit(): void {
-
+  ngOnDestroy() {
   }
+
+  ngOnInit(): void {}
 
   async getUser(){
     const id = this.activatedRoute.snapshot.params['id'];

@@ -50,10 +50,10 @@
         <!-- ============================================================== -->
         <li class="nav-item hidden-xs-down search-box">
           <a class="nav-link hidden-sm-down waves-effect waves-dark"
-             href="javascript:void(0)"><i class="ti-search"></i></a>
-          <form class="app-search">
+             href="javascript:void(0)" ><i class="ti-search"></i></a>
+          <form class="app-search" (submit)="search(txt.value)">
             <input type="text" class="form-control"
-                   placeholder="Search & enter"> <a class="srh-btn">
+                   placeholder="Buscar..." #txt> <a class="srh-btn" id="nav-search">
             <i class="ti-close"></i></a> </form>
         </li>
         <!-- ============================================================== -->

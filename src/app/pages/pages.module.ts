@@ -9,6 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AlluserComponent } from './maintenance/user/alluser/alluser.component';
 import { OneuserComponent } from './maintenance/user/oneuser/oneuser.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations:[
@@ -17,7 +18,8 @@ import { OneuserComponent } from './maintenance/user/oneuser/oneuser.component';
     AccountSettingsComponent,
     ProfileComponent,
     AlluserComponent,
-    OneuserComponent
+    OneuserComponent,
+    SearchComponent
   ],
     imports: [
         CommonModule,

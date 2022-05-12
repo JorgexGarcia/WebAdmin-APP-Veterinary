@@ -12,6 +12,12 @@ export interface  PromotionInterface{
   img?: Img
 }
 
+export interface  AidsInterface{
+  id: string,
+  name: string,
+  img?: Img
+}
+
 export interface UserInterface{
   id: string,
   name: string,
@@ -27,20 +33,31 @@ export interface ReportInterface{
 
 export interface ServiceInterface{
   id: string,
-  name: string
+  name: string,
+  img?: Img
 }
 
 export interface TreatmentInterface{
   id: string,
-  name: string
+  name: string,
+  img?: Img
 }
 
 export interface BreedInterface{
   id: string,
-  name: string
+  name: string,
+  img?: Img
 }
 
 export interface QueriesInterface{
   id: string,
-  type: string
+  type: string,
+  idPet: PetInterface
 }
+
+export interface ProductInterface{
+  id: string,
+  name: string,
+  img?: Img
+}
+

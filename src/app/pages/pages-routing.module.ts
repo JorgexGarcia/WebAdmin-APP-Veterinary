@@ -1,12 +1,8 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {PagesComponent} from "./pages.component";
-import {MainComponent} from "./main/main.component";
-import {AccountSettingsComponent} from "./account-settings/account-settings.component";
 import {AuthGuard} from "../guards/auth.guard";
-import {ProfileComponent} from "./profile/profile.component";
-import {AlluserComponent} from "./maintenance/user/alluser/alluser.component";
-import {OneuserComponent} from "./maintenance/user/oneuser/oneuser.component";
+
 
 const routes: Routes = [
 
@@ -14,15 +10,8 @@ const routes: Routes = [
     path: 'main',
     component: PagesComponent, data : {tittle: 'Home'},
     canActivate: [AuthGuard],
-    children: [
-      {path: '', component: MainComponent, data: {tittle : 'Principal'}},
-      {path: 'account-settings', component: AccountSettingsComponent, data: {tittle : 'Configurador'}},
-      {path: 'profile', component: ProfileComponent, data: {tittle : 'Perfil'}},
-
-      //Información
-      {path: 'users', component: AlluserComponent, data: {tittle : 'Usuarios'}},
-      {path: 'user/:id', component: OneuserComponent, data: {tittle : 'Usuario'}},
-    ]
+    canLoad: [AuthGuard],
+    loadChildren: () => import('./child-routes.module').then(m => m.ChildRoutesModule)
   }
 
 ];

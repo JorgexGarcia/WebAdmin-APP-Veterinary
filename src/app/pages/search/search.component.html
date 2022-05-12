@@ -1,0 +1,271 @@
+<h3 class="text-center">Buscar : "{{word}}"</h3>
+<div class="row">
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Usuarios</h3>
+
+        <div class="alert alert-info alert-box" *ngIf="users.length === 0">
+          <p class="alert-heading text-center"> No hay usuarios</p>
+        </div>
+
+        <div class="table-responsive scroll-table" *ngIf="users.length > 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th class="text-center">Avatar</th>
+              <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of users" (click)="goUser(item.id)"  class="cursor">
+                <td class="text-center">
+                  <img src="{{item.img!.url}}"
+                       class="avatar"
+                       alt="Avatar Usuario">
+                </td>
+                <td>{{item.name}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Mascotas</h3>
+
+        <div class="alert alert-info alert-box" *ngIf="pets.length === 0">
+          <p class="alert-heading text-center"> No hay mascotas</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="pets.length > 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Avatar</th>
+              <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of pets">
+                <td class="text-center">
+                  <img src="{{item.img!.url}}"
+                       class="avatar"
+                       alt="Avatar Usuario">
+                </td>
+                <td>{{item.name}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+    <div class="card-body">
+      <h3>Consultas</h3>
+
+      <div class="alert alert-info alert-box" *ngIf="queries.length == 0">
+        <p class="alert-heading text-center"> No hay consultas</p>
+      </div>
+
+      <div class="table-responsive" *ngIf="queries.length > 0">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Avatar</th>
+            <th>Nombre del animal</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of queries">
+            <td>{{item.type}}</td>
+            <td>{{item.idPet?.img?.url}}</td>
+            <td>{{item.idPet?.name}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Servicios</h3>
+
+        <div class="alert alert-info alert-box" *ngIf="services.length ==0">
+          <p class="alert-heading text-center"> No hay servicios</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="services.length > 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of services">
+              <td>{{item.name}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Tratamientos</h3>
+
+        <div class="alert alert-info alert-box" *ngIf="treatments.length == 0">
+          <p class="alert-heading text-center"> No hay tratamientos</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="treatments.length > 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of treatments">
+              <td>{{item.name}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Promociones</h3>
+
+        <div class="alert alert-info alert-box" *ngIf="promotions.length == 0">
+          <p class="alert-heading text-center"> No hay promociones</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="promotions.length > 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th class="text-center">Avatar</th>
+              <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of promotions">
+                <td class="text-center">
+                  <img src="{{item.img!.url}}"
+                       class="avatar"
+                       alt="Avatar Usuario">
+                </td>
+                <td>{{item.name}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Razas</h3>
+
+        <div class="alert alert-info alert-box" *ngIf="breeds.length == 0">
+          <p class="alert-heading text-center"> No hay razas</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="breeds.length > 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of breeds">
+              <td>{{item.name}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Productos</h3>
+
+        <div class="alert alert-info alert-box" *ngIf="products.length == 0">
+          <p class="alert-heading text-center"> No hay productos</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="products.length > 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Avatar</th>
+              <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of products">
+                <td class="text-center">
+                  <img src="{{item.img!.url}}"
+                       class="avatar"
+                       alt="Avatar Usuario">
+                </td>
+                <td>{{item.name}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Consejos</h3>
+
+        <div class="alert alert-info alert-box" *ngIf="aids.length == 0">
+          <p class="alert-heading text-center"> No hay consejos</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="aids.length > 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Avatar</th>
+              <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of aids">
+              <td class="text-center">
+                <img src="{{item.img!.url}}"
+                     class="avatar"
+                     alt="Avatar Usuario">
+              </td>
+              <td>{{item.name}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

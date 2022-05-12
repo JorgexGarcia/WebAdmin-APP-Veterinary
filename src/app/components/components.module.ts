@@ -5,6 +5,7 @@ import {SidebarComponent} from "./sidebar/sidebar.component";
 import {HeaderComponent} from "./header/header.component";
 import {RouterModule} from "@angular/router";
 import { ModalimgComponent } from './modalimg/modalimg.component';
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -17,7 +18,8 @@ import { ModalimgComponent } from './modalimg/modalimg.component';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   exports: [
     BreadcrumbsComponent,
