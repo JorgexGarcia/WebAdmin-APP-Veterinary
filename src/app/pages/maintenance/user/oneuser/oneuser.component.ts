@@ -12,7 +12,7 @@ import {ModalimgService} from "../../../../services/modalimg.service";
   templateUrl: './oneuser.component.html',
   styleUrls: ['./oneuser.component.css']
 })
-export class OneuserComponent implements OnInit, OnDestroy {
+export class OneuserComponent implements OnDestroy {
 
   private _user: User | undefined;
   private _waiting = false;
@@ -64,8 +64,6 @@ export class OneuserComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  ngOnInit(): void {}
-
   async getUser(){
     const id = this.activatedRoute.snapshot.params['id'];
     if(id === 'new'){
@@ -77,9 +75,11 @@ export class OneuserComponent implements OnInit, OnDestroy {
         .subscribe({
           next: resp => {
             this._user = resp.data;
+            if(!this._user) this.route.navigateByUrl('main');
             this.updateForm();
           },
-          error: err => Swal.fire('Error', err.error.msg, 'error')
+          error: err => {Swal.fire('Error', err.error.msg, 'error');
+            this.route.navigateByUrl('main');}
         });
     }
   }
@@ -187,7 +187,7 @@ export class OneuserComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    if(this._new){
+    if(this._new && this._formSubmitted){
       this._new = false;
       this.route.navigateByUrl(`/main/user/${this._id}`);
     }else {

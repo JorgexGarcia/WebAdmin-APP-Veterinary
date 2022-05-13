@@ -1,1 +1,86 @@
-<p>onepromotion works!</p>
+<div class="row animated fadeIn" *ngIf="waiting">
+  <div class="col-12">
+
+    <div class="alert alert-info text-center">
+      <h4 class="alert-heading">Cargando</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p class="mb-0">Por favor espere ...</p>
+    </div>
+
+  </div>
+</div>
+<div class="row" *ngIf="!waiting">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Promoción</h3>
+        <div class="row justify-content-between card-subtitle">
+          <h4  class="pt-3 pl-3">Ajustes</h4>
+          <div *ngIf="!new">
+            <button class="btn btn-outline-danger waves-effect waves-light m-r-10"
+                    (click)="openModalImg()">
+              Cambiar imagen</button>
+          </div>
+        </div>
+        <form class="form p-t-20" autocomplete="off" [formGroup]="changeForm"
+              (submit)="save()" (reset)="back()">
+          <div class="form-group row">
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="name" class="col-4 col-form-label">Nombre</label>
+                <div class="col-8">
+                  <input class="form-control" type="text"
+                         formControlName="name" id="name">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('name')">El nombre es obligatorio</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="description" class="col-2 col-form-label">Descripción</label>
+            <div class="col-10">
+              <textarea class="form-control"
+                        id="description" rows="5"
+                        formControlName="description">
+              </textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="startDate" class="col-6 col-form-label">Fecha Inicio</label>
+                <div class="col-6">
+                  <input class="form-control mr-5" type="date" (change)="checkDate('finish')"
+                         formControlName="startDate"
+                         id="startDate" >
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('startDate')">La fecha de inicio es obligatoria</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="finishDate" class="col-6 col-form-label pl-5">Fecha Final</label>
+                <div class="col-6">
+                  <input class="form-control" type="date" (change)="checkDate('finish')"
+                         formControlName="finishDate"
+                         id="finishDate" >
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('finishDate')">La fecha de final es obligatoria</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5">
+            <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Guardar</button>
+            <button type="reset" class="btn btn-warning waves-effect waves-light m-r-10 ml-5">volver</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

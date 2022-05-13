@@ -39,13 +39,19 @@
           <!--Activos-->
           <table class="table table-bordered" *ngIf="active">
             <thead *ngIf="promotions.length>0">
-            <tr>
+            <tr >
+              <th class="w100 text-center">Avatar</th>
               <th class="w140">Nombre</th>
-              <th class="text-nowrap w100">Acciones</th>
+              <th class="text-nowrap w100 text-center">Acciones</th>
             </tr>
             </thead>
             <tbody *ngIf="promotions.length>0">
             <tr *ngFor="let item of promotions">
+              <td class="text-center">
+                <img src="{{item.img!.url}}"
+                     class="avatar"
+                     alt="Avatar Promoción">
+              </td>
               <td>{{item.name}}</td>
               <td class="text-nowrap text-center">
                 <a (click)="updateElement(item.id)"
@@ -72,7 +78,7 @@
               <th class="w100">Fecha Eliminación</th>
               <th class="w100">Razón</th>
               <th class="w140">Encargado</th>
-              <th class="text-nowrap w100">Acciones</th>
+              <th class="text-nowrap w100 text-center">Acciones</th>
             </tr>
             </thead>
             <tbody *ngIf="promotions.length>0">

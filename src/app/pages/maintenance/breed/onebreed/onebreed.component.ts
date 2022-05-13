@@ -55,9 +55,11 @@ export class OnebreedComponent implements OnDestroy {
         .subscribe({
           next: resp => {
             this._breed = resp.data;
+            if(!this._breed) this.route.navigateByUrl('main');
             this.updateForm();
           },
-          error: err => Swal.fire('Error', err.error.msg, 'error')
+          error: err => {Swal.fire('Error', err.error.msg, 'error');
+          this.route.navigateByUrl('main');}
         });
     }else{
       this._new = true;
@@ -101,8 +103,6 @@ export class OnebreedComponent implements OnDestroy {
     }
 
     this._waiting = true;
-
-    console.log(this._new)
 
     if(!this._new){
       this.breedService.updateBreed(this._changeForm.value).subscribe({

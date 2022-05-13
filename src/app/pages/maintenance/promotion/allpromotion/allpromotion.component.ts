@@ -72,7 +72,7 @@ export class AllpromotionComponent implements OnInit, OnDestroy{
   }
 
   updateElement(id: string) {
-    this.router.navigateByUrl(`main/breed/${id}`);
+    this.router.navigateByUrl(`main/promotion/${id}`);
   }
 
   async deletePromotion(id: string) {
