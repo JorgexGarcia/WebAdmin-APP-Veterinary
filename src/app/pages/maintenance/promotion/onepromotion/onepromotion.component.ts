@@ -1,13 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Breed} from "../../../../models/models/breed.model";
+import {Component, OnDestroy} from '@angular/core';
 import {Subscription} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {BreedService} from "../../../../services/models/breed.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Promotion} from "../../../../models/models/promotion.model";
 import {PromotionService} from "../../../../services/models/promotion.service";
 import Swal from "sweetalert2";
-import {Img} from "../../../../models/models/img.model";
 import {ModalimgService} from "../../../../services/modalimg.service";
 
 @Component({
