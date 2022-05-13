@@ -133,8 +133,8 @@ export class AlluserComponent implements OnInit, OnDestroy{
       }});
   }
 
-  openPromotion(id: string) {
-
+  openPromotion(item: any) {
+    this.router.navigateByUrl(`main/promotion/${item._id}`);
   }
 
   updateElement(id: string) {

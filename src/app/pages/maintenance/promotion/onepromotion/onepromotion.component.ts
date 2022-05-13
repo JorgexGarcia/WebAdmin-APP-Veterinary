@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -12,7 +12,7 @@ import {ModalimgService} from "../../../../services/modalimg.service";
   templateUrl: './onepromotion.component.html',
   styleUrls: ['./onepromotion.component.css']
 })
-export class OnepromotionComponent implements OnDestroy{
+export class OnepromotionComponent implements OnDestroy, OnInit{
 
   private _promotion: Promotion | undefined;
   private _waiting = false;
@@ -47,14 +47,17 @@ export class OnepromotionComponent implements OnDestroy{
       startDate: [Date, [Validators.required]],
       finishDate: [Date, [Validators.required]]
     });
-    this.getPromotion();
+  }
+
+  ngOnInit() {
+    this.getPromotion()
   }
 
   async getPromotion(){
-    const id = this.activatedRoute.snapshot.params['id'];
-    if(id !== 'new'){
+    this._id = this.activatedRoute.snapshot.params['id'];
+    if(this._id !== 'new'){
       this._waiting = true;
-      this._servicePromotion = await this.promotionService.getOnePromotion(id)
+      this._servicePromotion = await this.promotionService.getOnePromotion(this._id)
         .subscribe({
           next: resp => {
             this._promotion = resp.data;
@@ -105,7 +108,7 @@ export class OnepromotionComponent implements OnDestroy{
     });
   }
 
-  private _confirmSave(){
+  private async _confirmSave(){
     this._formSubmitted = true;
 
     if(!this._changeForm.valid){
@@ -127,16 +130,18 @@ export class OnepromotionComponent implements OnDestroy{
         }
       });
     }else{
-      this.promotionService.createPromotion(this._changeForm.value).subscribe({
+      await this.promotionService.createPromotion(this._changeForm.value).subscribe({
         next: (resp:any )=> {
           this._waiting = false;
           this._id = resp.data.id;
           Swal.fire('Creado!', resp.msg, 'success');
-          this.back();
         },
         error: err => {
           this._waiting = false;
           Swal.fire('Cambios no guardados', err.error.msg, 'info')
+        },
+        complete: () => {
+          this.back()
         }
       });
     }
@@ -163,10 +168,8 @@ export class OnepromotionComponent implements OnDestroy{
   }
 
   openModalImg() {
-    if(this._promotion && this._promotion.img){
-      this.modalService.openModal('promotion',
-        this._promotion.id)
-    }
+    this.modalService.openModal('promotion',
+      this._id)
   }
 
   checkDate(input: string) {

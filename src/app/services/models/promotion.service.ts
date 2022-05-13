@@ -28,6 +28,10 @@ export class PromotionService {
     return this.http.get<any>(`${this._baseUrl}/promotion/all/${active}?page=${num}`);
   }
 
+  getPromotionsAll(): Observable<any> {
+    return this.http.get<any>(`${this._baseUrl}/promotion/pages/all`);
+  }
+
   getOnePromotion(id: string): Observable<any> {
     return this.http.get<any>(`${this._baseUrl}/promotion/one/${id}`);
   }

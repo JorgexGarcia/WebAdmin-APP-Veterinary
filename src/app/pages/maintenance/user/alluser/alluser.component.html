@@ -88,7 +88,7 @@
               <td *ngIf="item.promotions && item.promotions.length > 0">
                 <div class="tableUser">
                   <div class="card cardUser" *ngFor="let promotion of item.promotions">
-                    <div class="d-flex flex-column text-center" (click)="openPromotion(promotion.id)">
+                    <div class="d-flex flex-column text-center" (click)="openPromotion(promotion)">
                       <div class="">
                         <img src="{{promotion.img!.url}}"
                              class="avatar cursor"

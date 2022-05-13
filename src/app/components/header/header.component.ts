@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
   public email: string = '';
   private _interval;
 
-  @ViewChild('txtTer') searchInput: ElementRef<HTMLInputElement> | undefined;
+  @ViewChild('txt') searchInput: ElementRef<HTMLInputElement> | undefined;
 
   constructor(private service: UserService,
               private router: Router ) {

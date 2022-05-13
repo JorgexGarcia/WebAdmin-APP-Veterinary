@@ -52,7 +52,7 @@ export class ModalimgService implements OnDestroy{
         })
         break;
       case 'promotion':
-        console.log('a')
+        console.log('b')
         this._subscription = await this.promotionService.getOnePromotion(id).pipe(
           delay(400)
         ).subscribe({

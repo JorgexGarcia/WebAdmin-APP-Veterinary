@@ -23,8 +23,20 @@
             <button class="btn btn-outline-danger  waves-effect waves-light m-r-10"
                     (click)="password()">
               Resetear contraseña</button>
-            <button class="btn btn-outline-danger  waves-effect waves-light m-r-10" (click)="addPromotion()">
-              Añadir Promoción</button>
+            <div class="btn-group">
+              <button type="button"
+                      class="btn btn-outline-danger dropdown-toggle "
+                      data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">
+                Añadir Promociones
+              </button>
+              <ul class="dropdown-menu menu" >
+                <li *ngFor="let item of promotions; let i = index" class="menu-item">
+                  <a (click)="addPromotion(promotions[i])">{{item.name}}</a>
+                  <div class="dropdown-divider"></div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         <form class="form p-t-20" autocomplete="off" [formGroup]="changeForm"
@@ -115,7 +127,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group row">
+          <div class="form-group row pt-3">
             <div class="col-6">
               <div class="form-group row">
                 <label for="province" class="col-4 col-form-label">Provincia</label>
@@ -148,16 +160,30 @@
                      id="comment">
             </div>
           </div>
-          <div class="form-group row" *ngIf="userActive.rol === 'GERENTE_ROLE'">
-            <label for="rol" class="col-2 col-form-label">Rol</label>
-            <div class="col-2">
-              <select class="form-control"
-                      formControlName="rol" id="rol">
-                <option value="USER_ROLE">Usuario</option>
-                <option value="ADMIN_ROLE">Administrativo</option>
-                <option value="GERENTE_ROLE">Gerente</option>
-                <option value="DOCTOR_ROLE">Veterinario</option>
-              </select>
+          <div class="form-group row justify-content-between pt-2">
+            <div *ngIf="userActive.rol === 'GERENTE_ROLE'" class="col-6">
+              <div class="row">
+                <label for="rol" class="col-2 col-form-label">Rol</label>
+                <div class="col-4">
+                  <select class="form-control"
+                          formControlName="rol" id="rol">
+                    <option value="USER_ROLE">Usuario</option>
+                    <option value="ADMIN_ROLE">Administrativo</option>
+                    <option value="GERENTE_ROLE">Gerente</option>
+                    <option value="DOCTOR_ROLE">Veterinario</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row">
+                <label class="col-3 col-form-label">Promociones</label>
+                <div class="col-9">
+                  <ul *ngFor="let item of user.promotions">
+                    <li>{{item.name}}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
           <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Guardar</button>

@@ -6,6 +6,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../../../models/models/user.model";
 import {environment} from "../../../../../environments/environment";
 import {ModalimgService} from "../../../../services/modalimg.service";
+import {Promotion} from "../../../../models/models/promotion.model";
+import {PromotionService} from "../../../../services/models/promotion.service";
+import {Subscription} from "rxjs";
+import {PromotionInterface} from "../../../../models/interfaces/interfacesModel.interface";
 
 @Component({
   selector: 'app-oneuser',
@@ -18,6 +22,8 @@ export class OneuserComponent implements OnDestroy {
   private _waiting = false;
   private _new = false;
   private _id: string = '';
+  public promotions: Promotion[] = [];
+  private _servicePromotion: Subscription | undefined;
 
   get new(){return this._new;}
   get waiting(){return this._waiting;}
@@ -40,7 +46,8 @@ export class OneuserComponent implements OnDestroy {
               private userService: UserService,
               private route: Router,
               private activatedRoute: ActivatedRoute,
-              private modalService: ModalimgService) {
+              private modalService: ModalimgService,
+              private promotionService: PromotionService) {
 
     this._userActive = this.userService.userActive;
 
@@ -62,16 +69,19 @@ export class OneuserComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    if(this._servicePromotion){
+      this._servicePromotion.unsubscribe();
+    }
   }
 
   async getUser(){
-    const id = this.activatedRoute.snapshot.params['id'];
-    if(id === 'new'){
+    this._id = this.activatedRoute.snapshot.params['id'];
+    if(this._id === 'new'){
       this._new = true;
       this.updateForm();
     }else{
       this._waiting = true;
-      await this.userService.getOneUser(id)
+      await this.userService.getOneUser(this._id)
         .subscribe({
           next: resp => {
             this._user = resp.data;
@@ -80,6 +90,12 @@ export class OneuserComponent implements OnDestroy {
           },
           error: err => {Swal.fire('Error', err.error.msg, 'error');
             this.route.navigateByUrl('main');}
+        });
+      this._servicePromotion = await this.promotionService.getPromotionsAll()
+        .subscribe({
+          next: value => { this.promotions = value.data;
+            console.log(this.promotions)},
+          error: err => {Swal.fire('Error', err.error.msg, 'error')}
         });
     }
   }
@@ -135,7 +151,16 @@ export class OneuserComponent implements OnDestroy {
     this._waiting = true;
 
     if(!this._new){
-      this.userService.updateUser(this._changeForm.value).subscribe({
+      let data = {};
+      let array:string[] = [];
+      if(this._user){
+        this._user.promotions?.forEach( item => array.push(item.id))
+        data = {
+          promotions: array,
+          ... this._changeForm.value
+        }
+      }
+      this.userService.updateUser(data).subscribe({
         next: (resp:any )=> {
           this._waiting = false;
           Swal.fire('Actualizado!', resp.msg, 'success');
@@ -173,10 +198,8 @@ export class OneuserComponent implements OnDestroy {
   }
 
   openModalImg() {
-    if(this._user && this._user.img){
-      this.modalService.openModal('user',
-        this._user.id)
-    }
+    this.modalService.openModal('user',
+      this._id)
   }
 
   checkDate() {
@@ -208,9 +231,13 @@ export class OneuserComponent implements OnDestroy {
       }});
   }
 
-  addPromotion() {
-
+  addPromotion(item : PromotionInterface) {
+    if(this._user){
+      if(!this._user.promotions?.includes(item)){
+        this._user.promotions!.push(item);
+      }else{
+        Swal.fire('Error', 'Ya tienes esa promoción activada', 'info')
+      }
+    }
   }
-
-
 }

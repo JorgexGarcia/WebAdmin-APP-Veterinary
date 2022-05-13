@@ -1,0 +1,11 @@
+.menu{
+  padding: 1rem ;
+}
+
+.menu-item{
+  cursor: pointer;
+}
+
+.menu-item:last-child div{
+  display: none;
+}

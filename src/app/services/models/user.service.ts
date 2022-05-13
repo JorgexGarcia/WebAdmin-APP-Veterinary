@@ -5,7 +5,6 @@ import {LoginForm} from "../../models/interfaces/interfacesForms.interface";
 import {catchError, Observable, of, tap} from "rxjs";
 import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
-import {User} from "../../models/models/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -69,9 +68,9 @@ export class UserService {
     return this.http.put<any>(`${this._baseUrl}/user/${this._userActive.id}`, data);
   }
 
-  updateUser( user: User): Observable<any>{
-    return this.http.put<any>(`${this._baseUrl}/user/${user.id}`,
-      user);
+  updateUser( data: any): Observable<any>{
+    return this.http.put<any>(`${this._baseUrl}/user/${data.id}`,
+      data);
   }
 
   login( formData : LoginForm): Observable<any>{
