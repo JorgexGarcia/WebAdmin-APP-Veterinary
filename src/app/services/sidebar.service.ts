@@ -15,10 +15,12 @@ export class SidebarService {
       ]
     },
     {
-      tittle: 'Información',
+      tittle: 'Mantenimiento',
       icon: "mdi mdi-table",
       submenu: [
-        { tittle: 'Usuarios' , url : 'users'}
+        { tittle: 'Usuarios' , url : 'users'},
+        { tittle: 'Razas' , url : 'breeds'},
+        { tittle: 'Promociones' , url : 'promotions'},
       ]
     }
   ]

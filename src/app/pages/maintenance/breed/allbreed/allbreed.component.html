@@ -1,0 +1,122 @@
+<div class="row animated fadeIn">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input type="text"
+               placeholder="Buscar raza..."
+               class="form-control"
+               (keyup)="searchBreeds(txtTer.value)"
+               #txtTer/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="waiting">
+  <div class="col-12">
+
+    <div class="alert alert-info text-center">
+      <h4 class="alert-heading">Cargando</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p class="mb-0">Por favor espere ...</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="row" *ngIf="!waiting">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Total de razas ({{total}})</h4>
+        <div class="row justify-content-between card-subtitle">
+          <h6 class="pt-3 pl-3">Razas registradas</h6>
+          <button class="btn btn-danger mr-3"
+                  (click)="createBreed()">Crear Raza</button>
+        </div>
+        <div class="table-responsive">
+
+          <!--Activos-->
+          <table class="table table-bordered" *ngIf="active">
+            <thead *ngIf="breeds.length>0">
+            <tr>
+              <th class="w140">Nombre</th>
+              <th class="text-nowrap w100">Acciones</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="breeds.length>0">
+            <tr *ngFor="let item of breeds">
+              <td>{{item.name}}</td>
+              <td class="text-nowrap text-center">
+                <a (click)="updateElement(item.id)"
+                   class="cursor"
+                   data-toggle="tooltip"  data-placement="top"
+                   title="Editar la raza">
+                  <i class="fa fa-pencil text-inverse m-r-10"></i>
+                </a>
+                <a (click)="deleteBreed(item.id)"
+                   class="cursor"
+                   data-toggle="tooltip"  data-placement="top"
+                   title="Eliminar la raza">
+                  <i class="fa fa-close text-danger"></i> </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <!--Inactivos-->
+          <table class="table table-bordered" *ngIf="!active">
+            <thead *ngIf="breeds.length>0">
+            <tr>
+              <th class="w140">Nombre</th>
+              <th class="w100">Fecha Eliminación</th>
+              <th class="w100">Razón</th>
+              <th class="w140">Encargado</th>
+              <th class="text-nowrap w100">Acciones</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="breeds.length>0">
+            <tr *ngFor="let item of breeds">
+              <td>{{item.name}}</td>
+              <td>
+                <p>{{item.deleteDate!.toString().split('T')[0]}}</p>
+              </td>
+              <td>{{item.deleteReason!}}</td>
+              <td >
+                <p>{{item.deleteUser!.name}}</p>
+              </td>
+              <td class="text-nowrap text-center">
+                <a (click)="activeBreed(item)" class="cursor"
+                   data-toggle="tooltip"  data-placement="top"
+                   title="Volver activar la raza">
+                  <i class="fa fa-pencil text-inverse m-r-10"></i>
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row justify-content-around pt-4"
+             *ngIf="txtTer.value.length === 0">
+          <div *ngIf="breeds.length != 0">
+            <button class="btn btn secondary"
+                    (click)="changePage(-1)">Anteriores</button>
+          </div>
+          <div *ngIf="breeds.length != 0">
+            <button class="btn btn secondary"
+                    (click)="changePage(1)">Siguientes</button>
+          </div>
+        </div>
+
+        <div class="row justify-content-center pt-4">
+          <button class="btn btn secondary " *ngIf="active"
+                  (click)="activeBreeds(false)">Mostrar Razas Inactivas</button>
+          <button class="btn btn secondary " *ngIf="!active"
+                  (click)="activeBreeds(true)">Mostrar Razas Activas</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

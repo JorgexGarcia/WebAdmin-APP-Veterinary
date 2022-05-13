@@ -110,11 +110,14 @@
               <td class="text-nowrap text-center">
                 <a (click)="updateElement(item.id)"
                    data-toggle="tooltip" class="cursor"
-                   data-original-title="Editar perfil">
+                   data-placement="top"
+                   title="Editar">
                   <i class="fa fa-pencil text-inverse m-r-10"></i>
                 </a>
                 <a (click)="deleteUser(item.id)"
-                   class="cursor" data-toggle="tooltip" data-original-title="Borrar">
+                   class="cursor" data-toggle="tooltip"
+                   data-placement="top"
+                   title="Borrar">
                   <i class="fa fa-close text-danger"></i> </a>
               </td>
             </tr>
@@ -147,7 +150,8 @@
               <td class="text-nowrap text-center">
                 <a (click)="activeUser(item)"
                   data-toggle="tooltip" class="cursor"
-                  data-original-title="Volver activar perfil">
+                   data-placement="top"
+                   title="Volver activar el perfil">
                   <i class="fa fa-pencil text-inverse m-r-10"></i>
                 </a>
               </td>

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserService} from "../../../../services/models/user.service";
 import {User} from "../../../../models/models/user.model";
 import {SearchService} from "../../../../services/search.service";
@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
   templateUrl: './alluser.component.html',
   styleUrls: ['./alluser.component.css']
 })
-export class AlluserComponent implements OnInit {
+export class AlluserComponent implements OnInit, OnDestroy{
 
   private _waiting = false;
   private _total: number = 0;
@@ -41,7 +41,7 @@ export class AlluserComponent implements OnInit {
   searchUsers(value: string) {
     if(value != ''){
       this.search.search('user', value).subscribe((resp:any) => {
-        this._users = resp.data.filter( (user:User) => user.active == true);
+        this._users = resp.data.filter( (user:User) => user.active == this._active);
       })
     }else{
       this.getUsers();
@@ -58,28 +58,37 @@ export class AlluserComponent implements OnInit {
     this.getUsers();
   }
 
-  deleteUser(id: string) {
+  async deleteUser(id: string) {
     if(this.service.userActive.id !== id){
-      Swal.fire({
+      const {value, isConfirmed} =await Swal.fire<string>({
         title: '¿Quieres eliminar el usuario?',
         icon: 'warning',
+        input: 'text',
+        inputPlaceholder: 'Motivo',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si,elimina!',
         cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.service.deleteUser(id).subscribe({
-            next: resp => {
-              this.getUsers();
-              Swal.fire('Eliminado!', resp.msg, 'success')
-            },
-            error: err => {
-              Swal.fire('Error', err.msg, 'info')
-            }});
-        }
       });
+      if (isConfirmed) {
+        let data;
+        if(value){
+          data = {
+            reason: value
+          }
+        } else {
+          data = {}
+        }
+        this.service.deleteUser(id, data).subscribe({
+          next: resp => {
+            this.getUsers();
+            Swal.fire('Eliminado!', resp.msg, 'success')
+          },
+          error: err => {
+            Swal.fire('Error', err.msg, 'info')
+          }});
+      }
     }else{
       Swal.fire('Error', 'No puedes eliminarte', 'error')
     }
@@ -134,5 +143,11 @@ export class AlluserComponent implements OnInit {
 
   createUser() {
     this.router.navigateByUrl(`main/user/new`);
+  }
+
+  ngOnDestroy(){
+    if(this._serviceUser){
+      this._serviceUser.unsubscribe();
+    }
   }
 }

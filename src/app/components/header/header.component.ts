@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserService} from "../../services/models/user.service";
 import {Router} from "@angular/router";
 
@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
   public name: string = '';
   public email: string = '';
   private _interval;
+
+  @ViewChild('txtTer') searchInput: ElementRef<HTMLInputElement> | undefined;
 
   constructor(private service: UserService,
               private router: Router ) {
@@ -40,6 +42,9 @@ export class HeaderComponent implements OnInit, OnDestroy{
   search(value: string) {
     const nav = document.getElementById('nav-search');
     if(nav) nav.click();
+    if(this.searchInput){
+      this.searchInput.nativeElement.value = '';
+    }
     if(value.length != 0){
       this.router.navigateByUrl(`/main/search/${value}`);
     }

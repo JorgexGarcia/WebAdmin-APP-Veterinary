@@ -10,6 +10,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AlluserComponent } from './maintenance/user/alluser/alluser.component';
 import { OneuserComponent } from './maintenance/user/oneuser/oneuser.component';
 import { SearchComponent } from './search/search.component';
+import {AllbreedComponent} from "./maintenance/breed/allbreed/allbreed.component";
+import {OnebreedComponent} from "./maintenance/breed/onebreed/onebreed.component";
+import {AllpromotionComponent} from "./maintenance/promotion/allpromotion/allpromotion.component";
+import {OnepromotionComponent} from "./maintenance/promotion/onepromotion/onepromotion.component";
 
 @NgModule({
   declarations:[
@@ -19,7 +23,11 @@ import { SearchComponent } from './search/search.component';
     ProfileComponent,
     AlluserComponent,
     OneuserComponent,
-    SearchComponent
+    SearchComponent,
+    AllbreedComponent,
+    OnebreedComponent,
+    AllpromotionComponent,
+    OnepromotionComponent
   ],
     imports: [
         CommonModule,

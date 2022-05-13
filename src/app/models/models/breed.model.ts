@@ -2,10 +2,11 @@ import {UserInterface} from "../interfaces/interfacesModel.interface";
 
 export class Breed{
   constructor(
+    public id: string,
     public name: string,
     public type: string,
-    public problems?: [string],
-    public features?: [string],
+    public problems?: string,
+    public features?: string,
     public active?: boolean,
     public deleteDate?: Date,
     public deleteUser?: UserInterface,

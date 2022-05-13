@@ -1,0 +1,74 @@
+<div class="row animated fadeIn" *ngIf="waiting">
+  <div class="col-12">
+
+    <div class="alert alert-info text-center">
+      <h4 class="alert-heading">Cargando</h4>
+      <i class="fa fa-spin fa-refresh fa-2x"></i>
+      <p class="mb-0">Por favor espere ...</p>
+    </div>
+
+  </div>
+</div>
+<div class="row" *ngIf="!waiting">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Raza</h3>
+        <div class="row justify-content-between card-subtitle">
+          <h4  class="pt-3 pl-3">Ajustes</h4>
+        </div>
+        <form class="form p-t-20" autocomplete="off" [formGroup]="changeForm"
+              (submit)="save()" (reset)="back()">
+          <div class="form-group row">
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="name" class="col-4 col-form-label">Nombre</label>
+                <div class="col-8">
+                  <input class="form-control" type="text"
+                         formControlName="name" id="name">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('name')">El nombre es obligatorio</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="type" class="col-4 col-form-label pl-5 ">Especie</label>
+                <div class="col-8">
+                  <input class="form-control" type="text" formControlName="type"
+                         id="type">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('type')">La especie es obligatoria</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="features" class="col-2 col-form-label">Características</label>
+            <div class="col-10">
+              <textarea class="form-control"
+                        id="features" rows="5"
+                        formControlName="features">
+              </textarea>
+            </div>
+          </div>
+          <div class="form-group row mt-5">
+            <label for="problems" class="col-2 col-form-label">Problemas</label>
+            <div class="col-10">
+              <textarea class="form-control"
+                        id="problems" rows="5"
+                        formControlName="problems">
+              </textarea>
+            </div>
+          </div>
+          <div class="mt-5">
+            <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Guardar</button>
+            <button type="reset" class="btn btn-warning waves-effect waves-light m-r-10 ml-5">volver</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

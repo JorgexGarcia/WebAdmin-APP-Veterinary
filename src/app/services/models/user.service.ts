@@ -24,8 +24,7 @@ export class UserService {
   }
 
   get imgUrl(){
-    return (this._userActive.img)? this._userActive.img.url :
-      'https://res.cloudinary.com/app-veterinary/image/upload/v1651750377/91f0d27a-c1a6-4a39-923f-79b266bad604.jpg'
+    return (this._userActive.img.url);
   }
 
   get name(){
@@ -94,7 +93,7 @@ export class UserService {
     return this.http.get<any>(`${this._baseUrl}/user/one/${id}`);
   }
 
-  deleteUser(id: string): Observable<any>{
-    return this.http.delete<any>(`${this._baseUrl}/user/${id}`);
+  deleteUser(id: string, data:any): Observable<any>{
+    return this.http.put<any>(`${this._baseUrl}/user/delete/${id}`, data);
   }
 }

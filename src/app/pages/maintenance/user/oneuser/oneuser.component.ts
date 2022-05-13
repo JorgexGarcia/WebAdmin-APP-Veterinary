@@ -73,13 +73,13 @@ export class OneuserComponent implements OnInit, OnDestroy {
       this.updateForm();
     }else{
       this._waiting = true;
-      await this.userService.getOneUser(this.activatedRoute.snapshot.params['id'])
+      await this.userService.getOneUser(id)
         .subscribe({
           next: resp => {
             this._user = resp.data;
             this.updateForm();
           },
-          error: err => Swal.fire('Error', err.msg, 'error')
+          error: err => Swal.fire('Error', err.error.msg, 'error')
         });
     }
   }
@@ -155,6 +155,7 @@ export class OneuserComponent implements OnInit, OnDestroy {
         next: (resp:any )=> {
           this._waiting = false;
           this._id = resp.data.id;
+          this._user = resp.data;
           Swal.fire('Creado!', resp.msg, 'success');
           this.back();
         },
@@ -195,6 +196,7 @@ export class OneuserComponent implements OnInit, OnDestroy {
   }
 
   password() {
+    console.log(this._user)
       this._user!.password = environment.new_password;
       this.userService.updateUser(this._user!).subscribe({
         next: value => {

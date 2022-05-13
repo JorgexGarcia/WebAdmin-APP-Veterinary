@@ -3,6 +3,7 @@ import {UserInterface} from "../interfaces/interfacesModel.interface";
 
 export class Promotion{
   constructor(
+    public id: string,
     public name: string,
     public description: string,
     public startDate: Date,

@@ -69,7 +69,7 @@ export class SearchComponent implements OnInit {
     })
   }
 
-  goUser(id: string) {
-    this.router.navigateByUrl(`/main/user/${id}`)
+  go(id: string, type: string) {
+    this.router.navigateByUrl(`/main/${type}/${id}`)
   }
 }
