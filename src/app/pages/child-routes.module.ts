@@ -15,6 +15,8 @@ import {AllproductComponent} from "./maintenance/product/allproduct/allproduct.c
 import {OneproductComponent} from "./maintenance/product/oneproduct/oneproduct.component";
 import {AllserviceComponent} from "./maintenance/service/allservice/allservice.component";
 import {OneserviceComponent} from "./maintenance/service/oneservice/oneservice.component";
+import {AllaidComponent} from "./maintenance/aid/allaid/allaid.component";
+import {OneaidComponent} from "./maintenance/aid/oneaid/oneaid.component";
 
 const childRoutes: Routes = [
   {path: '', component: MainComponent, data: {tittle : 'Principal'}},
@@ -28,12 +30,14 @@ const childRoutes: Routes = [
   {path: 'promotions', component: AllpromotionComponent, data: {tittle : 'Promociones'}},
   {path: 'products', component: AllproductComponent, data: {tittle : 'Productos'}},
   {path: 'services', component: AllserviceComponent, data: {tittle : 'Servicios'}},
+  {path: 'aids', component: AllaidComponent, data: {tittle : 'Consejos'}},
 
   {path: 'user/:id', component: OneuserComponent, data: {tittle : 'Usuario'}},
   {path: 'breed/:id', component: OnebreedComponent, data: {tittle : 'Raza'}},
   {path: 'promotion/:id', component: OnepromotionComponent, data: {tittle : 'Promoción'}},
   {path: 'product/:id', component: OneproductComponent, data: {tittle : 'Producto'}},
   {path: 'service/:id', component: OneserviceComponent, data: {tittle : 'Servicio'}},
+  {path: 'aids/:id', component: OneaidComponent, data: {tittle : 'Consejo'}},
 ];
 
 

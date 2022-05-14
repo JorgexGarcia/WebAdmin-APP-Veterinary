@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {delay, Subscription} from "rxjs";
 import {PromotionService} from "./models/promotion.service";
 import {ProductService} from "./models/product.service";
+import {AidService} from "./models/aid.service";
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,7 @@ export class ModalimgService implements OnDestroy{
   constructor(private userService: UserService,
               private promotionService: PromotionService,
               private productService: ProductService,
+              private aidService: AidService,
               private router: Router) { }
 
   async openModal(type:  'user' | 'aids' | 'queries' | 'promotion' | 'product' | 'pet',
@@ -65,6 +67,16 @@ export class ModalimgService implements OnDestroy{
         break;
       case 'product':
         this._subscription = await this.productService.getOneProduct(id).pipe(
+          delay(400)
+        ).subscribe({
+          next: resp => {
+            this._img = resp.data.img.url;
+            this._hiddenModal = false;
+          }
+        })
+        break;
+      case 'aids':
+        this._subscription = await this.aidService.getOneAid(id).pipe(
           delay(400)
         ).subscribe({
           next: resp => {

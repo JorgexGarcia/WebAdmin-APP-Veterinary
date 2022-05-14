@@ -18,6 +18,8 @@ import {AllproductComponent} from "./maintenance/product/allproduct/allproduct.c
 import {OneproductComponent} from "./maintenance/product/oneproduct/oneproduct.component";
 import {OneserviceComponent} from "./maintenance/service/oneservice/oneservice.component";
 import {AllserviceComponent} from "./maintenance/service/allservice/allservice.component";
+import {AllaidComponent} from "./maintenance/aid/allaid/allaid.component";
+import {OneaidComponent} from "./maintenance/aid/oneaid/oneaid.component";
 
 @NgModule({
   declarations:[
@@ -35,7 +37,9 @@ import {AllserviceComponent} from "./maintenance/service/allservice/allservice.c
     AllproductComponent,
     OneproductComponent,
     OneserviceComponent,
-    AllserviceComponent
+    AllserviceComponent,
+    AllaidComponent,
+    OneaidComponent
   ],
   imports: [
     CommonModule,
