@@ -103,7 +103,7 @@
           <p class="alert-heading text-center"> No hay servicios</p>
         </div>
 
-        <div class="table-responsive" *ngIf="services.length > 0">
+        <div class="table-responsive scroll-table" *ngIf="services.length > 0">
           <table class="table">
             <thead>
             <tr>
@@ -111,7 +111,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let item of services">
+            <tr *ngFor="let item of services" (click)="go(item.id, 'service')"  class="cursor">
               <td>{{item.name}}</td>
             </tr>
             </tbody>
