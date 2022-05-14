@@ -1,3 +1,7 @@
-.cursor{
-  cursor: pointer;
+.navbar-header{
+  background-color: white;
+}
+.logo-completo{
+  width: 9rem;
+  padding-left: 2rem;
 }

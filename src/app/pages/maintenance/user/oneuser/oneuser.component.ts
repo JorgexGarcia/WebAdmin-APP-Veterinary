@@ -93,8 +93,7 @@ export class OneuserComponent implements OnDestroy {
         });
       this._servicePromotion = await this.promotionService.getPromotionsAll()
         .subscribe({
-          next: value => { this.promotions = value.data;
-            console.log(this.promotions)},
+          next: value => { this.promotions = value.data;},
           error: err => {Swal.fire('Error', err.error.msg, 'error')}
         });
     }

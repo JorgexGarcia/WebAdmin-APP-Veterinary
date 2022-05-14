@@ -1,32 +1,16 @@
-<!-- ============================================================== -->
-<!-- Topbar header - style you can find in pages.scss -->
-<!-- ============================================================== -->
 <header class="topbar">
   <nav class="navbar top-navbar navbar-expand-md navbar-light">
-    <!-- ============================================================== -->
-    <!-- Logo -->
-    <!-- ============================================================== -->
     <div class="navbar-header">
-      <a class="navbar-brand" routerLink="/">
-        <!-- Logo icon --><b>
-        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-        <!-- Dark Logo icon -->
-        <img src="./assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
-        <!-- Light Logo icon -->
-        <img src="./assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
-      </b>
-        <!--End Logo icon -->
-        <!-- Logo text --><span>
-                         <!-- dark Logo text -->
-                         <img src="./assets/images/logo-text.png"
-                              alt="homepage" class="dark-logo" />
-        <!-- Light Logo text -->
-                         <img src="./assets/images/logo-light-text.png"
-                              class="light-logo" alt="homepage" /></span> </a>
+      <a class="navbar-brand" >
+        <b>
+          <img src="./favicon.ico" alt="homepage" class="dark-logo avatar" />
+          <img src="./favicon.ico" alt="homepage" class="light-logo avatar" />
+        </b>
+        <span>
+          <img src="./assets/images/logo-completo.jpeg" alt="homepage" class="dark-logo logo-completo" />
+          <img src="./assets/images/logo-completo.jpeg" class="light-logo logo-completo"
+               alt="homepage" /></span> </a>
     </div>
-    <!-- ============================================================== -->
-    <!-- End Logo -->
-    <!-- ============================================================== -->
     <div class="navbar-collapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
@@ -67,8 +51,6 @@
               </li>
               <li role="separator" class="divider"></li>
               <li><a routerLink="profile"><i class="ti-user"></i> Perfil</a></li>
-              <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-              <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
               <li role="separator" class="divider"></li>
               <li><a routerLink="account-settings">
                 <i class="ti-settings"></i> Configuración</a></li>

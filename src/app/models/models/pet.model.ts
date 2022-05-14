@@ -3,6 +3,7 @@ import {BreedInterface, QueriesInterface, TreatmentInterface, UserInterface} fro
 
 export class Pet{
   constructor(
+    public id: string,
     public name: string,
     public birthDate: Date,
     public idUser: UserInterface,
