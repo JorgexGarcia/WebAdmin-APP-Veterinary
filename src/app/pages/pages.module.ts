@@ -16,6 +16,8 @@ import {AllpromotionComponent} from "./maintenance/promotion/allpromotion/allpro
 import {OnepromotionComponent} from "./maintenance/promotion/onepromotion/onepromotion.component";
 import {AllproductComponent} from "./maintenance/product/allproduct/allproduct.component";
 import {OneproductComponent} from "./maintenance/product/oneproduct/oneproduct.component";
+import {OneserviceComponent} from "./maintenance/service/oneservice/oneservice.component";
+import {AllserviceComponent} from "./maintenance/service/allservice/allservice.component";
 
 @NgModule({
   declarations:[
@@ -31,7 +33,9 @@ import {OneproductComponent} from "./maintenance/product/oneproduct/oneproduct.c
     AllpromotionComponent,
     OnepromotionComponent,
     AllproductComponent,
-    OneproductComponent
+    OneproductComponent,
+    OneserviceComponent,
+    AllserviceComponent
   ],
   imports: [
     CommonModule,

@@ -3,9 +3,9 @@
     <div class="card">
       <div class="card-body">
         <input type="text"
-               placeholder="Buscar raza..."
+               placeholder="Buscar servicio..."
                class="form-control"
-               (keyup)="searchBreeds(txtTer.value)"
+               (keyup)="searchServices(txtTer.value)"
                #txtTer/>
       </div>
     </div>
@@ -18,36 +18,36 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Total de razas ({{total}})</h4>
+        <h4 class="card-title">Total de servicios ({{total}})</h4>
         <div class="row justify-content-between card-subtitle">
-          <h6 class="pt-3 pl-3">Razas registradas</h6>
+          <h6 class="pt-3 pl-3">Servicios registradas</h6>
           <button class="btn btn-danger mr-3"
-                  (click)="createBreed()">Crear Raza</button>
+                  (click)="createService()">Crear Servicio</button>
         </div>
         <div class="table-responsive">
 
           <!--Activos-->
           <table class="table table-bordered" *ngIf="active">
-            <thead *ngIf="breeds.length>0">
+            <thead *ngIf="services.length>0">
             <tr>
               <th class="w140">Nombre</th>
               <th class="text-nowrap w100 text-center">Acciones</th>
             </tr>
             </thead>
-            <tbody *ngIf="breeds.length>0">
-            <tr *ngFor="let item of breeds">
+            <tbody *ngIf="services.length>0">
+            <tr *ngFor="let item of services">
               <td>{{item.name}}</td>
               <td class="text-nowrap text-center">
                 <a (click)="updateElement(item.id)"
                    class="cursor"
                    data-toggle="tooltip"  data-placement="top"
-                   title="Editar la raza">
+                   title="Editar el servicio">
                   <i class="fa fa-pencil text-inverse m-r-10"></i>
                 </a>
-                <a (click)="deleteBreed(item.id)"
+                <a (click)="deleteService(item.id)"
                    class="cursor"
                    data-toggle="tooltip"  data-placement="top"
-                   title="Eliminar la raza">
+                   title="Eliminar el servicio">
                   <i class="fa fa-close text-danger"></i> </a>
               </td>
             </tr>
@@ -55,19 +55,19 @@
           </table>
 
           <!--Inactivos-->
-          <app-tableinactive *ngIf="!active" [group]="breeds"
-                             (sendRequest)="activeBreed($event)"
-                             text="Volver activar la raza">
+          <app-tableinactive *ngIf="!active" [group]="services"
+                             (sendRequest)="activeService($event)"
+                             text="Volver activar el servicio">
           </app-tableinactive>
         </div>
 
         <div class="row justify-content-around pt-4"
              *ngIf="txtTer.value.length === 0">
-          <div *ngIf="breeds.length != 0">
+          <div *ngIf="services.length != 0">
             <button class="btn btn secondary"
                     (click)="changePage(-1)">Anteriores</button>
           </div>
-          <div *ngIf="breeds.length != 0">
+          <div *ngIf="services.length != 0">
             <button class="btn btn secondary"
                     (click)="changePage(1)">Siguientes</button>
           </div>
@@ -75,9 +75,9 @@
 
         <div class="row justify-content-center pt-4">
           <button class="btn btn secondary " *ngIf="active"
-                  (click)="activeBreeds(false)">Mostrar razas Inactivas</button>
+                  (click)="activeServices(false)">Mostrar servicios Inactivos</button>
           <button class="btn btn secondary " *ngIf="!active"
-                  (click)="activeBreeds(true)">Mostrar razas Activas</button>
+                  (click)="activeServices(true)">Mostrar servicios Activos</button>
         </div>
 
       </div>

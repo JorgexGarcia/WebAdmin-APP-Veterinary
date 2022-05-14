@@ -22,6 +22,7 @@ export class SidebarService {
         { tittle: 'Razas' , url : 'breeds'},
         { tittle: 'Promociones' , url : 'promotions'},
         { tittle: 'Productos' , url : 'products'},
+        { tittle: 'Servicios' , url : 'services'},
       ]
     }
   ]

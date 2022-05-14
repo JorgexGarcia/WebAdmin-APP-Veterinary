@@ -13,6 +13,8 @@ import {AllpromotionComponent} from "./maintenance/promotion/allpromotion/allpro
 import {OnepromotionComponent} from "./maintenance/promotion/onepromotion/onepromotion.component";
 import {AllproductComponent} from "./maintenance/product/allproduct/allproduct.component";
 import {OneproductComponent} from "./maintenance/product/oneproduct/oneproduct.component";
+import {AllserviceComponent} from "./maintenance/service/allservice/allservice.component";
+import {OneserviceComponent} from "./maintenance/service/oneservice/oneservice.component";
 
 const childRoutes: Routes = [
   {path: '', component: MainComponent, data: {tittle : 'Principal'}},
@@ -25,11 +27,13 @@ const childRoutes: Routes = [
   {path: 'breeds', component: AllbreedComponent, data: {tittle : 'Razas'}},
   {path: 'promotions', component: AllpromotionComponent, data: {tittle : 'Promociones'}},
   {path: 'products', component: AllproductComponent, data: {tittle : 'Productos'}},
+  {path: 'services', component: AllserviceComponent, data: {tittle : 'Servicios'}},
 
   {path: 'user/:id', component: OneuserComponent, data: {tittle : 'Usuario'}},
   {path: 'breed/:id', component: OnebreedComponent, data: {tittle : 'Raza'}},
   {path: 'promotion/:id', component: OnepromotionComponent, data: {tittle : 'Promoción'}},
   {path: 'product/:id', component: OneproductComponent, data: {tittle : 'Producto'}},
+  {path: 'service/:id', component: OneserviceComponent, data: {tittle : 'Servicio'}},
 ];
 
 
