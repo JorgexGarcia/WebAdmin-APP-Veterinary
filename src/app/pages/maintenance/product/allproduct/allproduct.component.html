@@ -3,9 +3,9 @@
     <div class="card">
       <div class="card-body">
         <input type="text"
-               placeholder="Buscar raza..."
+               placeholder="Buscar producto ..."
                class="form-control"
-               (keyup)="searchBreeds(txtTer.value)"
+               (keyup)="searchProduct(txtTer.value)"
                #txtTer/>
       </div>
     </div>
@@ -18,36 +18,44 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Total de razas ({{total}})</h4>
+        <h4 class="card-title">Total de productos ({{total}})</h4>
         <div class="row justify-content-between card-subtitle">
-          <h6 class="pt-3 pl-3">Razas registradas</h6>
+          <h6 class="pt-3 pl-3">Productos registradas</h6>
           <button class="btn btn-danger mr-3"
-                  (click)="createBreed()">Crear Raza</button>
+                  (click)="createProduct()">Crear Producto</button>
         </div>
         <div class="table-responsive">
 
           <!--Activos-->
           <table class="table table-bordered" *ngIf="active">
-            <thead *ngIf="breeds.length>0">
-            <tr>
+            <thead *ngIf="products.length>0">
+            <tr >
+              <th class="w100 text-center">Avatar</th>
               <th class="w140">Nombre</th>
+              <th class="w100 text-center">Cantidad</th>
               <th class="text-nowrap w100 text-center">Acciones</th>
             </tr>
             </thead>
-            <tbody *ngIf="breeds.length>0">
-            <tr *ngFor="let item of breeds">
-              <td>{{item.name}}</td>
+            <tbody *ngIf="products.length>0">
+            <tr *ngFor="let item of products">
+              <td class="text-center">
+                <img src="{{item.img!.url}}"
+                     class="avatar "
+                     alt="Avatar Promoción">
+              </td>
+              <td >{{item.name}}</td>
+              <td class="text-center">{{item.quantity}}</td>
               <td class="text-nowrap text-center">
                 <a (click)="updateElement(item.id)"
                    class="cursor"
                    data-toggle="tooltip"  data-placement="top"
-                   title="Editar la raza">
+                   title="Editar el producto">
                   <i class="fa fa-pencil text-inverse m-r-10"></i>
                 </a>
-                <a (click)="deleteBreed(item.id)"
+                <a (click)="deleteProduct(item.id)"
                    class="cursor"
                    data-toggle="tooltip"  data-placement="top"
-                   title="Eliminar la raza">
+                   title="Eliminar el producto">
                   <i class="fa fa-close text-danger"></i> </a>
               </td>
             </tr>
@@ -55,19 +63,19 @@
           </table>
 
           <!--Inactivos-->
-          <app-tableinactive *ngIf="!active" [group]="breeds"
-                             (sendRequest)="activeBreed($event)"
-                             text="Volver activar la raza">
+          <app-tableinactive *ngIf="!active" [group]="products"
+                             (sendRequest)="activeProduct($event)"
+                             text="Volver activar el producto">
           </app-tableinactive>
         </div>
 
         <div class="row justify-content-around pt-4"
              *ngIf="txtTer.value.length === 0">
-          <div *ngIf="breeds.length != 0">
+          <div *ngIf="products.length != 0">
             <button class="btn btn secondary"
                     (click)="changePage(-1)">Anteriores</button>
           </div>
-          <div *ngIf="breeds.length != 0">
+          <div *ngIf="products.length != 0">
             <button class="btn btn secondary"
                     (click)="changePage(1)">Siguientes</button>
           </div>
@@ -75,9 +83,9 @@
 
         <div class="row justify-content-center pt-4">
           <button class="btn btn secondary " *ngIf="active"
-                  (click)="activeBreeds(false)">Mostrar Razas Inactivas</button>
+                  (click)="activeProducts(false)">Mostrar Productos Inactivos</button>
           <button class="btn btn secondary " *ngIf="!active"
-                  (click)="activeBreeds(true)">Mostrar Razas Activas</button>
+                  (click)="activeProducts(true)">Mostrar Productos Activos</button>
         </div>
 
       </div>

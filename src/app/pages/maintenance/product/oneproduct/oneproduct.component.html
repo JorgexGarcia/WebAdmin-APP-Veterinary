@@ -4,7 +4,7 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title">Promoción</h3>
+        <h3 class="card-title">Producto</h3>
         <div class="row justify-content-between card-subtitle">
           <h4  class="pt-3 pl-3">Ajustes</h4>
           <div *ngIf="!new">
@@ -44,26 +44,24 @@
           <div class="form-group row">
             <div class="col-6">
               <div class="form-group row">
-                <label for="startDate" class="col-6 col-form-label">Fecha Inicio</label>
-                <div class="col-6">
-                  <input class="form-control mr-5" type="date" (change)="checkDate('finish')"
-                         formControlName="startDate"
-                         id="startDate" >
+                <label for="price" class="col-4 col-form-label">Precio</label>
+                <div class="col-8">
+                  <input class="form-control" type="number" min="0" step="0.01"
+                         formControlName="price" id="price">
                   <div class="text-danger">
-                    <p *ngIf="fieldNoValid('startDate')">La fecha de inicio es obligatoria</p>
+                    <p *ngIf="fieldNoValid('price')">El precio es obligatorio</p>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-6">
               <div class="form-group row">
-                <label for="finishDate" class="col-6 col-form-label pl-5">Fecha Final</label>
-                <div class="col-6">
-                  <input class="form-control" type="date" (change)="checkDate('finish')"
-                         formControlName="finishDate"
-                         id="finishDate" >
+                <label for="quantity" class="col-4 col-form-label">Cantidad</label>
+                <div class="col-8">
+                  <input class="form-control" type="number" min="0"
+                         formControlName="quantity" id="quantity">
                   <div class="text-danger">
-                    <p *ngIf="fieldNoValid('finishDate')">La fecha de final es obligatoria</p>
+                    <p *ngIf="fieldNoValid('quantity')">la cantidad es obligatoria</p>
                   </div>
                 </div>
               </div>

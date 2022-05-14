@@ -1,0 +1,31 @@
+<table class="table table-bordered" >
+  <thead *ngIf="group.length>0">
+  <tr>
+    <th class="w140">Nombre</th>
+    <th class="w100">Fecha Eliminación</th>
+    <th class="w100">Razón</th>
+    <th class="w140">Encargado</th>
+    <th class="text-nowrap w100 text-center">Acciones</th>
+  </tr>
+  </thead>
+  <tbody *ngIf="group.length>0">
+  <tr *ngFor="let item of group">
+    <td>{{item.name}} {{item.lastName}}</td>
+    <td>
+      <p>{{item.deleteDate!.toString().split('T')[0]}}</p>
+    </td>
+    <td>{{item.deleteReason!}}</td>
+    <td >
+      <p>{{item.deleteUser!.name}}</p>
+    </td>
+    <td class="text-nowrap text-center">
+      <a (click)="active(item)"
+         data-toggle="tooltip" class="cursor"
+         data-placement="top"
+         title={{text}}>
+        <i class="fa fa-pencil text-inverse m-r-10"></i>
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</table>

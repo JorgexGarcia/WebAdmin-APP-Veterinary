@@ -14,6 +14,8 @@ import {AllbreedComponent} from "./maintenance/breed/allbreed/allbreed.component
 import {OnebreedComponent} from "./maintenance/breed/onebreed/onebreed.component";
 import {AllpromotionComponent} from "./maintenance/promotion/allpromotion/allpromotion.component";
 import {OnepromotionComponent} from "./maintenance/promotion/onepromotion/onepromotion.component";
+import {AllproductComponent} from "./maintenance/product/allproduct/allproduct.component";
+import {OneproductComponent} from "./maintenance/product/oneproduct/oneproduct.component";
 
 @NgModule({
   declarations:[
@@ -27,15 +29,17 @@ import {OnepromotionComponent} from "./maintenance/promotion/onepromotion/onepro
     AllbreedComponent,
     OnebreedComponent,
     AllpromotionComponent,
-    OnepromotionComponent
+    OnepromotionComponent,
+    AllproductComponent,
+    OneproductComponent
   ],
-    imports: [
-        CommonModule,
-        ComponentsModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        FormsModule
-    ],
+  imports: [
+    CommonModule,
+    ComponentsModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
+  ],
   exports:[
     PagesComponent,
     MainComponent,

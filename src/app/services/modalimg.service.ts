@@ -3,6 +3,7 @@ import {UserService} from "./models/user.service";
 import {Router} from "@angular/router";
 import {delay, Subscription} from "rxjs";
 import {PromotionService} from "./models/promotion.service";
+import {ProductService} from "./models/product.service";
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,7 @@ export class ModalimgService implements OnDestroy{
 
   constructor(private userService: UserService,
               private promotionService: PromotionService,
+              private productService: ProductService,
               private router: Router) { }
 
   async openModal(type:  'user' | 'aids' | 'queries' | 'promotion' | 'product' | 'pet',
@@ -52,8 +54,17 @@ export class ModalimgService implements OnDestroy{
         })
         break;
       case 'promotion':
-        console.log('b')
         this._subscription = await this.promotionService.getOnePromotion(id).pipe(
+          delay(400)
+        ).subscribe({
+          next: resp => {
+            this._img = resp.data.img.url;
+            this._hiddenModal = false;
+          }
+        })
+        break;
+      case 'product':
+        this._subscription = await this.productService.getOneProduct(id).pipe(
           delay(400)
         ).subscribe({
           next: resp => {
@@ -67,14 +78,7 @@ export class ModalimgService implements OnDestroy{
 
   closeModal(){
     if(this.userService.userActive.id !== this._id){
-      switch (this._type){
-        case 'user':
-          this.router.navigateByUrl(`main/user/${this._id}`)
-          break;
-        case 'promotion':
-          this.router.navigateByUrl(`main/promotion/${this._id}`)
-          break;
-      }
+      this.router.navigateByUrl(`main/${this._type}/${this._id}`)
     }
     this._hiddenModal = true;
   }

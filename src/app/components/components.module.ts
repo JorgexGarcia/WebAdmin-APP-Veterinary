@@ -6,6 +6,8 @@ import {HeaderComponent} from "./header/header.component";
 import {RouterModule} from "@angular/router";
 import { ModalimgComponent } from './modalimg/modalimg.component';
 import {FormsModule} from "@angular/forms";
+import { LoadingComponent } from './loading/loading.component';
+import { TableinactiveComponent } from './tableinactive/tableinactive.component';
 
 
 
@@ -14,7 +16,9 @@ import {FormsModule} from "@angular/forms";
     BreadcrumbsComponent,
     SidebarComponent,
     HeaderComponent,
-    ModalimgComponent
+    ModalimgComponent,
+    LoadingComponent,
+    TableinactiveComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +29,9 @@ import {FormsModule} from "@angular/forms";
     BreadcrumbsComponent,
     SidebarComponent,
     HeaderComponent,
-    ModalimgComponent
+    ModalimgComponent,
+    LoadingComponent,
+    TableinactiveComponent
   ]
 })
 export class ComponentsModule { }
