@@ -1,1 +1,187 @@
-<p>onepet works!</p>
+<app-loading [waiting]="waiting"></app-loading>
+
+<div class="row" *ngIf="!waiting">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Usuario</h3>
+        <div class="row justify-content-between card-subtitle">
+          <h4  class="pt-3 pl-3">Ajustes</h4>
+          <div *ngIf="!new">
+            <button class="btn btn-outline-danger waves-effect waves-light m-r-10"
+                    (click)="openModalImg()">
+              Cambiar imagen</button>
+            <button class="btn btn-outline-danger  waves-effect waves-light m-r-10"
+                    (click)="password()">
+              Resetear contraseña</button>
+            <div class="btn-group">
+              <button type="button"
+                      class="btn btn-outline-danger dropdown-toggle "
+                      data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">
+                Añadir Promociones
+              </button>
+              <ul class="dropdown-menu menu" >
+                <li *ngFor="let item of promotions; let i = index" class="menu-item">
+                  <a (click)="addPromotion(promotions[i])">{{item.name}}</a>
+                  <div class="dropdown-divider"></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <form class="form p-t-20" autocomplete="off" [formGroup]="changeForm"
+              (submit)="save()" (reset)="back()">
+          <div class="form-group row">
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="name" class="col-4 col-form-label">Nombre</label>
+                <div class="col-8">
+                  <input class="form-control" type="text"
+                         formControlName="name" id="name">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('name')">El nombre es obligatorio</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="lastName" class="col-4 col-form-label">Apellidos</label>
+                <div class="col-8">
+                  <input class="form-control" type="text" formControlName="lastName"
+                         id="lastName">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('lastName')">Los apellidos son obligatorios</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="new">
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="email" class="col-4 col-form-label">Email</label>
+                <div class="col-8">
+                  <input class="form-control" type="email"
+                         formControlName="email" id="email">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('email')">El email es obligatorio</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="dni" class="col-4 col-form-label">DNI</label>
+                <div class="col-8">
+                  <input class="form-control" type="text" formControlName="dni"
+                         id="dni">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('dni')">El dni es obligatorio</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="birthDate" class="col-6 col-form-label">Fecha Nacimiento</label>
+                <div class="col-6">
+                  <input class="form-control" type="date" (change)="checkDate()"
+                         formControlName="birthDate"
+                         id="birthDate">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('birthDate')">La fecha de nacimiento es obligatoria</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="phone" class="col-4 col-form-label">Teléfono</label>
+                <div class="col-8">
+                  <input class="form-control" type="text" formControlName="phone"
+                         id="phone">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="address" class="col-2 col-form-label">Dirección</label>
+            <div class="col-10">
+              <input class="form-control" type="text" formControlName="address"
+                     id="address">
+              <div class="text-danger">
+                <p *ngIf="fieldNoValid('address')">La dirección es obligatoria</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row pt-3">
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="province" class="col-4 col-form-label">Provincia</label>
+                <div class="col-8">
+                  <input class="form-control" type="text" formControlName="province"
+                         id="province">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('province')">La provincia es obligatoria</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group row">
+                <label for="city" class="col-4 col-form-label">Ciudad</label>
+                <div class="col-8">
+                  <input class="form-control" type="text" formControlName="city"
+                         id="city">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('city')">La ciudad es obligatoria</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="comment" class="col-2 col-form-label">Comentarios</label>
+            <div class="col-10">
+              <input class="form-control" type="text" formControlName="comment"
+                     id="comment">
+            </div>
+          </div>
+          <div class="form-group row justify-content-between pt-2">
+            <div *ngIf="userActive.rol === 'GERENTE_ROLE'" class="col-6">
+              <div class="row">
+                <label for="rol" class="col-2 col-form-label">Rol</label>
+                <div class="col-4">
+                  <select class="form-control"
+                          formControlName="rol" id="rol">
+                    <option value="USER_ROLE">Usuario</option>
+                    <option value="ADMIN_ROLE">Administrativo</option>
+                    <option value="GERENTE_ROLE">Gerente</option>
+                    <option value="DOCTOR_ROLE">Veterinario</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row">
+                <label class="col-3 col-form-label">Promociones</label>
+                <div class="col-9">
+                  <ul *ngFor="let item of user.promotions">
+                    <li>{{item.name}}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Guardar</button>
+          <button type="reset" class="btn btn-warning waves-effect waves-light m-r-10 ml-5">volver</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
