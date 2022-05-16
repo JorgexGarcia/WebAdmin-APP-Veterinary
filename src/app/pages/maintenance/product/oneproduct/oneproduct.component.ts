@@ -14,6 +14,8 @@ import {ProductService} from "../../../../services/models/product.service";
 })
 export class OneproductComponent implements OnDestroy, OnInit{
 
+  private _oldNumber:string = '0'
+
   private _product: Product | undefined;
   private _waiting = false;
   private _new = false;
@@ -44,7 +46,7 @@ export class OneproductComponent implements OnDestroy, OnInit{
       id: [''],
       name: ['',[Validators.required, Validators.minLength(5)]],
       description: ['', [Validators.required, Validators.minLength(2)]],
-      price: [0, [Validators.required]],
+      price: ['0.00 €', [Validators.required]],
       quantity: [0, [Validators.required]]
     });
   }
@@ -79,7 +81,8 @@ export class OneproductComponent implements OnDestroy, OnInit{
         this._changeForm.get('id')!.setValue(this._product.id);
         this._changeForm.get('name')!.setValue(this._product.name);
         this._changeForm.get('description')!.setValue(this._product.description);
-        this._changeForm.get('price')!.setValue(this._product.price);
+        const num = this._product.price.toFixed(2)
+        this._changeForm.get('price')!.setValue(`${num} €`);
         this._changeForm.get('quantity')!.setValue(this._product.quantity);
       }
       this._waiting = false;
@@ -111,8 +114,16 @@ export class OneproductComponent implements OnDestroy, OnInit{
 
     this._waiting = true;
 
+    const priceText:string = this._changeForm.get('price')!.value;
+    const parts = priceText.split('€');
+    const priceNumber = parseFloat(parts[0]);
+    const data = {
+      ...this._changeForm.value,
+      price: priceNumber,
+    }
+
     if(!this._new){
-      this.productService.updateProduct(this._changeForm.value).subscribe({
+      this.productService.updateProduct(data).subscribe({
         next: (resp:any )=> {
           this._waiting = false;
           Swal.fire('Actualizado!', resp.msg, 'success');
@@ -124,7 +135,7 @@ export class OneproductComponent implements OnDestroy, OnInit{
         }
       });
     }else{
-      await this.productService.createProduct(this._changeForm.value).subscribe({
+      await this.productService.createProduct(data).subscribe({
         next: (resp:any )=> {
           this._waiting = false;
           this._id = resp.data.id;
@@ -165,5 +176,27 @@ export class OneproductComponent implements OnDestroy, OnInit{
       this._id)
   }
 
+  checkNumber(value: string) {
+    if(value !== ''){
+      const parts: string[] = value.split('€');
+      const parts2: string[] = parts[0].split(' ');
+      let text: string = '';
+      parts2.forEach(s => text = text.concat(s));
+
+      const num:number = parseFloat(text);
+      const numText: string = num.toFixed(2)
+
+      if(text.length - numText.length < 2){
+        if(!isNaN(num)){
+          this._oldNumber = numText;
+          this._changeForm.get('price')?.setValue(`${numText} €`);
+        }else {
+          this._changeForm.get('price')?.setValue(`${this._oldNumber} €`);
+        }
+      }else{
+        this._changeForm.get('price')?.setValue(`${this._oldNumber} €`);
+      }
+    }
+  }
 }
 
