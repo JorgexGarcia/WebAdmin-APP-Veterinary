@@ -13,6 +13,8 @@ import {ServiceService} from "../../../../services/models/service.service";
 })
 export class OneserviceComponent implements OnDestroy {
 
+  private _oldNumber:string = '0'
+
   private _service: Service | undefined;
   private _waiting = false;
   private _new = false;
@@ -40,7 +42,7 @@ export class OneserviceComponent implements OnDestroy {
     this._changeForm = this.fb.group({
       id: [''],
       name: ['',[Validators.required, Validators.minLength(5)]],
-      price: ['', [Validators.required, Validators.minLength(2)]],
+      price: ['0.00 €', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required]]
     });
     this.getService();
@@ -70,7 +72,8 @@ export class OneserviceComponent implements OnDestroy {
       if(this._service){
         this._changeForm.get('id')!.setValue(this._service.id);
         this._changeForm.get('name')!.setValue(this._service.name);
-        this._changeForm.get('price')!.setValue(this._service.price);
+        const num = this._service.price.toFixed(2)
+        this._changeForm.get('price')!.setValue(`${num} €`);
         this._changeForm.get('description')!.setValue(this._service.description);
       }
       this._waiting = false;
@@ -102,8 +105,16 @@ export class OneserviceComponent implements OnDestroy {
 
     this._waiting = true;
 
+    const priceText:string = this._changeForm.get('price')!.value;
+    const parts = priceText.split('€');
+    const priceNumber = parseFloat(parts[0]);
+    const data = {
+      ...this._changeForm.value,
+      price: priceNumber,
+    }
+
     if(!this._new){
-      this.serviceService.updateService(this._changeForm.value).subscribe({
+      this.serviceService.updateService(data).subscribe({
         next: (resp:any )=> {
           this._waiting = false;
           Swal.fire('Actualizado!', resp.msg, 'success');
@@ -115,7 +126,7 @@ export class OneserviceComponent implements OnDestroy {
         }
       });
     }else{
-      this.serviceService.createService(this._changeForm.value).subscribe({
+      this.serviceService.createService(data).subscribe({
         next: (resp:any )=> {
           this._waiting = false;
           Swal.fire('Creado!', resp.msg, 'success');
@@ -140,6 +151,29 @@ export class OneserviceComponent implements OnDestroy {
   ngOnDestroy(){
     if(this._serviceService){
       this._serviceService.unsubscribe();
+    }
+  }
+
+  checkNumber(value: string) {
+    if(value !== ''){
+      const parts: string[] = value.split('€');
+      const parts2: string[] = parts[0].split(' ');
+      let text: string = '';
+      parts2.forEach(s => text = text.concat(s));
+
+      const num:number = parseFloat(text);
+      const numText: string = num.toFixed(2)
+
+      if(text.length - numText.length < 2){
+        if(!isNaN(num)){
+          this._oldNumber = numText;
+          this._changeForm.get('price')?.setValue(`${numText} €`);
+        }else {
+          this._changeForm.get('price')?.setValue(`${this._oldNumber} €`);
+        }
+      }else{
+        this._changeForm.get('price')?.setValue(`${this._oldNumber} €`);
+      }
     }
   }
 }
