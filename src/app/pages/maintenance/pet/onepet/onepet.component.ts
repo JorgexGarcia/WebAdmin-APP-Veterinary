@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {User} from "../../../../models/models/user.model";
-import {Promotion} from "../../../../models/models/promotion.model";
-import {Subscription} from "rxjs";
+import { forkJoin } from 'rxjs';
+import {Observable, observable, Subscription} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../../services/models/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -9,7 +9,16 @@ import {ModalimgService} from "../../../../services/modalimg.service";
 import {PromotionService} from "../../../../services/models/promotion.service";
 import Swal from "sweetalert2";
 import {environment} from "../../../../../environments/environment";
-import {PromotionInterface} from "../../../../models/interfaces/interfacesModel.interface";
+import {
+  BreedInterface, PetInterface,
+  PromotionInterface, QueriesInterface, TreatmentInterface,
+  UserInterface
+} from "../../../../models/interfaces/interfacesModel.interface";
+import {Pet} from "../../../../models/models/pet.model";
+import {Breed} from "../../../../models/models/breed.model";
+import {PetService} from "../../../../services/models/pet.service";
+import {BreedService} from "../../../../services/models/breed.service";
+import {Img} from "../../../../models/models/img.model";
 
 @Component({
   selector: 'app-onepet',
@@ -18,109 +27,142 @@ import {PromotionInterface} from "../../../../models/interfaces/interfacesModel.
 })
 export class OnepetComponent implements OnDestroy {
 
-  private _user: User | undefined;
+  private _pet: Pet | undefined;
   private _waiting = false;
   private _new = false;
   private _id: string = '';
-  public promotions: Promotion[] = [];
-  private _servicePromotion: Subscription | undefined;
+  private _idUser: string = '';
+  public users: User[] = [];
+  public breeds: Breed[] = [];
+  private _serviceForkJoin: Subscription | undefined;
 
   get new(){return this._new;}
   get waiting(){return this._waiting;}
 
-  get user():User{
-    return this._user!;
+  get pet():Pet{
+    return this._pet!;
   }
 
   private _changeForm: FormGroup;
   private _formSubmitted = false;
-  private _userActive: User;
-
-  get userActive(){return this._userActive;}
 
   get changeForm(){
     return this._changeForm;
   }
 
   constructor(private fb: FormBuilder,
-              private userService: UserService,
+              private petService: PetService,
               private route: Router,
               private activatedRoute: ActivatedRoute,
               private modalService: ModalimgService,
-              private promotionService: PromotionService) {
-
-    this._userActive = this.userService.userActive;
+              private userService: UserService,
+              private breedService: BreedService) {
 
     this._changeForm = this.fb.group({
       id: [''],
       name: ['',[Validators.required, Validators.minLength(5)]],
-      lastName: ['', [Validators.required, Validators.minLength(5)]],
       birthDate: [Date, [Validators.required]],
-      phone: [''],
-      province: ['', [Validators.required, Validators.minLength(2)]],
-      city: ['', [Validators.required, Validators.minLength(2)]],
-      address: ['', [Validators.required, Validators.minLength(2)]],
-      comment: [''],
-      rol: [''],
-      dni: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
+      sex: ['', [Validators.required, Validators.minLength(2)]],
+      sterilized: [false, Validators.required],
+      color: ['', [Validators.required, Validators.minLength(2)]],
+      type: ['', [Validators.required, Validators.minLength(2)]],
+      createDate: [Date, [Validators.required]],
+      chip: [''],
+      passport: [''],
+      chronic: [''],
+      weight: [[0]],
+      queries: this.fb.array([{
+        id: [''],
+        type: [''],
+      }]),
+      nextQueries: this.fb.array([{
+        id: [''],
+        type: [''],
+      }]),
+      treatment: this.fb.array([{
+        id: [''],
+        name: ['']
+      }]),
+      comment: ['']
     });
-    this.getUser();
+    this.getPet();
   }
 
   ngOnDestroy() {
-    if(this._servicePromotion){
-      this._servicePromotion.unsubscribe();
+    if(this._serviceForkJoin){
+      this._serviceForkJoin.unsubscribe();
     }
   }
 
-  async getUser(){
+  async getPet(){
     this._id = this.activatedRoute.snapshot.params['id'];
     if(this._id === 'new'){
       this._new = true;
       this.updateForm();
     }else{
       this._waiting = true;
-      await this.userService.getOneUser(this._id)
+      await this.petService.getOnePet(this._id)
         .subscribe({
           next: resp => {
-            this._user = resp.data;
-            if(!this._user) this.route.navigateByUrl('main');
+            this._pet = resp.data;
+            if(!this._pet) this.route.navigateByUrl('main');
+            if(this._pet){
+              this._idUser = this._pet.idUser.id;
+            }
             this.updateForm();
           },
           error: err => {Swal.fire('Error', err.error.msg, 'error');
             this.route.navigateByUrl('main');}
         });
-      this._servicePromotion = await this.promotionService.getPromotionsAll()
+      const observableServiceUser = await this.userService.getAllUsers();
+      const observableServiceBreed = await this.breedService.getAllBreeds();
+
+      this._serviceForkJoin = await forkJoin([observableServiceUser, observableServiceBreed])
         .subscribe({
-          next: value => { this.promotions = value.data;},
-          error: err => {Swal.fire('Error', err.error.msg, 'error')}
+          next: results => {
+            console.log(results[0]);
+            console.log(results[1]);
+            this.users = results[0].data;
+            this.breeds = results[1].data;
+            console.log(this.users);
+            console.log(this.breeds);
+          },
+          error: err => {
+            Swal.fire('Error', err.error.msg, 'error')
+          }
         });
+
     }
   }
 
   updateForm(){
     if(!this._new){
-      if(this._user){
-        const date = this._user.birthDate.toString().split('T')[0];
-        this._changeForm.get('id')!.setValue(this._user.id);
-        this._changeForm.get('name')!.setValue(this._user.name);
-        this._changeForm.get('lastName')!.setValue(this._user.lastName);
+      if(this._pet){
+        const date = this._pet.birthDate.toString().split('T')[0];
+        const date2 = this._pet.createDate.toString().split('T')[0];
+        this._changeForm.get('id')!.setValue(this._pet.id);
+        this._changeForm.get('name')!.setValue(this._pet.name);
         this._changeForm.get('birthDate')!.setValue(date);
-        this._changeForm.get('phone')!.setValue(this._user.phone);
-        this._changeForm.get('province')!.setValue(this._user.province);
-        this._changeForm.get('city')!.setValue(this._user.city);
-        this._changeForm.get('address')!.setValue(this._user.address);
-        this._changeForm.get('comment')!.setValue(this._user.comment);
-        this._changeForm.get('rol')!.setValue(this._user.rol);
-        this._changeForm.get('dni')!.setValue(this._user.dni);
-        this._changeForm.get('email')!.setValue(this._user.email);
+        this._changeForm.get('sex')!.setValue(this._pet.sex);
+        this._changeForm.get('sterilized')!.setValue(this._pet.sterilized);
+        this._changeForm.get('color')!.setValue(this._pet.color);
+        this._changeForm.get('type')!.setValue(this._pet.type);
+        this._changeForm.get('createDate')!.setValue(date2);
+        this._changeForm.get('breed')!.setValue(this._pet.breed);
+        this._changeForm.get('chip')!.setValue(this._pet.chip);
+        this._changeForm.get('passport')!.setValue(this._pet.passport);
+        this._changeForm.get('chronic')!.setValue(this._pet.chronic);
+        this._changeForm.get('weight')!.setValue(this._pet.weight);
+        this._changeForm.get('queries')!.setValue(this._pet.queries);
+        this._changeForm.get('nextQueries')!.setValue(this._pet.nextQueries);
+        this._changeForm.get('treatment')!.setValue(this._pet.treatment);
+        this._changeForm.get('comment')!.setValue(this._pet.comment);
       }
       this._waiting = false;
     }else{
       const date = new Date().toISOString().split('T')[0];
       this._changeForm.get('birthDate')!.setValue(date);
-      this._changeForm.get('rol')!.setValue('USER_ROLE');
+      this._changeForm.get('createDate')!.setValue(date);
     }
   }
 
@@ -149,17 +191,13 @@ export class OnepetComponent implements OnDestroy {
 
     this._waiting = true;
 
+    const data = {
+      ...this._changeForm.value,
+      idUser: this._idUser,
+    }
+
     if(!this._new){
-      let data = {};
-      let array:string[] = [];
-      if(this._user){
-        this._user.promotions?.forEach( item => array.push(item.id))
-        data = {
-          promotions: array,
-          ... this._changeForm.value
-        }
-      }
-      this.userService.updateUser(data).subscribe({
+      this.petService.updatePet(data).subscribe({
         next: (resp:any )=> {
           this._waiting = false;
           Swal.fire('Actualizado!', resp.msg, 'success');
@@ -171,15 +209,11 @@ export class OnepetComponent implements OnDestroy {
         }
       });
     }else{
-      const data = {
-        password: environment.new_password,
-        ...this._changeForm.value
-      }
-      this.userService.createUser(data).subscribe({
+      this.petService.createPet(data).subscribe({
         next: (resp:any )=> {
           this._waiting = false;
           this._id = resp.data.id;
-          this._user = resp.data;
+          this._pet = resp.data;
           Swal.fire('Creado!', resp.msg, 'success');
           this.back();
         },
@@ -197,7 +231,7 @@ export class OnepetComponent implements OnDestroy {
   }
 
   openModalImg() {
-    this.modalService.openModal('user',
+    this.modalService.openModal('pet',
       this._id)
   }
 
@@ -211,32 +245,16 @@ export class OnepetComponent implements OnDestroy {
   back() {
     if(this._new && this._formSubmitted){
       this._new = false;
-      this.route.navigateByUrl(`/main/user/${this._id}`);
+      this.route.navigateByUrl(`/main/pet/${this._id}`);
     }else {
-      this.route.navigateByUrl('/main/users');
+      this.route.navigateByUrl('/main/pets');
     }
   }
 
-  password() {
-    console.log(this._user)
-    this._user!.password = environment.new_password;
-    this.userService.updateUser(this._user!).subscribe({
-      next: value => {
-        Swal.fire('Actualizado!', value.msg, 'success');
-        this.back();
-      },
-      error: err => {
-        Swal.fire('Cambios no guardados', err.error.msg, 'info');
-      }});
-  }
-
-  addPromotion(item : PromotionInterface) {
-    if(this._user){
-      if(!this._user.promotions?.includes(item)){
-        this._user.promotions!.push(item);
-      }else{
-        Swal.fire('Error', 'Ya tienes esa promoción activada', 'info')
-      }
+  addUser(item : UserInterface) {
+    if(this._pet){
+      this._pet.idUser = item;
+      this._changeForm.get('idUser')!.setValue(this._pet.idUser.id);
     }
   }
 }

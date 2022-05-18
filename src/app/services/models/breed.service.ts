@@ -27,6 +27,10 @@ export class BreedService {
     return this.http.get<any>(`${this._baseUrl}/breed/all/${active}?page=${num}`);
   }
 
+  getAllBreeds(): Observable<any>{
+    return this.http.get<any>(`${this._baseUrl}/breed/pages/all`);
+  }
+
   getOneBreed(id : string): Observable<any>{
     return this.http.get<any>(`${this._baseUrl}/breed/one/${id}`);
   }
