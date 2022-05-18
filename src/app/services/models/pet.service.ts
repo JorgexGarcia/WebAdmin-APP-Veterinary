@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Pet} from "../../models/models/pet.model";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,7 @@ export class PetService {
     return this.http.post<any>(`${this._baseUrl}/pet`, formData);
   }
 
-  updatePet(pet: Pet): Observable<any> {
+  updatePet(pet: any): Observable<any> {
     return this.http.put<any>(`${this._baseUrl}/pet/${pet.id}`,
       pet);
   }

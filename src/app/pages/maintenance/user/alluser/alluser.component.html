@@ -57,7 +57,7 @@
               <td *ngIf="item.listPets && item.listPets.length > 0">
                 <div class="tableUser">
                   <div class="card cardUser" *ngFor="let pet of item.listPets">
-                    <div class="d-flex flex-column text-center" (click)="openPet(pet.id)">
+                    <div class="d-flex flex-column text-center" (click)="openPet(pet)">
                       <div class="">
                         <img src="{{pet.img!.url}}"
                              class="avatar cursor"

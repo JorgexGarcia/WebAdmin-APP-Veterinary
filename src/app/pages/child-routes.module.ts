@@ -33,7 +33,7 @@ const childRoutes: Routes = [
   {path: 'products', component: AllproductComponent, data: {tittle : 'Productos'}},
   {path: 'services', component: AllserviceComponent, data: {tittle : 'Servicios'}},
   {path: 'aids', component: AllaidComponent, data: {tittle : 'Consejos'}},
-  {path: 'pet', component: AllpetComponent, data: {tittle : 'Mascotas'}},
+  {path: 'pets', component: AllpetComponent, data: {tittle : 'Mascotas'}},
 
   {path: 'user/:id', component: OneuserComponent, data: {tittle : 'Usuario'}},
   {path: 'breed/:id', component: OnebreedComponent, data: {tittle : 'Raza'}},

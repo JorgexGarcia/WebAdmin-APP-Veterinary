@@ -94,8 +94,8 @@ export class AlluserComponent implements OnInit, OnDestroy{
     }
   }
 
-  openPet(id: string) {
-
+  openPet(item: any) {
+    this.router.navigateByUrl(`main/pet/${item._id}`);
   }
 
   private async getUsers() {

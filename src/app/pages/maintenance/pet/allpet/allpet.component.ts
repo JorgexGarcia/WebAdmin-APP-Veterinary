@@ -1,5 +1,4 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {User} from "../../../../models/models/user.model";
 import {Subscription} from "rxjs";
 import {SearchService} from "../../../../services/search.service";
 import {Router} from "@angular/router";
@@ -118,8 +117,16 @@ export class AllpetComponent implements OnInit, OnDestroy{
     this.getPets();
   }
 
-  activePet(item: User) {
-    this.service.createPet(item).subscribe( {
+  activePet(item: Pet) {
+    item.active = true;
+    console.log(item)
+    const object: any = item.breed;
+    const data = {
+      ...item,
+      breed: object._id,
+    }
+    console.log(data)
+    this.service.updatePet(data).subscribe( {
       next: (resp:any) =>{
         this.getPets();
         Swal.fire('Actualizado!', resp.msg, 'success')

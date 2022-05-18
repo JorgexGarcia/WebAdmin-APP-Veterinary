@@ -4,26 +4,28 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title">Usuario</h3>
+        <h3 class="card-title">Mascota</h3>
         <div class="row justify-content-between card-subtitle">
           <h4  class="pt-3 pl-3">Ajustes</h4>
-          <div *ngIf="!new">
+          <div *ngIf="!new" class="buttons-top">
             <button class="btn btn-outline-danger waves-effect waves-light m-r-10"
                     (click)="openModalImg()">
               Cambiar imagen</button>
-            <button class="btn btn-outline-danger  waves-effect waves-light m-r-10"
-                    (click)="password()">
-              Resetear contraseña</button>
             <div class="btn-group">
               <button type="button"
                       class="btn btn-outline-danger dropdown-toggle "
                       data-toggle="dropdown" aria-haspopup="true"
                       aria-expanded="false">
-                Añadir Promociones
+                Añadir Dueño
               </button>
               <ul class="dropdown-menu menu" >
-                <li *ngFor="let item of promotions; let i = index" class="menu-item">
-                  <a (click)="addPromotion(promotions[i])">{{item.name}}</a>
+                <li *ngFor="let item of users; let i = index" class="menu-item w180">
+                  <a (click)="addUser(users[i])" class="cursor">
+                    <img src="{{item.img!.url}}"
+                         class="avatar p-2"
+                         alt="Avatar Mascota">
+                    <span>{{item.name}}</span>
+                  </a>
                   <div class="dropdown-divider"></div>
                 </li>
               </ul>
@@ -33,7 +35,7 @@
         <form class="form p-t-20" autocomplete="off" [formGroup]="changeForm"
               (submit)="save()" (reset)="back()">
           <div class="form-group row">
-            <div class="col-6">
+            <div class="col-9">
               <div class="form-group row">
                 <label for="name" class="col-4 col-form-label">Nombre</label>
                 <div class="col-8">
@@ -45,50 +47,61 @@
                 </div>
               </div>
             </div>
-            <div class="col-6">
-              <div class="form-group row">
-                <label for="lastName" class="col-4 col-form-label">Apellidos</label>
+            <div class="col-3">
+              <div class="row">
+                <label for="sex" class="col-4 col-form-label pl-5">Sexo</label>
                 <div class="col-8">
-                  <input class="form-control" type="text" formControlName="lastName"
-                         id="lastName">
+                  <input class="form-control" type="text"
+                         formControlName="sex" id="sex">
                   <div class="text-danger">
-                    <p *ngIf="fieldNoValid('lastName')">Los apellidos son obligatorios</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row" *ngIf="new">
-            <div class="col-6">
-              <div class="form-group row">
-                <label for="email" class="col-4 col-form-label">Email</label>
-                <div class="col-8">
-                  <input class="form-control" type="email"
-                         formControlName="email" id="email">
-                  <div class="text-danger">
-                    <p *ngIf="fieldNoValid('email')">El email es obligatorio</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="form-group row">
-                <label for="dni" class="col-4 col-form-label">DNI</label>
-                <div class="col-8">
-                  <input class="form-control" type="text" formControlName="dni"
-                         id="dni">
-                  <div class="text-danger">
-                    <p *ngIf="fieldNoValid('dni')">El dni es obligatorio</p>
+                    <p *ngIf="fieldNoValid('sex')">El sexo es obligatorio</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-6">
+            <div class="col-3">
+              <div class="row">
+                <div class="form-check pl-3">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" formControlName="sterilized">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Esterilizado</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 ">
+              <div class="row">
+                <label for="color" class="col-4 col-form-label">Color</label>
+                <div class="col-8">
+                  <input class="form-control" type="text"
+                         formControlName="color" id="color">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('color')">El color es obligatorio</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3 ">
+              <div class="row">
+                <label for="type" class="col-4 col-form-label">Tipo</label>
+                <div class="col-8">
+                  <input class="form-control" type="text"
+                         formControlName="type" id="type">
+                  <div class="text-danger">
+                    <p *ngIf="fieldNoValid('color')">El tipo de animal es obligatorio</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row pt-2">
+            <div class="col-4">
               <div class="form-group row">
-                <label for="birthDate" class="col-6 col-form-label">Fecha Nacimiento</label>
-                <div class="col-6">
+                <label for="birthDate" class="col-5 col-form-label">Fecha Nacimiento</label>
+                <div class="col-5">
                   <input class="form-control" type="date" (change)="checkDate()"
                          formControlName="birthDate"
                          id="birthDate">
@@ -98,48 +111,55 @@
                 </div>
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-4">
+              <div class="row">
+                <label class="col-4 col-form-label">Raza: </label>
+                <div class="col-4">
+                  <p *ngIf="breed">{{breed.name}}</p>
+                </div>
+                <div class="btn-group col-3">
+                  <button type="button"
+                          class="btn btn-outline-danger dropdown-toggle "
+                          data-toggle="dropdown" aria-haspopup="true"
+                          aria-expanded="false">
+                    Añadir Raza
+                  </button>
+                  <ul class="dropdown-menu menu" >
+                    <li *ngFor="let item of breeds; let i = index" class="menu-item">
+                      <a (click)="addBreed(breeds[i])">{{item.name}}</a>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 pl-5">
               <div class="form-group row">
-                <label for="phone" class="col-4 col-form-label">Teléfono</label>
-                <div class="col-8">
-                  <input class="form-control" type="text" formControlName="phone"
-                         id="phone">
+                <label for="weight" class="col-6 col-form-label">Último peso</label>
+                <div class="col-6 ">
+                  <input class="form-control" type="number"
+                         formControlName="weight"
+                         id="weight">
                 </div>
               </div>
             </div>
           </div>
           <div class="form-group row">
-            <label for="address" class="col-2 col-form-label">Dirección</label>
-            <div class="col-10">
-              <input class="form-control" type="text" formControlName="address"
-                     id="address">
-              <div class="text-danger">
-                <p *ngIf="fieldNoValid('address')">La dirección es obligatoria</p>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row pt-3">
             <div class="col-6">
               <div class="form-group row">
-                <label for="province" class="col-4 col-form-label">Provincia</label>
+                <label for="chip" class="col-4 col-form-label">Chip</label>
                 <div class="col-8">
-                  <input class="form-control" type="text" formControlName="province"
-                         id="province">
-                  <div class="text-danger">
-                    <p *ngIf="fieldNoValid('province')">La provincia es obligatoria</p>
-                  </div>
+                  <input class="form-control" type="text"
+                         formControlName="chip" id="chip">
                 </div>
               </div>
             </div>
             <div class="col-6">
               <div class="form-group row">
-                <label for="city" class="col-4 col-form-label">Ciudad</label>
+                <label for="passport" class="col-4 col-form-label">Pasaporte</label>
                 <div class="col-8">
-                  <input class="form-control" type="text" formControlName="city"
-                         id="city">
-                  <div class="text-danger">
-                    <p *ngIf="fieldNoValid('city')">La ciudad es obligatoria</p>
-                  </div>
+                  <input class="form-control" type="text" formControlName="passport"
+                         id="passport">
                 </div>
               </div>
             </div>
@@ -151,30 +171,11 @@
                      id="comment">
             </div>
           </div>
-          <div class="form-group row justify-content-between pt-2">
-            <div *ngIf="userActive.rol === 'GERENTE_ROLE'" class="col-6">
-              <div class="row">
-                <label for="rol" class="col-2 col-form-label">Rol</label>
-                <div class="col-4">
-                  <select class="form-control"
-                          formControlName="rol" id="rol">
-                    <option value="USER_ROLE">Usuario</option>
-                    <option value="ADMIN_ROLE">Administrativo</option>
-                    <option value="GERENTE_ROLE">Gerente</option>
-                    <option value="DOCTOR_ROLE">Veterinario</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="row">
-                <label class="col-3 col-form-label">Promociones</label>
-                <div class="col-9">
-                  <ul *ngFor="let item of user.promotions">
-                    <li>{{item.name}}</li>
-                  </ul>
-                </div>
-              </div>
+          <div class="form-group row">
+            <label for="chronic" class="col-2 col-form-label">Enfermedades Crónicas</label>
+            <div class="col-10">
+              <input class="form-control" type="text" formControlName="chronic"
+                     id="chronic">
             </div>
           </div>
           <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Guardar</button>
