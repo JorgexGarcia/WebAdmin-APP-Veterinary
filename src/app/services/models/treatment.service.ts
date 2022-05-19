@@ -11,6 +11,16 @@ export class TreatmentService {
 
   private _baseUrl = environment.base_url;
 
+  private _idPet: String = '';
+
+  get pet(): String{
+    return this._idPet!;
+  }
+
+  set pet(id: String){
+    this._idPet = id;
+  }
+
   constructor(private http: HttpClient) { }
 
 
@@ -19,6 +29,7 @@ export class TreatmentService {
   }
 
   updateTreatment( treatment: Treatment): Observable<any>{
+    console.log(treatment)
     return this.http.put<any>(`${this._baseUrl}/treatment/${treatment.id}`,
       treatment);
   }

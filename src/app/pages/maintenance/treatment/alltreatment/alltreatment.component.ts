@@ -128,7 +128,11 @@ export class AlltreatmentComponent implements OnInit, OnDestroy {
   }
 
   activeTreatment(item: Treatment) {
-    this.service.createTreatment(item).subscribe({
+    item = {
+      ...item,
+      active: true
+    }
+    this.service.updateTreatment(item).subscribe({
       next: (resp: any) => {
         this.getTreatments();
         Swal.fire('Actualizado!', resp.msg, 'success')
