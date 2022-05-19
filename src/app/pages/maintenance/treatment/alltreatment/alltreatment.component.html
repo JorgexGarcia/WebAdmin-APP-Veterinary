@@ -3,9 +3,9 @@
     <div class="card">
       <div class="card-body">
         <input type="text"
-               placeholder="Buscar animal..."
+               placeholder="Buscar tratamiento..."
                class="form-control"
-               (keyup)="searchPets(txtTer.value)"
+               (keyup)="searchTreatment(txtTer.value)"
                #txtTer/>
       </div>
     </div>
@@ -18,57 +18,37 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Total de mascotas ({{total}})</h4>
+        <h4 class="card-title">Total de Tratamientos ({{total}})</h4>
         <div class="row justify-content-between card-subtitle">
-          <h6 class="pt-3 pl-3">Mascotas registradas</h6>
+          <h6 class="pt-3 pl-3">Tratamientos registrados</h6>
           <button class="btn btn-danger mr-3"
-                  (click)="createPet()">Crear mascota</button>
+                  (click)="updateElement()">Crear Tratamiento</button>
         </div>
         <div class="table-responsive">
 
           <!--Activos-->
           <table class="table table-bordered" *ngIf="active">
-            <thead *ngIf="pets.length>0">
+            <thead *ngIf="treatments.length>0">
             <tr>
-              <th class="w100 text-center">Avatar</th>
               <th class="w140">Nombre</th>
-              <th class="w140">Tipo</th>
-              <th class="w140">Raza</th>
-              <th class="w140 text-center">Último Propietario Conocido</th>
-              <th class="w140 text-center">Comentarios</th>
+              <th class="w180">Fecha Inicio</th>
+              <th class="w100">Fecha Final</th>
+              <th class="w100">Animal</th>
+              <th class="w140">Encargado</th>
               <th class="text-nowrap w100 text-center">Acciones</th>
             </tr>
             </thead>
-            <tbody *ngIf="pets.length>0">
-            <tr *ngFor="let item of pets">
-              <td class="text-center">
-                <img src="{{item.img!.url}}"
-                     class="avatar"
-                     alt="Avatar Mascota">
-              </td>
+            <tbody *ngIf="treatments.length>0">
+            <tr *ngFor="let item of treatments">
               <td>{{item.name}}</td>
-              <td>{{item.type}}</td>
-              <td>{{item.breed.name}}</td>
-              <td *ngIf="item.idUser">
-                <div class="card cardUser">
-                  <div class="d-flex flex-column text-center" (click)="openUser(item.idUser)">
-                    <div class="">
-                      <img src="{{item.idUser.img!.url}}"
-                           class="avatar cursor"
-                           alt="Avatar Mascota">
-                    </div>
-                    <div class="align-self-center">
-                      <h5 class="">{{item.idUser.name}}</h5>
-                    </div>
-                  </div>
-                </div>
+              <td>
+                <p>{{item.startDate.toString().split('T')[0]}}</p>
               </td>
-              <td *ngIf="!item.idUser">
-                <div class="tableUserEmpty text-center">
-                  Lista Vacia
-                </div>
+              <td>
+                <p *ngIf="item.finishDate">{{item.finishDate.toString().split('T')[0]}}</p>
               </td>
-              <td>{{item.comment}}</td>
+              <td (click)="open(item.idPet, 'pet')">{{item.idPet.name}}</td>
+              <td (click)="open(item.idUser, 'user')">{{item.idUser.name}}</td>
               <td class="text-nowrap text-center">
                 <a (click)="updateElement(item.id)"
                    data-toggle="tooltip" class="cursor"
@@ -76,7 +56,7 @@
                    title="Editar">
                   <i class="fa fa-pencil text-inverse m-r-10"></i>
                 </a>
-                <a (click)="deletePet(item.id)"
+                <a (click)="deleteTreatment(item.id)"
                    class="cursor" data-toggle="tooltip"
                    data-placement="top"
                    title="Borrar">
@@ -87,19 +67,19 @@
           </table>
 
           <!--Inactivos-->
-          <app-tableinactive *ngIf="!active" [group]="pets"
-                             (sendRequest)="activePet($event)"
+          <app-tableinactive *ngIf="!active" [group]="treatments"
+                             (sendRequest)="activeTreatment($event)"
                              text="Volver activar el perfil">
           </app-tableinactive>
         </div>
 
         <div class="row justify-content-around pt-4"
              *ngIf="txtTer.value.length === 0">
-          <div *ngIf="pets.length != 0">
+          <div *ngIf="treatments.length != 0">
             <button class="btn btn secondary"
                     (click)="changePage(-1)">Anteriores</button>
           </div>
-          <div *ngIf="pets.length != 0">
+          <div *ngIf="treatments.length != 0">
             <button class="btn btn secondary"
                     (click)="changePage(1)">Siguientes</button>
           </div>
@@ -107,9 +87,9 @@
 
         <div class="row justify-content-center pt-4">
           <button class="btn btn secondary " *ngIf="active"
-                  (click)="activePets(false)">Mostrar Mascotas Inactivas</button>
+                  (click)="activeTreatments(false)">Mostrar Tratamientos Inactivos</button>
           <button class="btn btn secondary " *ngIf="!active"
-                  (click)="activePets(true)">Mostrar Mascotas Activas</button>
+                  (click)="activeTreatments(true)">Mostrar Tratamientos Activos</button>
         </div>
 
       </div>

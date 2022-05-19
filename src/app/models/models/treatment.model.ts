@@ -2,6 +2,7 @@ import {PetInterface, UserInterface} from "../interfaces/interfacesModel.interfa
 
 export class Treatment {
   constructor(
+    public id: string,
     public startDate: Date,
     public description: string,
     public idPet: PetInterface,

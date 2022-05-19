@@ -41,16 +41,16 @@
           <p class="alert-heading text-center"> No hay mascotas</p>
         </div>
 
-        <div class="table-responsive" *ngIf="pets.length > 0">
+        <div class="table-responsive scroll-table" *ngIf="pets.length > 0">
           <table class="table">
             <thead>
             <tr>
-              <th>Avatar</th>
+              <th class="text-center">Avatar</th>
               <th>Nombre</th>
             </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of pets">
+              <tr *ngFor="let item of pets" (click)="go(item.id, 'pet')"  class="cursor">
                 <td class="text-center">
                   <img src="{{item.img!.url}}"
                        class="avatar"

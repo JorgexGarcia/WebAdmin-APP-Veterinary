@@ -58,7 +58,7 @@ export class OnepetComponent implements OnDestroy {
 
     this._changeForm = this.fb.group({
       id: [''],
-      name: ['',[Validators.required, Validators.minLength(5)]],
+      name: ['',[Validators.required, Validators.minLength(2)]],
       birthDate: [Date, [Validators.required]],
       sex: ['', [Validators.required, Validators.minLength(2)]],
       sterilized: [false],

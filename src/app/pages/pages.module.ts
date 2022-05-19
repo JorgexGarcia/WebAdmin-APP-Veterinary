@@ -22,6 +22,8 @@ import {AllaidComponent} from "./maintenance/aid/allaid/allaid.component";
 import {OneaidComponent} from "./maintenance/aid/oneaid/oneaid.component";
 import {AllpetComponent} from "./maintenance/pet/allpet/allpet.component";
 import {OnepetComponent} from "./maintenance/pet/onepet/onepet.component";
+import {AlltreatmentComponent} from "./maintenance/treatment/alltreatment/alltreatment.component";
+import {OnetreatmentComponent} from "./maintenance/treatment/onetreatment/onetreatment.component";
 
 @NgModule({
   declarations:[
@@ -43,7 +45,9 @@ import {OnepetComponent} from "./maintenance/pet/onepet/onepet.component";
     AllaidComponent,
     OneaidComponent,
     AllpetComponent,
-    OnepetComponent
+    OnepetComponent,
+    AlltreatmentComponent,
+    OnetreatmentComponent
   ],
   imports: [
     CommonModule,
