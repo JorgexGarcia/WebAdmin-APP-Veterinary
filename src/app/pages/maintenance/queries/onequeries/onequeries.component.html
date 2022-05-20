@@ -1,1 +1,129 @@
-<p>onequeries works!</p>
+<app-loading [waiting]="waiting"></app-loading>
+
+<div class="row" *ngIf="!waiting">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Consulta</h3>
+        <div class="row justify-content-between card-subtitle">
+          <h4  class="pt-3 pl-3">Ajustes</h4>
+          <div *ngIf="!new">
+            <button class="btn btn-outline-danger waves-effect waves-light m-r-10"
+                    (click)="openModalImg()">
+              Subir Archivos</button>
+          </div>
+        </div>
+        <form class="form p-t-20" autocomplete="off" [formGroup]="changeForm"
+              (submit)="save()" (reset)="back()">
+          <div class="form-group row">
+            <div class="col-4">
+              <label class="col-form-label mr-2">Selecciona una Animal</label>
+              <div class="btn-group">
+                <button type="button"
+                        class="btn btn-secondary dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                  <span *ngIf="!pet">Animal</span>
+                  <span *ngIf="pet">{{pet.name}}</span>
+                </button>
+                <div class="dropdown-menu scroll">
+                  <a *ngFor="let item of allPets;let i = index"
+                     class="dropdown-item " (click)="changePet(allPets[i])">
+                    <img src="{{item.img!.url}}"
+                         class="avatar p-2"
+                         alt="Avatar Mascota">
+                    <span>{{item.name}}</span>
+                  </a>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-4" *ngIf="bol1">
+              <label class="col-form-label mr-2">Selecciona un Trabajador</label>
+              <div class="btn-group">
+                <button type="button"
+                        class="btn btn-secondary dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                  <span *ngIf="!user">Trabajador</span>
+                  <span *ngIf="user">{{user.name}}</span>
+                </button>
+                <div class="dropdown-menu scroll">
+                  <a *ngFor="let item of allUsers;let i = index"
+                     class="dropdown-item " (click)="changeUser(allUsers[i])">
+                    <img src="{{item.img!.url}}"
+                         class="avatar p-2"
+                         alt="Avatar Usuario">
+                    <span>{{item.name}}</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-4" *ngIf="bol2">
+
+              <label class="col-form-label mr-2">Selecciona un Servicio</label>
+              <div class="btn-group">
+                <button type="button"
+                        class="btn btn-secondary dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                  <span *ngIf="!service">Servicio</span>
+                  <span *ngIf="service">{{service.name}}</span>
+                </button>
+                <div class="dropdown-menu scroll">
+                  <a *ngFor="let item of allServices;let i = index"
+                     class="dropdown-item " (click)="changeService(allServices[i])">
+                    <span>{{item.name}}</span>
+                  </a>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div *ngIf="bol3">
+            <div class="form-group row">
+              <label for="description" class="col-2 col-form-label">Descripción</label>
+              <div class="col-10">
+              <textarea class="form-control"
+                        id="description" rows="2"
+                        formControlName="description">
+              </textarea>
+                <div class="text-danger">
+                  <p *ngIf="fieldNoValid('description')">La descripción es obligatoria</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-4">
+                <div class="form-group row">
+                  <label for="startDate" class="col-3 col-form-label">Fecha Inicio</label>
+                  <div class="col-7">
+                    <input class="form-control" type="datetime-local"
+                           formControlName="startDate" step="3600"
+                           id="startDate">
+                    <div class="text-danger">
+                      <p *ngIf="fieldNoValid('startDate')">La fecha es obligatoria</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+
+              </div>
+              <div class="col-4 pl-5">
+                <div class="form-group row">
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5">
+            <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Guardar</button>
+            <button type="reset" class="btn btn-warning waves-effect waves-light m-r-10 ml-5">volver</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -59,7 +59,7 @@ export class AllqueriesComponent implements OnInit, OnDestroy{
 
   getSearch(value: string) {
     if(value != ''){
-      this.search.search('promotion', value).subscribe((resp:any) => {
+      this.search.search('queries', value).subscribe((resp:any) => {
         this._queries = resp.data.filter( (item:Queries) => item.active == this._active);
       });
     }else{

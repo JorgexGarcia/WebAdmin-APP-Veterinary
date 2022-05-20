@@ -28,7 +28,7 @@ export class PetService {
   }
 
   getPetsAll(): Observable<any> {
-    return this.http.get<any>(`${this._baseUrl}/pet/pages/all`);
+    return this.http.get<any>(`${this._baseUrl}/pet/page/all`);
   }
 
   getOnePet(id: string): Observable<any> {

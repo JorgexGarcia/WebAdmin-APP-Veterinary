@@ -28,7 +28,7 @@ export class ServiceService {
   }
 
   getServicesAll(): Observable<any> {
-    return this.http.get<any>(`${this._baseUrl}/service/pages/all`);
+    return this.http.get<any>(`${this._baseUrl}/service/page/all`);
   }
 
   getOneService(id: string): Observable<any> {
