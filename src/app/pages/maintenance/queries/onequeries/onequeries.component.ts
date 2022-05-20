@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import {QueriesService} from "../../../../services/models/queries.service";
 import {
   PetInterface,
-  ReportInterface, ServiceInterface,
+  ReportInterface, ServiceInterface, TreatmentInterface,
   UserInterface
 } from "../../../../models/interfaces/interfacesModel.interface";
 import {Pet} from "../../../../models/models/pet.model";
@@ -17,6 +17,7 @@ import {UserService} from "../../../../services/models/user.service";
 import {Queries} from "../../../../models/models/queries.model";
 import {Service} from "../../../../models/models/service.model";
 import {ServiceService} from "../../../../services/models/service.service";
+import {TreatmentService} from "../../../../services/models/treatment.service";
 
 @Component({
   selector: 'app-onequeries',
@@ -35,6 +36,7 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
   public pet: PetInterface | undefined;
   public allPets: Pet[] = [];
   public user: UserInterface | undefined;
+  public treatment: TreatmentInterface | undefined;
   public allUsers: User[] = [];
   public service: ServiceInterface | undefined;
   public allServices: Service[] = [];
@@ -62,6 +64,7 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
               private petService: PetService,
               private userService: UserService,
               private serviceService: ServiceService,
+              private treatmentService: TreatmentService,
               private route: Router,
               private activatedRoute: ActivatedRoute,
               private modalService: ModalimgService) {
@@ -93,22 +96,34 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
     this._getData()
 
     if(this._id !== 'new'){
-      this._waiting = true;
-      this._serviceQueries = await this.queriesService.getOneQueries(this._id)
-        .subscribe({
-          next: resp => {
-            const {idUser, idPet, reports, ...fields} = resp.data;
-            this.pet = idPet;
-            this.user = idUser;
-            this.reports = reports;
-            this._queries = fields;
-            this.bol1 = true;
-            if(!this._queries) this.route.navigateByUrl('main');
-            this.updateForm();
-          },
-          error: err => {Swal.fire('Error', err.error.msg, 'error');
-            this.route.navigateByUrl('main');}
-        });
+      if(this._id !== 'newTemp'){
+        this._waiting = true;
+        this._serviceQueries = await this.queriesService.getOneQueries(this._id)
+          .subscribe({
+            next: resp => {
+              const {idUser, idPet, reports, treatment, ...fields} = resp.data;
+              this.pet = idPet;
+              this.user = idUser;
+              this.reports = reports;
+              this.treatment = treatment;
+              this._queries = fields;
+              this.bol1 = true;
+              if(!this._queries) this.route.navigateByUrl('main');
+              this.updateForm();
+            },
+            error: err => {Swal.fire('Error', err.error.msg, 'error');
+              this.route.navigateByUrl('main');}
+          });
+      }else{
+        const {user, pet, serviceTemp, reports, ...fields} = this.treatmentService.data;
+        this._queries = fields;
+        this.user = user;
+        this.pet = pet;
+        this.service = serviceTemp;
+        this.reports = reports;
+        this.treatment = this.treatmentService.treatment;
+        this.updateForm();
+      }
     }else{
       this._new = true;
       this.updateForm();
@@ -148,12 +163,7 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
         this._changeForm.get('service')!.setValue(this._queries.service.id);
         this._changeForm.get('description')!.setValue(this._queries.description);
         this._changeForm.get('tests')!.setValue(this._queries.tests);
-        const date = this._queries.startDate.toString().toString().split('.')[0];
-        const date2 = (this._queries.finishDate)?
-          this._queries.finishDate.toString().toString().split('.')[0]:
-          new Date().toISOString().split('.')[0];
-        this._changeForm.get('startDate')!.setValue(date);
-        this._changeForm.get('finishDate')!.setValue(date2);
+        this.changeDateStart(this._queries.startDate.toString());
         this._changeForm.get('firstObservation')!.setValue(this._queries.firstObservation);
         this._changeForm.get('treatment')!.setValue(this._queries.treatment);
         this._changeForm.get('diagnostic')!.setValue(this._queries.diagnostic);
@@ -161,11 +171,65 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
       }
       this._waiting = false;
     }else{
-      const date = new Date().toISOString().split('.')[0];
-      console.log(date)
-      this._changeForm.get('startDate')!.setValue(date);
-      this._changeForm.get('finishDate')!.setValue(date);
+      this.changeDateStart(new Date().toISOString());
     }
+  }
+
+  changeDateStart(date :string){
+
+    //Obtener Valores
+    const day = date.split('T')[0].split('-')[2];
+    const month = date.split('T')[0].split('-')[1];
+    const year = date.split('T')[0].split('-')[0];
+    let dateHorStart = date.split('T')[1].split(':')[0];
+    let dateMinStart = date.split('T')[1].split(':')[1];
+    let dateHorFinish = dateHorStart;
+    let dateMinFinish: string;
+
+    //Comprobar Horario consultas
+    if(Number(dateHorStart) < 9){
+      dateHorStart = '09';
+      dateMinStart = '00';
+      dateHorFinish = dateHorStart;
+      dateMinFinish = '30';
+    }else{
+      if(Number(dateHorStart) > 19){
+        dateHorStart = '19';
+        dateMinStart = '00';
+        dateHorFinish = dateHorStart;
+        dateMinFinish = '30';
+      }else{
+        //Intervalos de 30 min
+        if(Number(dateMinStart) < 59 && Number(dateMinStart) > 30){
+          dateMinStart = '00';
+          dateMinFinish = '30';
+          const num = Number(dateHorStart);
+          dateHorStart = `${num + 1}`;
+          dateHorFinish = dateHorStart;
+        }else{
+          if(Number(dateMinStart) != 0){
+            dateMinStart = '30'
+            dateMinFinish = '00';
+            const num = Number(dateHorFinish);
+            dateHorFinish = `${num + 1}`;
+          }else{
+            dateMinFinish = '30';
+          }
+        }
+        if(dateHorStart.length == 1){
+          dateHorStart = '0'.concat(dateHorStart);
+        }
+        if(dateHorFinish.length == 1){
+          dateHorFinish = '0'.concat(dateHorFinish);
+        }
+      }
+    }
+
+    //Devolver horas
+    this._changeForm.get('startDate')!.setValue( year.concat('-').concat(month).concat('-').concat(day).concat('T')
+      .concat(`${dateHorStart}`).concat(':').concat(`${dateMinStart}`));
+    this._changeForm.get('finishDate')!.setValue( year.concat('-').concat(month).concat('-').concat(day).concat('T')
+      .concat(`${dateHorFinish}`).concat(':').concat(`${dateMinFinish}`));
   }
 
   save() {
@@ -197,6 +261,7 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
       ...this._changeForm.value,
       idUser: this.user?.id,
       idPet: this.user?.id,
+      treatment: this.treatment?.id,
       service: this.service?.id,
       reports: this.reports,
     }
@@ -276,4 +341,18 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
     this.bol3 = true;
   }
 
+  createTreatment() {
+    this.treatmentService.data = {
+      ...this._changeForm.value,
+      idUser: this.user?.id,
+      idPet: this.user?.id,
+      treatment: this.treatment?.id,
+      service: this.service?.id,
+      reports: this.reports,
+      user: this.user,
+      pet: this.pet,
+      serviceTemp: this.service,
+    };
+    this.route.navigateByUrl(`main/treatment/new`);
+  }
 }

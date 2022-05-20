@@ -18,6 +18,7 @@ export class OnetreatmentComponent implements OnDestroy, OnInit{
   private _new = false;
   private _serviceTreatment: Subscription | undefined;
   private _id: string = '';
+  private _pet: any;
 
   get new(){return this._new;}
   get waiting(){return this._waiting;}
@@ -89,6 +90,7 @@ export class OnetreatmentComponent implements OnDestroy, OnInit{
       const date = new Date().toISOString().split('T')[0];
       this._changeForm.get('startDate')!.setValue(date);
       this._changeForm.get('finishDate')!.setValue(date);
+      this._pet = this.treatmentService.data.pet;
     }
   }
 
@@ -117,11 +119,12 @@ export class OnetreatmentComponent implements OnDestroy, OnInit{
 
     this._waiting = true;
 
-    const pet = this.treatmentService.pet;
+    const pet = this.treatmentService.data.pet;
 
+    console.log(this.treatmentService.data)
     const data = {
       ...this._changeForm.value,
-      idPet: pet
+      idPet: pet.id
     }
 
     if(!this._new){
@@ -141,6 +144,7 @@ export class OnetreatmentComponent implements OnDestroy, OnInit{
         next: (resp:any )=> {
           this._waiting = false;
           this._id = resp.data.id;
+          this._treatment = resp.data;
           Swal.fire('Creado!', resp.msg, 'success');
         },
         error: err => {
@@ -156,7 +160,15 @@ export class OnetreatmentComponent implements OnDestroy, OnInit{
   }
 
   back() {
-    this.route.navigateByUrl('/main/treatments');
+    if(!this._new){
+      this.route.navigateByUrl('/main/treatments');
+    }else{
+      if(!this._treatment){
+        this.route.navigateByUrl('/main/treatments');
+      }
+      this.treatmentService.treatment = this._treatment;
+      this.route.navigateByUrl('/main/queries/newTemp');
+    }
   }
 
   fieldNoValid(name: string) {

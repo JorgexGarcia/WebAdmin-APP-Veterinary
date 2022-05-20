@@ -11,14 +11,24 @@ export class TreatmentService {
 
   private _baseUrl = environment.base_url;
 
-  private _idPet: String = '';
+  private _data: any = {};
 
-  get pet(): String{
-    return this._idPet!;
+  private _treatment: any;
+
+  get treatment(){
+    return this._treatment;
   }
 
-  set pet(id: String){
-    this._idPet = id;
+  set treatment(item : any){
+    this._treatment = item;
+  }
+
+  get data(){
+    return this._data;
+  }
+
+  set data(data: any){
+    this._data = data;
   }
 
   constructor(private http: HttpClient) { }

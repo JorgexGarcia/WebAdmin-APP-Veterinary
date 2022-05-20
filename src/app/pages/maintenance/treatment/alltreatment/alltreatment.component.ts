@@ -143,7 +143,7 @@ export class AlltreatmentComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateElement(id: string = 'new') {
+  updateElement(id: string) {
     this.router.navigateByUrl(`main/treatment/${id}`);
   }
 
