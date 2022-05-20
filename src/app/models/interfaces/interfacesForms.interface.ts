@@ -9,7 +9,7 @@ export interface LoginForm{
 
 export interface TableInterface{
   id: string,
-  name: string,
+  name?: string,
   lastName?: string,
   active?: boolean,
   deleteDate?: Date,

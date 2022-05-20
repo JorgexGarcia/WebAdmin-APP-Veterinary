@@ -3,6 +3,7 @@ import {PetInterface, ReportInterface, ServiceInterface, TreatmentInterface, Use
 
 export class Queries {
   constructor(
+    public id: string,
     public type: string,
     public idPet: PetInterface,
     public position: number,

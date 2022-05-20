@@ -7,23 +7,8 @@ import {AppRoutingModule} from "../app-routing.module";
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { ProfileComponent } from './profile/profile.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { AlluserComponent } from './maintenance/user/alluser/alluser.component';
-import { OneuserComponent } from './maintenance/user/oneuser/oneuser.component';
 import { SearchComponent } from './search/search.component';
-import {AllbreedComponent} from "./maintenance/breed/allbreed/allbreed.component";
-import {OnebreedComponent} from "./maintenance/breed/onebreed/onebreed.component";
-import {AllpromotionComponent} from "./maintenance/promotion/allpromotion/allpromotion.component";
-import {OnepromotionComponent} from "./maintenance/promotion/onepromotion/onepromotion.component";
-import {AllproductComponent} from "./maintenance/product/allproduct/allproduct.component";
-import {OneproductComponent} from "./maintenance/product/oneproduct/oneproduct.component";
-import {OneserviceComponent} from "./maintenance/service/oneservice/oneservice.component";
-import {AllserviceComponent} from "./maintenance/service/allservice/allservice.component";
-import {AllaidComponent} from "./maintenance/aid/allaid/allaid.component";
-import {OneaidComponent} from "./maintenance/aid/oneaid/oneaid.component";
-import {AllpetComponent} from "./maintenance/pet/allpet/allpet.component";
-import {OnepetComponent} from "./maintenance/pet/onepet/onepet.component";
-import {AlltreatmentComponent} from "./maintenance/treatment/alltreatment/alltreatment.component";
-import {OnetreatmentComponent} from "./maintenance/treatment/onetreatment/onetreatment.component";
+import {MaintenanceModule} from "./maintenance/maintenance.module";
 
 @NgModule({
   declarations:[
@@ -31,30 +16,15 @@ import {OnetreatmentComponent} from "./maintenance/treatment/onetreatment/onetre
     MainComponent,
     AccountSettingsComponent,
     ProfileComponent,
-    AlluserComponent,
-    OneuserComponent,
-    SearchComponent,
-    AllbreedComponent,
-    OnebreedComponent,
-    AllpromotionComponent,
-    OnepromotionComponent,
-    AllproductComponent,
-    OneproductComponent,
-    OneserviceComponent,
-    AllserviceComponent,
-    AllaidComponent,
-    OneaidComponent,
-    AllpetComponent,
-    OnepetComponent,
-    AlltreatmentComponent,
-    OnetreatmentComponent
+    SearchComponent
   ],
   imports: [
     CommonModule,
     ComponentsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MaintenanceModule
   ],
   exports:[
     PagesComponent,

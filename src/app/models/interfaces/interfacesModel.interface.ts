@@ -26,6 +26,7 @@ export interface UserInterface{
 }
 
 export interface ReportInterface{
+  name: string,
   typeReport: string,
   reportId: string,
   url: string

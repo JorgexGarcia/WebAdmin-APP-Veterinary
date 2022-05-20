@@ -1,0 +1,124 @@
+<div class="row animated fadeIn">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <input type="text"
+               placeholder="Buscar consultas ..."
+               class="form-control"
+               (keyup)="getSearch(txtTer.value)"
+               #txtTer/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-loading [waiting]="waiting"></app-loading>
+
+<div class="row" *ngIf="!waiting">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Total de Consultas ({{total}})</h4>
+        <div class="row justify-content-between card-subtitle">
+          <h6 class="pt-3 pl-3">Consultas registradas</h6>
+          <button class="btn btn-danger mr-3"
+                  (click)="create()">Crear Consulta</button>
+        </div>
+        <div class="table-responsive">
+
+          <!--Activos-->
+          <table class="table table-bordered" *ngIf="active">
+            <thead *ngIf="queries.length>0">
+            <tr >
+              <th class="text-nowrap w100 text-center">Animal</th>
+              <th class="text-nowrap w100 text-center">Encargado</th>
+              <th class="text-nowrap w100 text-center">Fecha</th>
+              <th class="text-nowrap w100 text-center">Finalizada</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="queries.length>0">
+            <tr *ngFor="let item of queries">
+              <td *ngIf="item.idPet">
+                <div class="card cardUser">
+                  <div class="d-flex flex-column text-center" (click)="open(item.idUser, 'pet')">
+                    <div class="">
+                      <img src="{{item.idPet.img!.url}}"
+                           class="avatar cursor"
+                           alt="Avatar Mascota">
+                    </div>
+                    <div class="align-self-center">
+                      <h5 class="">{{item.idPet.name}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td *ngIf="item.idUser">
+                <div class="card cardUser">
+                  <div class="d-flex flex-column text-center" (click)="open(item.idUser, 'user')">
+                    <div class="">
+                      <img src="{{item.idUser.img!.url}}"
+                           class="avatar cursor"
+                           alt="Avatar Mascota">
+                    </div>
+                    <div class="align-self-center">
+                      <h5 class="">{{item.idUser.name}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <p>{{item.date.toString().split('T')[0]}}</p>
+              </td>
+              <td *ngIf="item.finish == false">
+                <span class="label label-table label-success">Espera</span>
+              </td>
+              <td *ngIf="item.finish == true">
+                <span class="label label-table label-success">Finalizada</span>
+              </td>
+              <td class="text-nowrap text-center">
+                <a (click)="update(item.id)"
+                   class="cursor"
+                   data-toggle="tooltip"  data-placement="top"
+                   title="Editar la consulta">
+                  <i class="fa fa-pencil text-inverse m-r-10"></i>
+                </a>
+                <a (click)="delete(item.id)"
+                   class="cursor"
+                   data-toggle="tooltip"  data-placement="top"
+                   title="Eliminar la consulta">
+                  <i class="fa fa-close text-danger"></i> </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <!--Inactivos-->
+          <app-tableinactive *ngIf="!active" [group]="queries"
+                             (sendRequest)="getActive($event)"
+                             text="Volver activar la promoción">
+          </app-tableinactive>
+        </div>
+
+        <div class="row justify-content-around pt-4"
+             *ngIf="txtTer.value.length === 0">
+          <div *ngIf="queries.length != 0">
+            <button class="btn btn secondary"
+                    (click)="changePage(-1)">Anteriores</button>
+          </div>
+          <div *ngIf="queries.length != 0">
+            <button class="btn btn secondary"
+                    (click)="changePage(1)">Siguientes</button>
+          </div>
+        </div>
+
+        <div class="row justify-content-center pt-4">
+          <button class="btn btn secondary " *ngIf="active"
+                  (click)="activeSet(false)">Mostrar Consultas Inactivas</button>
+          <button class="btn btn secondary " *ngIf="!active"
+                  (click)="activeSet(true)">Mostrar Consultas Activas</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -21,6 +21,8 @@ import {AllpetComponent} from "./maintenance/pet/allpet/allpet.component";
 import {OnepetComponent} from "./maintenance/pet/onepet/onepet.component";
 import {AlltreatmentComponent} from "./maintenance/treatment/alltreatment/alltreatment.component";
 import {OnetreatmentComponent} from "./maintenance/treatment/onetreatment/onetreatment.component";
+import {AllqueriesComponent} from "./maintenance/queries/allqueries/allqueries.component";
+import {OnequeriesComponent} from "./maintenance/queries/onequeries/onequeries.component";
 
 const childRoutes: Routes = [
   {path: '', component: MainComponent, data: {tittle : 'Principal'}},
@@ -37,6 +39,7 @@ const childRoutes: Routes = [
   {path: 'aids', component: AllaidComponent, data: {tittle : 'Consejos'}},
   {path: 'pets', component: AllpetComponent, data: {tittle : 'Mascotas'}},
   {path: 'treatments', component: AlltreatmentComponent, data: {tittle : 'Tratamientos'}},
+  {path: 'queries', component: AllqueriesComponent, data: {tittle : 'Consultas'}},
 
   {path: 'user/:id', component: OneuserComponent, data: {tittle : 'Usuario'}},
   {path: 'breed/:id', component: OnebreedComponent, data: {tittle : 'Raza'}},
@@ -46,6 +49,7 @@ const childRoutes: Routes = [
   {path: 'aids/:id', component: OneaidComponent, data: {tittle : 'Consejo'}},
   {path: 'pet/:id', component: OnepetComponent, data: {tittle : 'Mascota'}},
   {path: 'treatment/:id', component: OnetreatmentComponent, data: {tittle : 'Tratamiento'}},
+  {path: 'queries/:id', component: OnequeriesComponent, data: {tittle : 'Consulta'}},
 ];
 
 
