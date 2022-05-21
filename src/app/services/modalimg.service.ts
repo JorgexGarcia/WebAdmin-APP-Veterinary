@@ -113,7 +113,11 @@ export class ModalimgService implements OnDestroy{
 
   closeModal(){
     if(this._type === 'queries'){
-      this.router.navigateByUrl(`main/queries`);
+      if(this.querieService.newDate){
+        this.router.navigateByUrl(`main`);
+      }else{
+        this.router.navigateByUrl(`main/queries`);
+      }
       this._hiddenModal = true;
     }else{
       if(this.userService.userActive.id !== this._id){

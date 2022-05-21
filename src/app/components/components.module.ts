@@ -8,8 +8,19 @@ import { ModalimgComponent } from './modalimg/modalimg.component';
 import {FormsModule} from "@angular/forms";
 import { LoadingComponent } from './loading/loading.component';
 import { TableinactiveComponent } from './tableinactive/tableinactive.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
+import {FullCalendarModule} from "@fullcalendar/angular";
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from '@fullcalendar/timegrid';
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  interactionPlugin,
+  timeGridPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -18,20 +29,23 @@ import { TableinactiveComponent } from './tableinactive/tableinactive.component'
     HeaderComponent,
     ModalimgComponent,
     LoadingComponent,
-    TableinactiveComponent
+    TableinactiveComponent,
+    CalendarComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    FullCalendarModule
   ],
-  exports: [
-    BreadcrumbsComponent,
-    SidebarComponent,
-    HeaderComponent,
-    ModalimgComponent,
-    LoadingComponent,
-    TableinactiveComponent
-  ]
+    exports: [
+        BreadcrumbsComponent,
+        SidebarComponent,
+        HeaderComponent,
+        ModalimgComponent,
+        LoadingComponent,
+        TableinactiveComponent,
+        CalendarComponent
+    ]
 })
 export class ComponentsModule { }

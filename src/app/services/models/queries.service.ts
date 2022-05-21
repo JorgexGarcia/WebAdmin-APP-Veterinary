@@ -9,6 +9,25 @@ import {Queries} from "../../models/models/queries.model";
 })
 export class QueriesService {
 
+  private _newDate: boolean = false;
+  private _date: Date = new Date();
+
+  get date():Date {
+    return this._date;
+  }
+
+  set date(item:Date){
+    this._date = item;
+  }
+
+  get newDate() {
+    return this._newDate;
+  }
+
+  set newDate(item:boolean){
+    this._newDate = item;
+  }
+
   private _baseUrl = environment.base_url;
 
   constructor(private http: HttpClient) {

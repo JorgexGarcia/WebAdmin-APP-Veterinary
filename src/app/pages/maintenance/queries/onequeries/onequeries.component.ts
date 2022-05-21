@@ -24,6 +24,7 @@ import {map} from "rxjs/operators";
 export class OnequeriesComponent implements OnDestroy, OnInit{
 
   private _queries: Queries | undefined;
+  private _allQueries: Queries[] = [];
   private _waiting = false;
   private _new = false;
   private _serviceQueries: Subscription | undefined;
@@ -142,15 +143,18 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
     const observableServiceUser = await this.userService.getAllUsers();
     const observableServicePet = await this.petService.getPetsAll();
     const observableServiceService = await this.serviceService.getServicesAll();
+    const observableServiceQueries = await this.queriesService.getQueriesAll();
 
     this._serviceForkJoin = await forkJoin([observableServiceUser,
       observableServicePet,
-      observableServiceService])
+      observableServiceService, observableServiceQueries])
       .subscribe({
         next: results => {
           this.allUsers = results[0].data;
           this.allPets = results[1].data;
           this.allServices = results[2].data;
+          this._allQueries = results[3].data;
+          console.log(this._allQueries)
         },
         error: err => {
           Swal.fire('Error', err.error.msg, 'error')
@@ -176,7 +180,11 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
       }
       this._waiting = false;
     }else{
-      this.changeDateStart(new Date().toISOString());
+      if(this.queriesService.newDate){
+        this.changeDateStart(this.queriesService.date.toISOString());
+      }else{
+        this.changeDateStart(new Date().toISOString());
+      }
     }
   }
 
@@ -234,6 +242,18 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
         }
       }
     }
+
+    /*No poder coger dos horas a la vez
+    console.log(this._allQueries)
+    const  c = this._allQueries.map(item => {
+      const a = new Date(item.startDate);
+      const b = new Date(Number(year),Number(month), Number(day), Number(dateHorStart),Number(dateMinStart));
+      console.log(a.getDate())
+      console.log(b.getDate())
+      console.log(a.getDate() === b.getDate())
+    })
+
+     */
 
     //Devolver horas
     this._changeForm.get('startDate')!.setValue( year.concat('-').concat(month).concat('-').concat(day).concat('T')
@@ -314,12 +334,17 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
   }
 
   back() {
-    this.treatmentService.finish = false;
-    if(this._new && this._formSubmitted){
-      this._new = false;
-      this.route.navigateByUrl(`/main/queries/${this._id}`);
-    }else {
-      this.route.navigateByUrl('/main/queries');
+    if(this.queriesService.newDate && this._formSubmitted){
+      this.queriesService.newDate = false;
+      return this.route.navigateByUrl('/main');
+    }else{
+      this.treatmentService.finish = false;
+      if(this._new && this._formSubmitted){
+        this._new = false;
+        return this.route.navigateByUrl(`/main/queries/${this._id}`);
+      }else {
+        return this.route.navigateByUrl('/main/queries');
+      }
     }
   }
 
