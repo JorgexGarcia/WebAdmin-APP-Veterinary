@@ -121,8 +121,6 @@ export class ModalimgService implements OnDestroy{
       }
       this._hiddenModal = true;
     }
-
-
   }
 
   ngOnDestroy(): void {

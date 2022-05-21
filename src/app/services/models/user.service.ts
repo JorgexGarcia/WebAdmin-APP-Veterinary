@@ -5,7 +5,6 @@ import {LoginForm} from "../../models/interfaces/interfacesForms.interface";
 import {catchError, Observable, of, tap} from "rxjs";
 import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
-import {User} from "../../models/models/user.model";
 
 @Injectable({
   providedIn: 'root'
