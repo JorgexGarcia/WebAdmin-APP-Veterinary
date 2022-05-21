@@ -6,6 +6,7 @@ import {PromotionService} from "./models/promotion.service";
 import {ProductService} from "./models/product.service";
 import {AidService} from "./models/aid.service";
 import {PetService} from "./models/pet.service";
+import {QueriesService} from "./models/queries.service";
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,7 @@ export class ModalimgService implements OnDestroy{
               private productService: ProductService,
               private aidService: AidService,
               private petService: PetService,
+              private querieService: QueriesService,
               private router: Router) { }
 
   async openModal(type:  'user' | 'aids' | 'queries' | 'promotion' | 'product' | 'pet',
@@ -97,14 +99,30 @@ export class ModalimgService implements OnDestroy{
           }
         })
         break;
+      case 'queries':
+        this._subscription = await this.querieService.getOneQueries(id).pipe(
+          delay(400)
+        ).subscribe({
+          next: _ => {
+            this._hiddenModal = false;
+          }
+        })
+        break;
     }
   }
 
   closeModal(){
-    if(this.userService.userActive.id !== this._id){
-      this.router.navigateByUrl(`main/${this._type}/${this._id}`)
+    if(this._type === 'queries'){
+      this.router.navigateByUrl(`main/queries`);
+      this._hiddenModal = true;
+    }else{
+      if(this.userService.userActive.id !== this._id){
+        this.router.navigateByUrl(`main/${this._type}/${this._id}`)
+      }
+      this._hiddenModal = true;
     }
-    this._hiddenModal = true;
+
+
   }
 
   ngOnDestroy(): void {

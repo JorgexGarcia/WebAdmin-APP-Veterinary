@@ -32,7 +32,6 @@ export class QueriesService {
   }
 
   getOneQueries(id: string): Observable<any> {
-    console.log(id)
     return this.http.get<any>(`${this._baseUrl}/queries/one/${id}`);
   }
 

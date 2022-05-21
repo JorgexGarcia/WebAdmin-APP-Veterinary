@@ -110,12 +110,9 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
               this.service = resp.data.service;
               this._queries = resp.data;
               if(!this._queries) this.route.navigateByUrl('main');
-              console.log(this._queries?.treatment)
-              console.log(this.createShow)
               if(this._queries?.treatment){
                 this.createShow = false;
               }
-              console.log(this.createShow)
               this.updateForm();
             },
             error: err => {Swal.fire('Error', err.error.msg, 'error');

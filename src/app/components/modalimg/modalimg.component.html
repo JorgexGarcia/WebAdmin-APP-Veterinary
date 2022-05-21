@@ -6,15 +6,19 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="exampleModalLabel1">Cargar Imagen</h4>
+          <h4 class="modal-title" id="exampleModalLabel1"
+              *ngIf="service.type !== 'queries'">Cargar Imagen</h4>
+          <h4 class="modal-title" id="exampleModalLabel2"
+              *ngIf="service.type === 'queries'">Cargar Archivo</h4>
           <button type="button" class="close" data-dismiss="modal"
                   (click)="closeModal()"
                   aria-label="Close"><span aria-hidden="true">×</span></button>
         </div>
         <div class="modal-body">
-          <h3>Seleccione una imagen</h3>
+          <h3 *ngIf="service.type !== 'queries'">Seleccione una imagen</h3>
+          <h3 *ngIf="service.type === 'queries'">Seleccione una archivo</h3>
 
-          <div class="text-center">
+          <div class="text-center" *ngIf="service.type !== 'queries'">
             <img *ngIf="!imgTemp" [src]="service.img" alt="Avatar Usuario" class="img-avatar p-5">
             <img *ngIf="imgTemp" [src]="imgTemp" alt="Avatar Usuario" class="img-avatar p-5">
           </div>
@@ -25,8 +29,10 @@
           <button type="button" class="btn btn-default"
                   (click)="closeModal()"
                   data-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary"
+          <button type="button" class="btn btn-primary" *ngIf="service.type !== 'queries'"
                   (click)="update()" [disabled]="!imgTemp">Actualizar foto</button>
+          <button type="button" class="btn btn-primary" *ngIf="service.type === 'queries'"
+                  (click)="update()" [disabled]="!imgTemp">Subir archivo</button>
         </div>
 
       </div>
