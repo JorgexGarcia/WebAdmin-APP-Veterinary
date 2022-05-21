@@ -11,6 +11,9 @@
             <button class="btn btn-outline-danger waves-effect waves-light m-r-10"
                     (click)="openModalImg()">
               Subir Archivos</button>
+            <button class="btn btn-outline-danger waves-effect waves-light m-r-10"
+                    (click)="finish()">
+              Finalizar</button>
           </div>
         </div>
         <form class="form p-t-20" autocomplete="off" [formGroup]="changeForm"
@@ -82,6 +85,7 @@
             </div>
           </div>
           <div *ngIf="bol3">
+
             <div class="form-group row">
               <label for="description" class="col-2 col-form-label">Descripción</label>
               <div class="col-10">
@@ -94,6 +98,7 @@
                 </div>
               </div>
             </div>
+
             <div class="form-group row">
               <div class="col-4">
                 <div class="form-group row">
@@ -120,23 +125,51 @@
                   </div>
                 </div>
               </div>
-              <div class="col-5">
+              <div class="col-5" *ngIf="!new">
                 <div class="row">
                   <label class="col-3 col-form-label">Tratamiento: </label>
                   <div class="col-7">
                     <p *ngIf="treatment">{{treatment.name}}</p>
                   </div>
-                  <div class="col-2">
+                  <div class="col-2" *ngIf="createShow">
                     <button type="button"
                             class="btn btn-outline-danger "
-                            (click)="createTreatment()">
+                            (click)="createTreatment()" >
                       Crear
                     </button>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div class="form-group row" *ngIf="!new">
+              <label for="tests" class="col-2 col-form-label">Pruebas</label>
+              <div class="col-10">
+                <input class="form-control" type="text"
+                       formControlName="tests" id="tests">
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="!new">
+              <label for="firstObservation" class="col-2 col-form-label">Primera observación</label>
+              <div class="col-10">
+                <input class="form-control" type="text"
+                       formControlName="firstObservation" id="firstObservation">
+              </div>
+            </div>
+
+            <div class="form-group row" *ngIf="!new">
+              <label for="diagnostic" class="col-2 col-form-label">Diagnostico</label>
+              <div class="col-10">
+              <textarea class="form-control"
+                        id="diagnostic" rows="5"
+                        formControlName="diagnostic">
+              </textarea>
+              </div>
+            </div>
+
           </div>
+
           <div class="mt-5">
             <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Guardar</button>
             <button type="reset" class="btn btn-warning waves-effect waves-light m-r-10 ml-5">volver</button>

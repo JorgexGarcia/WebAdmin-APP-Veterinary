@@ -32,7 +32,8 @@ export class QueriesService {
   }
 
   getOneQueries(id: string): Observable<any> {
-    return this.http.get<any>(`${this._baseUrl}/quereies/one/${id}`);
+    console.log(id)
+    return this.http.get<any>(`${this._baseUrl}/queries/one/${id}`);
   }
 
   deleteQueries(id: string, data: any): Observable<any> {

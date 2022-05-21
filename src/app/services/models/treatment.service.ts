@@ -15,6 +15,16 @@ export class TreatmentService {
 
   private _treatment: any;
 
+  private _finish: boolean = false;
+
+  get finish(){
+    return this._finish;
+  }
+
+  set finish(item:boolean){
+    this._finish = item;
+  }
+
   get treatment(){
     return this._treatment;
   }

@@ -10,7 +10,8 @@
   </thead>
   <tbody *ngIf="group.length>0">
   <tr *ngFor="let item of group">
-    <td>{{item.name}} {{item.lastName}}</td>
+    <td *ngIf="item.name">{{item.name}} {{item.lastName}}</td>
+    <td *ngIf="!item.name">{{item.description}}</td>
     <td>
       <p>{{item.deleteDate!.toString().split('T')[0]}}</p>
     </td>

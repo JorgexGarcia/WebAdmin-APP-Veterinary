@@ -9,6 +9,7 @@ export interface LoginForm{
 
 export interface TableInterface{
   id: string,
+  description?: string,
   name?: string,
   lastName?: string,
   active?: boolean,

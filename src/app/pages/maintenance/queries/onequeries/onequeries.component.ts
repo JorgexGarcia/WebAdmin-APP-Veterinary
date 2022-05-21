@@ -1,15 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {forkJoin, Subscription} from "rxjs";
+import {forkJoin, mergeMap, Subscription} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ModalimgService} from "../../../../services/modalimg.service";
 import Swal from "sweetalert2";
 import {QueriesService} from "../../../../services/models/queries.service";
-import {
-  PetInterface,
-  ReportInterface, ServiceInterface, TreatmentInterface,
-  UserInterface
-} from "../../../../models/interfaces/interfacesModel.interface";
+import {ReportInterface} from "../../../../models/interfaces/interfacesModel.interface";
 import {Pet} from "../../../../models/models/pet.model";
 import {User} from "../../../../models/models/user.model";
 import {PetService} from "../../../../services/models/pet.service";
@@ -18,6 +14,7 @@ import {Queries} from "../../../../models/models/queries.model";
 import {Service} from "../../../../models/models/service.model";
 import {ServiceService} from "../../../../services/models/service.service";
 import {TreatmentService} from "../../../../services/models/treatment.service";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-onequeries',
@@ -33,17 +30,19 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
   private _serviceForkJoin: Subscription | undefined;
   private _id: string = '';
   public reports: ReportInterface[] = [];
-  public pet: PetInterface | undefined;
+  public pet: any;
   public allPets: Pet[] = [];
-  public user: UserInterface | undefined;
-  public treatment: TreatmentInterface | undefined;
+  public user: any;
+  public treatment: any;
+  private _treatmentNew: any;
   public allUsers: User[] = [];
-  public service: ServiceInterface | undefined;
+  public service: any;
   public allServices: Service[] = [];
 
   public bol1: boolean = false;
   public bol2: boolean = false;
   public bol3: boolean = false;
+  public createShow = true;
 
   get new(){return this._new;}
   get waiting(){return this._waiting;}
@@ -72,10 +71,10 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
     this._changeForm = this.fb.group({
       id: [''],
       type: [''],
-      idPet: ['', [Validators.required]],
-      idUser: ['', [Validators.required]],
-      description: ['', [Validators.required, Validators.minLength(2)]],
-      service: ['', [Validators.required]],
+      idPet: [''],
+      idUser: [''],
+      description: ['', [Validators.required]],
+      service: [''],
       tests: [''],
       startDate: [Date, [Validators.required]],
       finishDate: [Date],
@@ -96,19 +95,27 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
     this._getData()
 
     if(this._id !== 'new'){
-      if(this._id !== 'newTemp'){
+      this.bol1 = true;
+      this.bol2 = true;
+      this.bol3 = true;
+      if(!this.treatmentService.finish){
         this._waiting = true;
         this._serviceQueries = await this.queriesService.getOneQueries(this._id)
           .subscribe({
             next: resp => {
-              const {idUser, idPet, reports, treatment, ...fields} = resp.data;
-              this.pet = idPet;
-              this.user = idUser;
-              this.reports = reports;
-              this.treatment = treatment;
-              this._queries = fields;
-              this.bol1 = true;
+              this.pet = resp.data.idPet;
+              this.user = resp.data.idUser;
+              this.reports = resp.data.reports;
+              this.treatment = resp.data.treatment;
+              this.service = resp.data.service;
+              this._queries = resp.data;
               if(!this._queries) this.route.navigateByUrl('main');
+              console.log(this._queries?.treatment)
+              console.log(this.createShow)
+              if(this._queries?.treatment){
+                this.createShow = false;
+              }
+              console.log(this.createShow)
               this.updateForm();
             },
             error: err => {Swal.fire('Error', err.error.msg, 'error');
@@ -118,12 +125,16 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
         const {user, pet, serviceTemp, reports, ...fields} = this.treatmentService.data;
         this._queries = fields;
         this.user = user;
+        this._queries!.idUser = user._id;
         this.pet = pet;
+        this._queries!.idPet = pet._id;
         this.service = serviceTemp;
+        this._queries!.service = serviceTemp._id;
         this.reports = reports;
         this.treatment = this.treatmentService.treatment;
         this.updateForm();
       }
+
     }else{
       this._new = true;
       this.updateForm();
@@ -143,9 +154,6 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
           this.allUsers = results[0].data;
           this.allPets = results[1].data;
           this.allServices = results[2].data;
-          console.log(this.allUsers)
-          console.log(this.allPets)
-          console.log(this.allServices)
         },
         error: err => {
           Swal.fire('Error', err.error.msg, 'error')
@@ -183,6 +191,11 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
     const year = date.split('T')[0].split('-')[0];
     let dateHorStart = date.split('T')[1].split(':')[0];
     let dateMinStart = date.split('T')[1].split(':')[1];
+
+    //Diferencia horaria con España
+    const num = Number(dateHorStart);
+    dateHorStart = `${num + 2}`;
+
     let dateHorFinish = dateHorStart;
     let dateMinFinish: string;
 
@@ -243,7 +256,7 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this._confirmSave()
+        this._confirmSave();
       }
     });
   }
@@ -257,17 +270,24 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
 
     this._waiting = true;
 
-    const data = {
+    let data = {
       ...this._changeForm.value,
-      idUser: this.user?.id,
-      idPet: this.user?.id,
-      treatment: this.treatment?.id,
-      service: this.service?.id,
+      idUser: this.user._id,
+      idPet: this.pet._id,
+      treatment: this.treatment?._id,
+      service: this.service._id,
       reports: this.reports,
     }
 
     if(!this._new){
-      this.queriesService.updateQueries(data).subscribe({
+
+      if(this.treatment){
+        if(this.treatment.name && !this.treatment.id){
+          await this._createNewTreatment(data);
+        }
+      }
+
+      await this.queriesService.updateQueries(data).subscribe({
         next: (resp:any )=> {
           this._waiting = false;
           Swal.fire('Actualizado!', resp.msg, 'success');
@@ -297,6 +317,7 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
   }
 
   back() {
+    this.treatmentService.finish = false;
     if(this._new && this._formSubmitted){
       this._new = false;
       this.route.navigateByUrl(`/main/queries/${this._id}`);
@@ -325,19 +346,19 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
 
   changePet(pet: Pet) {
     this.pet = pet;
-    console.log(this.pet)
+    this.pet._id = pet.id;
     this.bol1 = true;
   }
 
   changeUser(user: User) {
     this.user = user;
-    console.log(this.user)
+    this.user._id = user.id;
     this.bol2 = true;
   }
 
   changeService(service: Service) {
     this.service = service;
-    console.log(this.service)
+    this.service._id = service.id;
     this.bol3 = true;
   }
 
@@ -345,7 +366,7 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
     this.treatmentService.data = {
       ...this._changeForm.value,
       idUser: this.user?.id,
-      idPet: this.user?.id,
+      idPet: this.pet?.id,
       treatment: this.treatment?.id,
       service: this.service?.id,
       reports: this.reports,
@@ -354,5 +375,51 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
       serviceTemp: this.service,
     };
     this.route.navigateByUrl(`main/treatment/new`);
+  }
+
+  finish() {
+    Swal.fire({
+      title: '¿Quieres finalizar la consulta?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, guardar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._changeForm.get('finish')?.setValue(true);
+        this._confirmSave();
+      }
+    });
+  }
+
+  private async _createNewTreatment(dataQueries :any) {
+
+    const data = {
+      ...this.treatment,
+      idPet: this.pet._id
+    }
+
+    await this.treatmentService.createTreatment(data)
+      .pipe(map(resp => {
+        this._treatmentNew = resp.data;
+        dataQueries.treatment = this._treatmentNew.id;
+        return dataQueries;
+      }),
+      mergeMap(res => {
+        return this.queriesService.updateQueries(res);
+      })).subscribe({
+        next: (resp:any )=> {
+          this._waiting = false;
+          Swal.fire('Actualizado!', resp.msg, 'success');
+          this.back();
+        },
+        error: err => {
+          this._waiting = false;
+          Swal.fire('Cambios no guardados', err.error.msg, 'info')
+        }
+      });
+
   }
 }

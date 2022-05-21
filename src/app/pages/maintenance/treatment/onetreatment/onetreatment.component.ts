@@ -121,7 +121,6 @@ export class OnetreatmentComponent implements OnDestroy, OnInit{
 
     const pet = this.treatmentService.data.pet;
 
-    console.log(this.treatmentService.data)
     const data = {
       ...this._changeForm.value,
       idPet: pet.id
@@ -140,21 +139,9 @@ export class OnetreatmentComponent implements OnDestroy, OnInit{
         }
       });
     }else{
-      await this.treatmentService.createTreatment(data).subscribe({
-        next: (resp:any )=> {
-          this._waiting = false;
-          this._id = resp.data.id;
-          this._treatment = resp.data;
-          Swal.fire('Creado!', resp.msg, 'success');
-        },
-        error: err => {
-          this._waiting = false;
-          Swal.fire('Cambios no guardados', err.error.msg, 'info')
-        },
-        complete: () => {
-          this.back()
-        }
-      });
+
+      this.treatmentService.treatment = data;
+      this.back();
     }
 
   }
@@ -163,11 +150,13 @@ export class OnetreatmentComponent implements OnDestroy, OnInit{
     if(!this._new){
       this.route.navigateByUrl('/main/treatments');
     }else{
-      if(!this._treatment){
+      this.treatmentService.finish = true;
+      const id = this.treatmentService.data.id;
+      if(id){
+        this.route.navigateByUrl(`/main/queries/${id}`);
+      }else{
         this.route.navigateByUrl('/main/treatments');
       }
-      this.treatmentService.treatment = this._treatment;
-      this.route.navigateByUrl('/main/queries/newTemp');
     }
   }
 

@@ -45,8 +45,8 @@
               <td>
                 <p *ngIf="item.finishDate">{{item.finishDate.toString().split('T')[0]}}</p>
               </td>
-              <td (click)="open(item.idPet, 'pet')">{{item.idPet.name}}</td>
-              <td (click)="open(item.idUser, 'user')">{{item.idUser.name}}</td>
+              <td (click)="open(item.idPet, 'pet')" class="cursor">{{item.idPet.name}}</td>
+              <td (click)="open(item.idUser, 'user')" class="cursor">{{item.idUser.name}}</td>
               <td class="text-nowrap text-center">
                 <a (click)="updateElement(item.id)"
                    data-toggle="tooltip" class="cursor"

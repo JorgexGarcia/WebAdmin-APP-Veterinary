@@ -14,7 +14,7 @@ export class Queries {
     public finishDate: Date,
     public reports?: [ReportInterface],
     public firstObservation?: string,
-    public treatment?: [TreatmentInterface],
+    public treatment?: TreatmentInterface,
     public diagnostic?: string,
     public finish?: boolean,
     public active?: boolean,

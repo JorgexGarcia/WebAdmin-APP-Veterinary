@@ -30,17 +30,20 @@
           <table class="table table-bordered" *ngIf="active">
             <thead *ngIf="queries.length>0">
             <tr >
+              <th class="text-nowrap w140 text-center">Descripción</th>
               <th class="text-nowrap w100 text-center">Animal</th>
               <th class="text-nowrap w100 text-center">Encargado</th>
               <th class="text-nowrap w100 text-center">Fecha</th>
-              <th class="text-nowrap w100 text-center">Finalizada</th>
+              <th class="text-nowrap text-center">Finalizada</th>
+              <th class="text-nowrap text-center">Acciones</th>
             </tr>
             </thead>
             <tbody *ngIf="queries.length>0">
             <tr *ngFor="let item of queries">
+            <td>{{item.description}}</td>
               <td *ngIf="item.idPet">
                 <div class="card cardUser">
-                  <div class="d-flex flex-column text-center" (click)="open(item.idUser, 'pet')">
+                  <div class="d-flex flex-column text-center" (click)="open(item.idPet, 'pet')">
                     <div class="">
                       <img src="{{item.idPet.img!.url}}"
                            class="avatar cursor"
@@ -66,18 +69,18 @@
                   </div>
                 </div>
               </td>
-              <td>
+              <td class="text-center">
                 <p>{{item.startDate.toString().split('T')[0]}}</p>
               </td>
-              <td *ngIf="item.finish == false">
+              <td *ngIf="item.finish == false" class="text-center">
                 <span class="label label-table label-success">Espera</span>
               </td>
-              <td *ngIf="item.finish == true">
-                <span class="label label-table label-success">Finalizada</span>
+              <td *ngIf="item.finish == true" class="text-center">
+                <span class="label label-table label-danger">Finalizada</span>
               </td>
               <td class="text-nowrap text-center">
                 <a (click)="update(item.id)"
-                   class="cursor"
+                   class="cursor" *ngIf="item.finish == false"
                    data-toggle="tooltip"  data-placement="top"
                    title="Editar la consulta">
                   <i class="fa fa-pencil text-inverse m-r-10"></i>
