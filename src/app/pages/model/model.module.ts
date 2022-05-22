@@ -4,14 +4,18 @@ import {UserComponent} from "./user/user.component";
 import {ComponentsModule} from "../../components/components.module";
 import {BreedComponent} from "./breed/breed.component";
 import {PromotionComponent} from "./promotion/promotion.component";
-
-
+import {ProductComponent} from "./product/product.component";
+import {ServiceComponent} from "./service/service.component";
+import {AidComponent} from "./aid/aid.component";
 
 @NgModule({
   declarations: [
     UserComponent,
     BreedComponent,
-    PromotionComponent
+    PromotionComponent,
+    ProductComponent,
+    ServiceComponent,
+    AidComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +24,10 @@ import {PromotionComponent} from "./promotion/promotion.component";
   exports: [
     UserComponent,
     BreedComponent,
-    PromotionComponent
+    PromotionComponent,
+    ProductComponent,
+    ServiceComponent,
+    AidComponent
   ]
 })
 export class ModelModule { }

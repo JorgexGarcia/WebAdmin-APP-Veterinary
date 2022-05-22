@@ -38,6 +38,10 @@ export class AllproductComponent implements OnInit, OnDestroy{
     this._getProducts();
   }
 
+  infoElement(id: string) {
+    this.router.navigateByUrl(`main/model/product/${id}`);
+  }
+
   private async _getProducts() {
     this._waiting = true;
     this._products = [];

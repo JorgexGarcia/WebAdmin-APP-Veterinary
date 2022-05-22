@@ -38,6 +38,10 @@ export class AllserviceComponent implements OnInit, OnDestroy{
     this._getServices();
   }
 
+  infoElement(id: string) {
+    this.router.navigateByUrl(`main/model/service/${id}`);
+  }
+
   private async _getServices() {
     this._waiting = true;
     this._services = [];

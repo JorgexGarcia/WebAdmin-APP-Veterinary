@@ -26,6 +26,9 @@ import {OnequeriesComponent} from "./maintenance/queries/onequeries/onequeries.c
 import {UserComponent} from "./model/user/user.component";
 import {BreedComponent} from "./model/breed/breed.component";
 import {PromotionComponent} from "./model/promotion/promotion.component";
+import {ProductComponent} from "./model/product/product.component";
+import {ServiceComponent} from "./model/service/service.component";
+import {AidComponent} from "./model/aid/aid.component";
 
 const childRoutes: Routes = [
   {path: '', component: MainComponent, data: {tittle : 'Principal'}},
@@ -48,6 +51,9 @@ const childRoutes: Routes = [
   {path: 'model/user/:id', component: UserComponent, data: {tittle : 'Usuario'}},
   {path: 'model/breed/:id', component: BreedComponent, data: {tittle : 'Raza'}},
   {path: 'model/promotion/:id', component: PromotionComponent, data: {tittle : 'Promoción'}},
+  {path: 'model/product/:id', component: ProductComponent, data: {tittle : 'Producto'}},
+  {path: 'model/service/:id', component: ServiceComponent, data: {tittle : 'Servicio'}},
+  {path: 'model/aids/:id', component: AidComponent, data: {tittle : 'Consejo'}},
 
   //Mantenimiento
   {path: 'user/:id', component: OneuserComponent, data: {tittle : 'Usuario'}},

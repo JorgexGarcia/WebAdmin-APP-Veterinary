@@ -104,6 +104,10 @@ export class AllaidComponent implements OnInit, OnDestroy{
     this._getAids();
   }
 
+  infoElement(id: string) {
+    this.router.navigateByUrl(`main/model/aids/${id}`);
+  }
+
   ngOnDestroy(){
     if(this._serviceAid){
       this._serviceAid.unsubscribe();

@@ -1,0 +1,59 @@
+<app-loading [waiting]="waiting"></app-loading>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body" *ngIf="!waiting">
+        <h3 class="card-title">Consejo</h3>
+        <div class="row card-subtitle">
+          <h4  class="pt-3 pl-3">Información</h4>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="row">
+              <img src="{{data.img?.url}}" alt="Imagen Consejo">
+            </div>
+            <div class="row pt-5">
+              <div class="col-12">
+                <button type="btn" (click)="edit()"
+                        class="btn btn-success waves-effect waves-light m-r-10">Editar</button>
+                <button type="btn" (click)="back()"
+                        class="btn btn-warning waves-effect waves-light m-r-10 ">Volver</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="row">
+              <div class="col-12">
+                <p class="tittle">Nombre :<br/><span class="span-tittle">{{data.name}}</span></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <p class="tittle">Descripción :<br/>
+                  <span class="span-tittle">{{data.description}}</span></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <p class="tittle">Contenido :<br/>
+                  <span class="span-tittle">{{data.content}}</span></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <p class="tittle">Última modificación:<br/>
+                <div class="d-flex p-2" (click)="open(data.idUser, 'user')">
+                  <img src="{{data.idUser.img!.url}}"
+                       class="avatar cursor"
+                       alt="Avatar Mascota">
+                  <p class="pl-3 pt-2">{{data.idUser.name}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

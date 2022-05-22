@@ -55,21 +55,11 @@ export class SearchComponent implements OnInit {
         this.products = resp.data.products;
         this.pets = resp.data.pets;
         this.breeds = resp.data.breed;
-
-        console.log(this.aids)
-        console.log(this.users)
-        console.log(this.treatments)
-        console.log(this.services)
-        console.log(this.queries)
-        console.log(this.promotions)
-        console.log(this.products)
-        console.log(this.pets)
-        console.log(this.breeds)
       }
     })
   }
 
   go(id: string, type: string) {
-    this.router.navigateByUrl(`/main/${type}/${id}`)
+    this.router.navigateByUrl(`/main/model/${type}/${id}`)
   }
 }

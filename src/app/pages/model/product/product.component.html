@@ -1,0 +1,61 @@
+<app-loading [waiting]="waiting"></app-loading>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body" *ngIf="!waiting">
+        <h3 class="card-title">Producto</h3>
+        <div class="row card-subtitle">
+          <h4  class="pt-3 pl-3">Información</h4>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="row">
+              <img src="{{data.img?.url}}" alt="Imagen Producto">
+            </div>
+            <div class="row pt-5">
+              <div class="col-4">
+                <div *ngIf="data.active == true" class="text-center">
+                  <span class="label label-table label-success">Activo</span>
+                </div>
+                <div *ngIf="data.active == false" class="text-center">
+                  <span class="label label-table label-danger">Eliminado</span>
+                </div>
+              </div>
+              <div class="col-8">
+                <button type="btn" (click)="edit()"
+                        class="btn btn-success waves-effect waves-light m-r-10">Editar</button>
+                <button type="btn" (click)="back()"
+                        class="btn btn-warning waves-effect waves-light m-r-10 ">Volver</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="row">
+              <div class="col-12">
+                <p class="tittle">Nombre :<br/><span class="span-tittle">{{data.name}}</span></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <p class="tittle">Precio :<br/>
+                  <span class="span-tittle">
+                    {{data.price | currency:'EUR':'symbol':'.2-2' }}</span></p>
+              </div>
+              <div class="col-6">
+                <p class="tittle">Cantidad :<br/>
+                  <span class="span-tittle">{{data.quantity}}</span></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <p class="tittle">Descripción :<br/>
+                  <span class="span-tittle">{{data.description}}</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
