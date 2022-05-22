@@ -52,8 +52,10 @@ export interface BreedInterface{
 
 export interface QueriesInterface{
   id: string,
+  description: string,
   type: string,
   idPet: PetInterface
+  idUser: UserInterface
 }
 
 export interface ProductInterface{

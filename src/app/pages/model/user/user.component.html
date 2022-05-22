@@ -1,0 +1,112 @@
+<app-loading [waiting]="waiting"></app-loading>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body" *ngIf="!waiting">
+        <h3 class="card-title">Usuario</h3>
+        <div class="row card-subtitle">
+          <h4  class="pt-3 pl-3">Información</h4>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="row">
+              <img src="{{user.img?.url}}" alt="Imagen Usuario">
+            </div>
+            <div class="row pt-5">
+              <div class="col-4">
+                <div *ngIf="user.active == true" class="text-center">
+                  <span class="label label-table label-success">Activo</span>
+                </div>
+                <div *ngIf="user.active == false" class="text-center">
+                  <span class="label label-table label-danger">Eliminado</span>
+                </div>
+              </div>
+              <div class="col-8">
+                <button type="btn" (click)="edit()"
+                        class="btn btn-success waves-effect waves-light m-r-10">Editar</button>
+                <button type="btn" (click)="back()"
+                        class="btn btn-warning waves-effect waves-light m-r-10 ">Volver</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="row">
+              <div class="col-6">
+                <p class="tittle">Nombre :<br/><span class="span-tittle">{{user.name}}</span></p>
+              </div>
+              <div class="col-6">
+                <p class="tittle">Apellidos :<br/><span class="span-tittle">{{user.lastName}}</span></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <p class="tittle">Email :<br/><span class="span-tittle">{{user.email}}</span></p>
+              </div>
+              <div class="col-3">
+                <p class="tittle">DNI :<br/><span class="span-tittle">{{user.dni}}</span></p>
+              </div>
+              <div class="col-3">
+                <p class="tittle">Teléfono :<br/><span class="span-tittle">{{user.phone}}</span></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <p class="tittle">Fecha de Nacimiento :<br/>
+                  <span class="span-tittle">{{user.birthDate | date:'dd-MM-yy'}}</span></p>
+              </div>
+              <div class="col-4">
+                <p class="tittle">Ciudad :<br/><span class="span-tittle">{{user.city}}</span></p>
+              </div>
+              <div class="col-4">
+                <p class="tittle">Provincia :<br/><span class="span-tittle">{{user.province}}</span></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <p class="tittle">Dirección :<br/>
+                  <span class="span-tittle">{{user.address}}</span></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <p class="tittle">Comentarios :<br/>
+                  <span class="span-tittle">{{user.comment}}</span></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <p class="tittle">Mascotas :<br/></p>
+                <div *ngIf="user.listPets && user.listPets.length > 0">
+                  <div class="tableModel">
+                    <div class="d-flex p-2" *ngFor="let pet of user.listPets" (click)="open(pet, 'pet')">
+                      <img src="{{pet.img!.url}}"
+                           class="avatar cursor"
+                           alt="Avatar Mascota">
+                      <p class="pl-3 pt-2">{{pet.name}}</p>
+                    </div>
+                  </div>
+                </div>
+                <p *ngIf="!user.listPets || user.listPets.length <= 0">No tiene</p>
+              </div>
+              <div class="col-6">
+                <p class="tittle">Promociones :<br/></p>
+                <div *ngIf="user.promotions && user.promotions.length > 0">
+                  <div class="tableUser">
+                    <div class="d-flex p-2" *ngFor="let item of user.promotions" (click)="open(item, 'pet')">
+                      <img src="{{item.img!.url}}"
+                           class="avatar cursor"
+                           alt="Avatar Mascota">
+                      <p class="pl-3 pt-2">{{item.name}}</p>
+                    </div>
+                  </div>
+                </div>
+                <p *ngIf="!user.promotions || user.promotions.length <= 0">No tiene</p>
+              </div>
+            </div>
+          </div>
+        </div>
+     </div>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { SearchComponent } from './search/search.component';
 import {MaintenanceModule} from "./maintenance/maintenance.module";
+import {ModelModule} from "./model/model.module";
 
 @NgModule({
   declarations:[
@@ -24,7 +25,8 @@ import {MaintenanceModule} from "./maintenance/maintenance.module";
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    MaintenanceModule
+    MaintenanceModule,
+    ModelModule
   ],
   exports:[
     PagesComponent,

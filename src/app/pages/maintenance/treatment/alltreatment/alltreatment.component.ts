@@ -101,7 +101,7 @@ export class AlltreatmentComponent implements OnInit, OnDestroy {
   }
 
   open(item: any, type: String) {
-    this.router.navigateByUrl(`main/${type}/${item._id}`);
+    this.router.navigateByUrl(`main/model/${type}/${item._id}`);
   }
 
   private async getTreatments() {

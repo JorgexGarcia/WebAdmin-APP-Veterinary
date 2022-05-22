@@ -73,20 +73,16 @@
         <p class="alert-heading text-center"> No hay consultas</p>
       </div>
 
-      <div class="table-responsive" *ngIf="queries.length > 0">
+      <div class="table-responsive scroll-table" *ngIf="queries.length > 0">
         <table class="table">
           <thead>
           <tr>
-            <th>Tipo</th>
-            <th>Avatar</th>
-            <th>Nombre del animal</th>
+            <th>Descripción</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of queries">
-            <td>{{item.type}}</td>
-            <td>{{item.idPet?.img?.url}}</td>
-            <td>{{item.idPet?.name}}</td>
+          <tr *ngFor="let item of queries" (click)="go(item.id, 'queries')"  class="cursor">
+            <td>{{item.description}}</td>
           </tr>
           </tbody>
         </table>

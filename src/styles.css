@@ -41,6 +41,10 @@
   height:100px;
   overflow-y: scroll;
 }
+.tableModel{
+  height:150px;
+  overflow-y: scroll;
+}
 
 .tableUserEmpty{
   height:100px;

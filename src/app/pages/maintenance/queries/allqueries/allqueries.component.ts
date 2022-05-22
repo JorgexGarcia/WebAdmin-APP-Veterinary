@@ -76,7 +76,7 @@ export class AllqueriesComponent implements OnInit, OnDestroy{
   }
 
   open(item : any, type:string) {
-    this.router.navigateByUrl(`main/${type}/${item._id}`);
+    this.router.navigateByUrl(`main/model/${type}/${item._id}`);
   }
 
   async delete(id: string) {

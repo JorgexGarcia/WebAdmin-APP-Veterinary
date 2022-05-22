@@ -48,7 +48,7 @@
               </td>
               <td>{{item.name}}</td>
               <td>{{item.type}}</td>
-              <td>{{item.breed.name}}</td>
+              <td class="cursor" (click)="infoElement(item.breed)">{{item.breed.name}}</td>
               <td *ngIf="item.idUser">
                 <div class="card cardUser">
                   <div class="d-flex flex-column text-center" (click)="openUser(item.idUser)">

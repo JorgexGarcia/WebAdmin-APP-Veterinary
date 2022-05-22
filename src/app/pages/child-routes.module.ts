@@ -23,6 +23,9 @@ import {AlltreatmentComponent} from "./maintenance/treatment/alltreatment/alltre
 import {OnetreatmentComponent} from "./maintenance/treatment/onetreatment/onetreatment.component";
 import {AllqueriesComponent} from "./maintenance/queries/allqueries/allqueries.component";
 import {OnequeriesComponent} from "./maintenance/queries/onequeries/onequeries.component";
+import {UserComponent} from "./model/user/user.component";
+import {BreedComponent} from "./model/breed/breed.component";
+import {PromotionComponent} from "./model/promotion/promotion.component";
 
 const childRoutes: Routes = [
   {path: '', component: MainComponent, data: {tittle : 'Principal'}},
@@ -30,7 +33,7 @@ const childRoutes: Routes = [
   {path: 'profile', component: ProfileComponent, data: {tittle : 'Perfil'}},
   {path: 'search/:value', component: SearchComponent, data: {tittle : 'Búsqueda'}},
 
-  //Información
+  //Información ALL
   {path: 'users', component: AlluserComponent, data: {tittle : 'Usuarios'}},
   {path: 'breeds', component: AllbreedComponent, data: {tittle : 'Razas'}},
   {path: 'promotions', component: AllpromotionComponent, data: {tittle : 'Promociones'}},
@@ -41,6 +44,12 @@ const childRoutes: Routes = [
   {path: 'treatments', component: AlltreatmentComponent, data: {tittle : 'Tratamientos'}},
   {path: 'queries', component: AllqueriesComponent, data: {tittle : 'Consultas'}},
 
+  //Información ONE
+  {path: 'model/user/:id', component: UserComponent, data: {tittle : 'Usuario'}},
+  {path: 'model/breed/:id', component: BreedComponent, data: {tittle : 'Raza'}},
+  {path: 'model/promotion/:id', component: PromotionComponent, data: {tittle : 'Promoción'}},
+
+  //Mantenimiento
   {path: 'user/:id', component: OneuserComponent, data: {tittle : 'Usuario'}},
   {path: 'breed/:id', component: OnebreedComponent, data: {tittle : 'Raza'}},
   {path: 'promotion/:id', component: OnepromotionComponent, data: {tittle : 'Promoción'}},

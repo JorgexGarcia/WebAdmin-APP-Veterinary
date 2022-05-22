@@ -57,6 +57,10 @@ export class AllpromotionComponent implements OnInit, OnDestroy{
     })
   }
 
+  infoElement(id: string) {
+    this.router.navigateByUrl(`main/model/promotion/${id}`);
+  }
+
   searchPromotions(value: string) {
     if(value != ''){
       this.search.search('promotion', value).subscribe((resp:any) => {

@@ -56,6 +56,10 @@ export class AllbreedComponent implements OnInit, OnDestroy{
     })
   }
 
+  infoElement(id: string) {
+    this.router.navigateByUrl(`main/model/breed/${id}`);
+  }
+
   searchBreeds(value: string) {
     if(value != ''){
       this.search.search('breed', value).subscribe((resp:any) => {

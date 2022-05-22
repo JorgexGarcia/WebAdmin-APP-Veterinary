@@ -111,6 +111,6 @@ export class AllaidComponent implements OnInit, OnDestroy{
   }
 
   go(item: any) {
-    this.router.navigateByUrl(`/main/user/${item._id}`);
+    this.router.navigateByUrl(`/main/model/user/${item._id}`);
   }
 }

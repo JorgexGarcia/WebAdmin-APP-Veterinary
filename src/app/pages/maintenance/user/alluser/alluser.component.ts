@@ -134,7 +134,7 @@ export class AlluserComponent implements OnInit, OnDestroy{
   }
 
   openPromotion(item: any) {
-    this.router.navigateByUrl(`main/promotion/${item._id}`);
+    this.router.navigateByUrl(`main/model/promotion/${item._id}`);
   }
 
   updateElement(id: string) {
@@ -149,5 +149,9 @@ export class AlluserComponent implements OnInit, OnDestroy{
     if(this._serviceUser){
       this._serviceUser.unsubscribe();
     }
+  }
+
+  infoElement(id: string) {
+    this.router.navigateByUrl(`main/model/user/${id}`);
   }
 }
