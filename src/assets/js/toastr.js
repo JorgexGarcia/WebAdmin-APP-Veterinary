@@ -1,9 +1,4 @@
-/*
-Template Name: Material Pro admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: js
-*/
+
 $(function() {
     "use strict";
       $(".tst1").click(function(){
