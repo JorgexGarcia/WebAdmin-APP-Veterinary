@@ -110,6 +110,9 @@
                     <div class="text-danger">
                       <p *ngIf="fieldNoValid('startDate')">La fecha es obligatoria</p>
                     </div>
+                    <div class="text-danger">
+                      <p *ngIf="equal">La fecha esta ocupada</p>
+                    </div>
                   </div>
                 </div>
               </div>

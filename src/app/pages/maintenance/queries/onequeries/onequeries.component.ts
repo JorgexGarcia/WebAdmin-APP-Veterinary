@@ -44,6 +44,7 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
   public bol2: boolean = false;
   public bol3: boolean = false;
   public createShow = true;
+  public equal: boolean = false;
 
   get new(){return this._new;}
   get waiting(){return this._waiting;}
@@ -71,7 +72,7 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
 
     this._changeForm = this.fb.group({
       id: [''],
-      type: [''],
+      type: ['', [Validators.required]],
       idPet: [''],
       idUser: [''],
       description: ['', [Validators.required]],
@@ -83,6 +84,8 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
       treatment: [''],
       diagnostic: [''],
       finish: [false]
+    },{
+      validators: this.checkEqualDate('startDate')
     });
   }
 
@@ -154,7 +157,6 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
           this.allPets = results[1].data;
           this.allServices = results[2].data;
           this._allQueries = results[3].data;
-          console.log(this._allQueries)
         },
         error: err => {
           Swal.fire('Error', err.error.msg, 'error')
@@ -183,7 +185,9 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
       if(this.queriesService.newDate){
         this.changeDateStart(this.queriesService.date.toISOString());
       }else{
-        this.changeDateStart(new Date().toISOString());
+        let date = new Date();
+        date.setHours(date.getHours() +2);
+        this.changeDateStart(date.toISOString());
       }
     }
   }
@@ -196,10 +200,6 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
     const year = date.split('T')[0].split('-')[0];
     let dateHorStart = date.split('T')[1].split(':')[0];
     let dateMinStart = date.split('T')[1].split(':')[1];
-
-    //Diferencia horaria con España
-    const num = Number(dateHorStart);
-    dateHorStart = `${num + 2}`;
 
     let dateHorFinish = dateHorStart;
     let dateMinFinish: string;
@@ -218,7 +218,7 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
         dateMinFinish = '30';
       }else{
         //Intervalos de 30 min
-        if(Number(dateMinStart) < 59 && Number(dateMinStart) > 30){
+        if(Number(dateMinStart) <= 59 && Number(dateMinStart) > 30){
           dateMinStart = '00';
           dateMinFinish = '30';
           const num = Number(dateHorStart);
@@ -243,23 +243,14 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
       }
     }
 
-    /*No poder coger dos horas a la vez
-    console.log(this._allQueries)
-    const  c = this._allQueries.map(item => {
-      const a = new Date(item.startDate);
-      const b = new Date(Number(year),Number(month), Number(day), Number(dateHorStart),Number(dateMinStart));
-      console.log(a.getDate())
-      console.log(b.getDate())
-      console.log(a.getDate() === b.getDate())
-    })
-
-     */
+    const dat1 = year.concat('-').concat(month).concat('-').concat(day).concat('T')
+      .concat(`${dateHorStart}`).concat(':').concat(`${dateMinStart}`);
+    const dat2 = year.concat('-').concat(month).concat('-').concat(day).concat('T')
+      .concat(`${dateHorFinish}`).concat(':').concat(`${dateMinFinish}`);
 
     //Devolver horas
-    this._changeForm.get('startDate')!.setValue( year.concat('-').concat(month).concat('-').concat(day).concat('T')
-      .concat(`${dateHorStart}`).concat(':').concat(`${dateMinStart}`));
-    this._changeForm.get('finishDate')!.setValue( year.concat('-').concat(month).concat('-').concat(day).concat('T')
-      .concat(`${dateHorFinish}`).concat(':').concat(`${dateMinFinish}`));
+    this._changeForm.get('startDate')!.setValue(dat1);
+    this._changeForm.get('finishDate')!.setValue(dat2);
   }
 
   save() {
@@ -334,7 +325,7 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
   }
 
   back() {
-    if(this.queriesService.newDate && this._formSubmitted){
+    if(this.queriesService.newDate){
       this.queriesService.newDate = false;
       return this.route.navigateByUrl('/main');
     }else{
@@ -443,5 +434,28 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
         }
       });
 
+  }
+
+  private checkEqualDate(date: string) {
+    return (formGroup: FormGroup) => {
+
+      const pass1Control = formGroup.get(date);
+
+      this.equal = false;
+      this._allQueries.filter(item => {
+        if(new Date(item.startDate).getFullYear() === new Date(pass1Control!.value).getFullYear() &&
+          new Date(item.startDate).getMonth() === new Date(pass1Control!.value).getMonth() &&
+          new Date(item.startDate).getDate() === new Date(pass1Control!.value).getDate() &&
+          new Date(item.startDate).getHours()=== new Date(pass1Control!.value).getHours() &&
+          new Date(item.startDate).getMinutes() === new Date(pass1Control!.value).getMinutes()) {
+          this.equal = true;
+        }
+      })
+      if(this.equal){
+        pass1Control!.setErrors({DateEqual: true});
+      }else{
+        pass1Control!.setErrors(null);
+      }
+    }
   }
 }
