@@ -36,7 +36,6 @@ export class PetComponent implements OnDestroy {
       .subscribe({
         next: resp => {
           this._data = resp.data;
-          console.log(this._data)
           if(!this._data) this.route.navigateByUrl('main');
           this._waiting = false;
         },

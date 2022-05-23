@@ -15,6 +15,10 @@ import {FullCalendarModule} from "@fullcalendar/angular";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import { TableComponent } from './table/table.component';
+import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {BrowserModule} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -30,13 +34,17 @@ FullCalendarModule.registerPlugins([
     ModalimgComponent,
     LoadingComponent,
     TableinactiveComponent,
-    CalendarComponent
+    CalendarComponent,
+    TableComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
-    FullCalendarModule
+    FullCalendarModule,
+    NgxChartsModule,
+    BrowserModule,
+    BrowserAnimationsModule
   ],
     exports: [
         BreadcrumbsComponent,
@@ -45,7 +53,8 @@ FullCalendarModule.registerPlugins([
         ModalimgComponent,
         LoadingComponent,
         TableinactiveComponent,
-        CalendarComponent
+        CalendarComponent,
+        TableComponent
     ]
 })
 export class ComponentsModule { }
