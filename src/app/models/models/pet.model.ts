@@ -20,7 +20,7 @@ export class Pet{
     public weight?: [number],
     public queries?: [QueriesInterface],
     public nextQueries?: [QueriesInterface],
-    public treatment?: [TreatmentInterface],
+    public treatment?: TreatmentInterface,
     public comment?: string,
     public active?: boolean,
     public deleteDate?: Date,

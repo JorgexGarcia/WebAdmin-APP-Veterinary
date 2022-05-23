@@ -94,8 +94,12 @@ export class AllpetComponent implements OnInit, OnDestroy{
     this.router.navigateByUrl(`main/model/user/${item._id}`);
   }
 
-  infoElement(item: any) {
-    this.router.navigateByUrl(`main/model/breed/${item._id}`);
+  infoElement(item: any, type: string) {
+    if(item._id){
+      this.router.navigateByUrl(`main/model/${type}/${item._id}`);
+    }else{
+      this.router.navigateByUrl(`main/model/${type}/${item.id}`);
+    }
   }
 
   private async getPets() {

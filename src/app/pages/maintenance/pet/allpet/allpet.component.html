@@ -41,14 +41,14 @@
             </thead>
             <tbody *ngIf="pets.length>0">
             <tr *ngFor="let item of pets">
-              <td class="text-center">
+              <td class="text-center cursor" (click)="infoElement(item, 'pet')">
                 <img src="{{item.img!.url}}"
                      class="avatar"
                      alt="Avatar Mascota">
               </td>
               <td>{{item.name}}</td>
               <td>{{item.type}}</td>
-              <td class="cursor" (click)="infoElement(item.breed)">{{item.breed.name}}</td>
+              <td class="cursor" (click)="infoElement(item.breed, 'breed')">{{item.breed.name}}</td>
               <td *ngIf="item.idUser">
                 <div class="card cardUser">
                   <div class="d-flex flex-column text-center" (click)="openUser(item.idUser)">

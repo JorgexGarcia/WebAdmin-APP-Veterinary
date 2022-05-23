@@ -7,6 +7,7 @@ import {PromotionComponent} from "./promotion/promotion.component";
 import {ProductComponent} from "./product/product.component";
 import {ServiceComponent} from "./service/service.component";
 import {AidComponent} from "./aid/aid.component";
+import {PetComponent} from "./pet/pet.component";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {AidComponent} from "./aid/aid.component";
     PromotionComponent,
     ProductComponent,
     ServiceComponent,
-    AidComponent
+    AidComponent,
+    PetComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import {AidComponent} from "./aid/aid.component";
     PromotionComponent,
     ProductComponent,
     ServiceComponent,
-    AidComponent
+    AidComponent,
+    PetComponent
   ]
 })
 export class ModelModule { }

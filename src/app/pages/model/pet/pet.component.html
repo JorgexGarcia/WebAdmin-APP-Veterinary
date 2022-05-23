@@ -1,0 +1,153 @@
+<app-loading [waiting]="waiting"></app-loading>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body" *ngIf="!waiting">
+        <h3 class="card-title">Mascota</h3>
+        <div class="row card-subtitle">
+          <h4  class="pt-3 pl-3">Información</h4>
+        </div>
+        <div class="row ">
+          <div class="col-4">
+            <div class="row">
+              <img src="{{data.img?.url}}" alt="Imagen Animal">
+            </div>
+            <div class="row pt-5">
+              <div class="col-4">
+                <div *ngIf="data.active == true" class="text-center">
+                  <span class="label label-table label-success">Activo</span>
+                </div>
+                <div *ngIf="data.active == false" class="text-center">
+                  <span class="label label-table label-danger">Eliminado</span>
+                </div>
+              </div>
+              <div class="col-8">
+                <button type="btn" (click)="edit()"
+                        class="btn btn-success waves-effect waves-light m-r-10">Editar</button>
+                <button type="btn" (click)="back()"
+                        class="btn btn-warning waves-effect waves-light m-r-10 ">Volver</button>
+              </div>
+            </div>
+            <div class="row p-5">
+              <p class="tittle"> Pesos: </p>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="row p-2">
+              <div class="col-6">
+                <p class="tittle">Nombre :<br/><span class="span-tittle">{{data.name}}</span></p>
+              </div>
+              <div class="col-6">
+                <p class="tittle">Chip :<br/><span class="span-tittle">{{data.chip}}</span></p>
+              </div>
+            </div>
+            <div class="row p-2">
+              <div class="col-4">
+                <p class="tittle">Pasaporte :<br/><span class="span-tittle">{{data.passport}}</span></p>
+              </div>
+              <div class="col-4">
+                <p class="tittle">Sexo :<br/><span class="span-tittle">{{data.sex}}</span></p>
+              </div>
+              <div class="col-4">
+                <p class="tittle">Esterilizado :<br/>
+                  <span class="span-tittle" *ngIf="data.sterilized == true">Esterilizado</span>
+                  <span class="span-tittle" *ngIf="data.sterilized == false">No esterilizado</span>
+                </p>
+              </div>
+            </div>
+            <div class="row p-2">
+              <div class="col-4">
+                <p class="tittle">Fecha de Nacimiento :<br/>
+                  <span class="span-tittle">{{data.birthDate | date:'dd-MM-yy'}}</span></p>
+              </div>
+              <div class="col-4">
+                <p class="tittle">Color :<br/><span class="span-tittle">{{data.color}}</span></p>
+              </div>
+              <div class="col-4">
+                <p class="tittle">Tipo :<br/><span class="span-tittle">{{data.type}}</span></p>
+              </div>
+            </div>
+            <div class="row p-2">
+              <div class="col-6">
+                <p class="tittle">Primera visita :<br/>
+                  <span class="span-tittle">{{data.createDate | date:'dd-MM-yy'}}</span></p>
+              </div>
+              <div class="col-6">
+                <p class="tittle">Último propietario :<br/>
+                </p>
+                <div *ngIf="data.idUser">
+                  <div class="d-flex p-2 cursor"
+                       (click)="open(data.idUser, 'user')">
+                    <img src="{{data.idUser.img?.url}}" alt="Imagen Usuario" class="w50 avatar ">
+                    <p class="pl-3 pt-2">{{data.idUser.name}}</p>
+                  </div>
+                </div>
+                <p *ngIf="!data.idUser ">No tiene</p>
+              </div>
+            </div>
+            <div class="row p-2">
+              <div class="col-6">
+                <p class="tittle">Próxima consultas :<br/></p>
+                <div *ngIf="data.nextQueries && data.nextQueries.length > 0">
+                  <div class="tableUser">
+                    <div class="d-flex p-2 cursor" *ngFor="let item of data.nextQueries"
+                         (click)="open(item, 'queries')">
+                      <p class="pl-3 pt-2">{{item.description}}</p>
+                    </div>
+                  </div>
+                </div>
+                <p *ngIf="!data.nextQueries || data.nextQueries.length <= 0">No tiene</p>
+              </div>
+              <div class="col-6">
+                <p class="tittle">Consultas finalizadas :<br/></p>
+                <div *ngIf="data.queries && data.queries.length > 0">
+                  <div class="tableUser">
+                    <div class="d-flex p-2 cursor" *ngFor="let item of data.queries" (click)="open(item, 'queries')">
+                      <p class="pl-3 pt-2">{{item.description}}</p>
+                    </div>
+                  </div>
+                </div>
+                <p *ngIf="!data.queries || data.queries.length <= 0">No tiene</p>
+              </div>
+            </div>
+            <div class="row p-2">
+              <div class="col-6">
+                <p class="tittle">Raza :<br/></p>
+                <div *ngIf="data.breed">
+                  <div class="d-flex p-2 cursor"
+                       (click)="open(data.breed, 'breed')">
+                    <p class="pl-3 pt-2">{{data.breed.name}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <p class="tittle">Tratamientos :<br/></p>
+                <div *ngIf="data.treatment">
+                  <div class="d-flex p-2 cursor"
+                       (click)="open(data.treatment, 'treatment')">
+                    <p class="pl-3 pt-2">{{data.treatment.name}}</p>
+                  </div>
+                </div>
+                <p *ngIf="!data.treatment">No tiene</p>
+              </div>
+            </div>
+            <div class="row p-2">
+              <div class="col-12">
+                <p class="tittle">Problemas crónicos :<br/>
+                  <span class="span-tittle">{{data.chronic}}</span></p>
+              </div>
+            </div>
+            <div class="row p-2">
+              <div class="col-12">
+                <p class="tittle">Comentarios :<br/>
+                  <span class="span-tittle">{{data.comment}}</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
