@@ -67,6 +67,10 @@ export class AllqueriesComponent implements OnInit, OnDestroy{
     }
   }
 
+  infoElement(id: string) {
+    this.router.navigateByUrl(`main/model/queries/${id}`);
+  }
+
   create() {
     this.router.navigateByUrl(`main/queries/new`);
   }

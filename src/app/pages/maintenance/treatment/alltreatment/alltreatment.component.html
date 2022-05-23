@@ -38,7 +38,7 @@
             </thead>
             <tbody *ngIf="treatments.length>0">
             <tr *ngFor="let item of treatments">
-              <td>{{item.name}}</td>
+              <td class="cursor" (click)="infoElement(item.id)">{{item.name}}</td>
               <td>
                 <p>{{item.startDate.toString().split('T')[0]}}</p>
               </td>

@@ -8,6 +8,8 @@ import {ProductComponent} from "./product/product.component";
 import {ServiceComponent} from "./service/service.component";
 import {AidComponent} from "./aid/aid.component";
 import {PetComponent} from "./pet/pet.component";
+import {TreatmentComponent} from "./treatment/treatment.component";
+import {QueriesComponent} from "./queries/queries.component";
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import {PetComponent} from "./pet/pet.component";
     ProductComponent,
     ServiceComponent,
     AidComponent,
-    PetComponent
+    PetComponent,
+    TreatmentComponent,
+    QueriesComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +34,9 @@ import {PetComponent} from "./pet/pet.component";
     ProductComponent,
     ServiceComponent,
     AidComponent,
-    PetComponent
+    PetComponent,
+    TreatmentComponent,
+    QueriesComponent
   ]
 })
 export class ModelModule { }

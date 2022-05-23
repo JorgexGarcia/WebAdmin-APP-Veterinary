@@ -1,0 +1,16 @@
+.tittle{
+  font-style: normal;
+  font-weight: bold;
+}
+.span-tittle {
+  font-style: italic;
+  font-weight: normal;
+}
+
+img{
+  max-width: 400px;
+  padding-left: 10px;
+}
+.w50{
+  width: 50px;
+}

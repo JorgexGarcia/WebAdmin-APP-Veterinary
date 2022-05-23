@@ -30,6 +30,8 @@ import {ProductComponent} from "./model/product/product.component";
 import {ServiceComponent} from "./model/service/service.component";
 import {AidComponent} from "./model/aid/aid.component";
 import {PetComponent} from "./model/pet/pet.component";
+import {TreatmentComponent} from "./model/treatment/treatment.component";
+import {QueriesComponent} from "./model/queries/queries.component";
 
 const childRoutes: Routes = [
   {path: '', component: MainComponent, data: {tittle : 'Principal'}},
@@ -56,6 +58,8 @@ const childRoutes: Routes = [
   {path: 'model/service/:id', component: ServiceComponent, data: {tittle : 'Servicio'}},
   {path: 'model/aids/:id', component: AidComponent, data: {tittle : 'Consejo'}},
   {path: 'model/pet/:id', component: PetComponent, data: {tittle : 'Mascota'}},
+  {path: 'model/treatment/:id', component: TreatmentComponent, data: {tittle : 'Tratamiento'}},
+  {path: 'model/queries/:id', component: QueriesComponent, data: {tittle : 'Consulta'}},
 
   //Mantenimiento
   {path: 'user/:id', component: OneuserComponent, data: {tittle : 'Usuario'}},

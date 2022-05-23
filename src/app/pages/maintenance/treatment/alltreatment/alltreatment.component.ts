@@ -57,6 +57,10 @@ export class AlltreatmentComponent implements OnInit, OnDestroy {
     }
   }
 
+  infoElement(id: string) {
+    this.router.navigateByUrl(`main/model/treatment/${id}`);
+  }
+
   changePage(value: number) {
     this._page += value;
     if (this._page < 0) {

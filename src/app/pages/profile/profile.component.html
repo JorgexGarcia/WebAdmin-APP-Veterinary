@@ -7,7 +7,7 @@
           <h4  class="pt-3 pl-3">Ajustes</h4>
           <button class="btn btn-outline-danger waves-effect waves-light m-r-10" (click)="openModalImg()">
             Cambiar imagen</button>
-          <button class="btn btn-outline-danger  waves-effect waves-light m-r-10" (click)="openModalPassword()">
+          <button class="btn btn-outline-danger  waves-effect waves-light m-r-10" (click)="changePassword()">
             Cambiar contraseña</button>
         </div>
         <form class="form p-t-20" autocomplete="off" [formGroup]="changeForm" (submit)="save()">
@@ -103,4 +103,6 @@
     </div>
   </div>
 </div>
+
+
 

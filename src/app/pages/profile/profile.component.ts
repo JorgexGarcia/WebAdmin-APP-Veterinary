@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
   private _changeForm: FormGroup;
   private _formSubmitted = false;
 
+
   get changeForm(){
     return this._changeForm;
   }
@@ -86,8 +87,28 @@ export class ProfileComponent implements OnInit {
         this.userService.userActive.id);
   }
 
-  openModalPassword() {
-
+  async changePassword() {
+    const { value: password } = await Swal.fire({
+      title: 'Introduce la contraseña',
+      input: 'password',
+      inputLabel: 'Contraseña',
+      inputPlaceholder: 'Contraseña',
+    })
+    if (password && password.length >= 6) {
+      const { value: password2 } = await Swal.fire({
+        title: 'Introduce de nuevo la contraseña',
+        input: 'password',
+        inputLabel: 'Contraseña',
+        inputPlaceholder: 'Contraseña',
+      })
+      if (password === password2) {
+        this.updatePassword(password);
+      }else{
+        Swal.fire(`La contraseña no coincide`);
+      }
+    }else{
+      Swal.fire(`Contraseña no válida`);
+    }
   }
 
   checkDate() {
@@ -95,5 +116,25 @@ export class ProfileComponent implements OnInit {
     if(date < new Date(this.changeForm.get('birthDate')?.value)){
       this.changeForm.get('birthDate')?.setValue(date.toISOString().split('T')[0]);
     }
+  }
+
+  private  async updatePassword(password: any) {
+
+    const data = {
+      ...this.userService.userActive,
+      password: password
+    }
+
+   await this.userService.updateSameUser(data).subscribe({
+      next: (resp:any )=> {
+        const user = resp.data;
+        user.password = resp.password;
+        this.userService.userActive = user;
+        Swal.fire('Actualizado!', resp.msg, 'success')
+      },
+      error: err => {
+        Swal.fire('Cambios no guardados', err.msg, 'info')
+      }
+    })
   }
 }
