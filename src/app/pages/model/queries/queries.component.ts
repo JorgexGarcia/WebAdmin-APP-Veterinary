@@ -8,7 +8,7 @@ import {QueriesService} from "../../../services/models/queries.service";
 @Component({
   selector: 'app-queries',
   templateUrl: './queries.component.html',
-  styleUrls: ['./queries.component.css']
+  styleUrls: ['./queries.component.css'],
 })
 export class QueriesComponent implements OnDestroy {
 

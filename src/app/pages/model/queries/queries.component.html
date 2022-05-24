@@ -104,13 +104,24 @@
               <div class="col-12">
                 <p class="tittle">Archivos adjuntos :<br/>
                 <div class="row">
-                  <div *ngFor="let item of data.reports" class="d-flex">
+                  <div *ngFor="let item of data.reports" class="d-flex polaroid">
                     <img *ngIf="item.typeReport == 'img'" src="{{item.url}}"
                          alt="Archivo adjunto" class="w100">
                     <video *ngIf="item.typeReport == 'video'"
                            width="400" height="400" controls id="video1">
                       <source src={{item.url}} type="video/mp4">
                     </video>
+                    <div class="container content">
+                      <div *ngIf="item.typeReport === 'img'">
+                        <p>Imagen</p>
+                      </div>
+                      <div *ngIf="item.typeReport === 'pdf'">
+                        <p>Archivo PDF</p>
+                      </div>
+                      <div *ngIf="item.typeReport === 'video'">
+                        <p>Video</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
