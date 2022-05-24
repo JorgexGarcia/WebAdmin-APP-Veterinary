@@ -176,6 +176,9 @@ export class OneproductComponent implements OnDestroy, OnInit{
       this._id)
   }
 
+  /**
+   * Método para colocar el símbolo del euro en el input
+   */
   checkNumber(value: string) {
     if(value !== ''){
       const parts: string[] = value.split('€');

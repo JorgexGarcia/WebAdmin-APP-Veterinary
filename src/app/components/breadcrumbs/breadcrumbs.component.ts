@@ -25,6 +25,9 @@ export class BreadcrumbsComponent implements OnDestroy{
       });
   }
 
+  /**
+   * Método para obtener el título de la página donde te encuentras
+   */
   getDataRoute(){
     return this.router.events
       .pipe(

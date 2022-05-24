@@ -9,6 +9,8 @@ export class HeaderService implements HttpInterceptor{
 
   constructor() { }
 
+  //Clase para modificar todas las peticiones http y añadir token en el header
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     const headers = new HttpHeaders({

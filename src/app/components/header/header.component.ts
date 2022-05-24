@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {UserService} from "../../services/models/user.service";
 import {Router} from "@angular/router";
 
@@ -7,7 +7,7 @@ import {Router} from "@angular/router";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, OnDestroy{
+export class HeaderComponent implements OnDestroy{
 
   public imgUrl: string = '';
   public name: string = '';
@@ -26,9 +26,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
     },100);
 
-  }
-
-  ngOnInit(): void {
   }
 
   logOut(){

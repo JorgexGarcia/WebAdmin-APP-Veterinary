@@ -172,6 +172,9 @@ export class OnepromotionComponent implements OnDestroy, OnInit{
       this._id)
   }
 
+  /**
+   * Comprobar fechas
+   */
   checkDate(input: string) {
     const date = new Date();
     if(new Date(this.changeForm.get('startDate')?.value) >

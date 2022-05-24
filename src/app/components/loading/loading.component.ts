@@ -1,16 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-loading',
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.css']
 })
-export class LoadingComponent implements OnInit {
+export class LoadingComponent{
 
   @Input() waiting: boolean = false;
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

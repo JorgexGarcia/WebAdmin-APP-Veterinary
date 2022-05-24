@@ -12,9 +12,9 @@ import Swal from 'sweetalert2';
 export class LoginComponent{
 
   public loginForm = this.fb.group({
-    email: [localStorage.getItem('email') || "jefe@gmail.com", [Validators.required,
+    email: [localStorage.getItem('email') || "", [Validators.required,
       Validators.pattern("[a-zA-Z0-9.-_]{2,}[@]{1}[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}")]],
-    password: ["123456", [Validators.required,
+    password: ["", [Validators.required,
       Validators.pattern("[a-zA-Z0-9.-_]{6}")]],
     remember: [false]
   });
@@ -25,6 +25,9 @@ export class LoginComponent{
               private fb: FormBuilder,
               private service: UserService) { }
 
+  /**
+   * Método para hacer login
+   */
   async login() {
     this._formSubmitted = true;
 
@@ -53,6 +56,9 @@ export class LoginComponent{
       });
   }
 
+  /**
+   * Método para comprobar cada campo
+   */
   fieldNoValid(value: string):boolean {
     return this.loginForm.get(value)!.invalid && this._formSubmitted;
   }

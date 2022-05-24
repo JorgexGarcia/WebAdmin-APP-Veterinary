@@ -218,7 +218,6 @@ export class OneuserComponent implements OnDestroy {
   }
 
   password() {
-    console.log(this._user)
       this._user!.password = environment.new_password;
       this.userService.updateUser(this._user!).subscribe({
         next: value => {

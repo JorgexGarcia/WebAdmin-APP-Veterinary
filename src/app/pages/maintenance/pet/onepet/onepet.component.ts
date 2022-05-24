@@ -110,7 +110,6 @@ export class OnepetComponent implements OnDestroy {
       await this.petService.getOnePet(this._id)
         .subscribe({
           next: resp => {
-            console.log(resp)
             this._pet = resp.data;
             if(!this._pet) this.route.navigateByUrl('main');
             if(this._pet){
@@ -173,8 +172,6 @@ export class OnepetComponent implements OnDestroy {
 
   private _confirmSave(){
     this._formSubmitted = true;
-
-    console.log(this._changeForm.value)
 
     if(!this._changeForm.valid){
       if(this._changeForm.get('breed')!.invalid){

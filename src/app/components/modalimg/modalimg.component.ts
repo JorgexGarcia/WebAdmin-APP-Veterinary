@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import {ModalimgService} from "../../services/modalimg.service";
 import {FileUploadService} from "../../services/file-upload.service";
 import Swal from "sweetalert2";
@@ -9,7 +9,7 @@ import {UserService} from "../../services/models/user.service";
   templateUrl: './modalimg.component.html',
   styleUrls: ['./modalimg.component.css']
 })
-export class ModalimgComponent implements OnInit {
+export class ModalimgComponent{
 
   private _imgUpload: File | undefined;
   private _imgTemp: any;
@@ -21,9 +21,6 @@ export class ModalimgComponent implements OnInit {
   constructor(public service : ModalimgService,
               private fileService: FileUploadService,
               private userService: UserService) { }
-
-  ngOnInit(): void {
-  }
 
   async update() {
       await this.fileService.updateFile(this._imgUpload!, this.service.type!, this.service.id)
@@ -43,6 +40,9 @@ export class ModalimgComponent implements OnInit {
     this.service.closeModal();
   }
 
+  /**
+   * Método para recoger un archivo
+   */
   changeImg(event: any) {
     const file = event.files[0];
     this._imgUpload = event.files[0];

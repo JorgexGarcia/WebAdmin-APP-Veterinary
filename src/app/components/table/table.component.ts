@@ -21,9 +21,7 @@ export class TableComponent implements OnInit {
 
   @Input() dataTable: any;
 
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit(): void {
     let autoNum: number = 1;

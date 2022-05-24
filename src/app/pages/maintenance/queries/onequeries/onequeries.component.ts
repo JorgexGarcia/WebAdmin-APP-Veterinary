@@ -192,6 +192,9 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
     }
   }
 
+  /**
+   * Método para que las consultas sean de media hora
+   */
   changeDateStart(date :string){
 
     //Obtener Valores

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {SettingsService} from "../services/settings.service";
 
 declare function  customInitFunctions():any;
 
@@ -10,7 +9,7 @@ declare function  customInitFunctions():any;
 })
 export class PagesComponent implements OnInit {
 
-  constructor(private settingsService: SettingsService) { }
+  constructor() { }
 
   ngOnInit(): void {
     customInitFunctions();

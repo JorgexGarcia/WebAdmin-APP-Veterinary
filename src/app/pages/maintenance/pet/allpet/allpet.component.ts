@@ -127,13 +127,11 @@ export class AllpetComponent implements OnInit, OnDestroy{
 
   activePet(item: Pet) {
     item.active = true;
-    console.log(item)
     const object: any = item.breed;
     const data = {
       ...item,
       breed: object._id,
     }
-    console.log(data)
     this.service.updatePet(data).subscribe( {
       next: (resp:any) =>{
         this.getPets();

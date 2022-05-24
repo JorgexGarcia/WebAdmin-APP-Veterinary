@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {SidebarService} from "../../services/sidebar.service";
 import {UserService} from "../../services/models/user.service";
 
@@ -7,7 +7,7 @@ import {UserService} from "../../services/models/user.service";
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit, OnDestroy{
+export class SidebarComponent implements OnDestroy{
 
   private _menu: any[] = [];
   public imgUrl: string = '';
@@ -29,9 +29,6 @@ export class SidebarComponent implements OnInit, OnDestroy{
 
     },100);
 
-  }
-
-  ngOnInit(): void {
   }
 
   logOut() {

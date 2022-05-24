@@ -21,6 +21,9 @@ export class CalendarComponent implements OnInit {
    this.getCalendar();
   }
 
+  /**
+   * Configuración del calendario
+   */
   private async getCalendar() {
     await this.service.getData().pipe()
       .subscribe(resp => {

@@ -16,6 +16,7 @@ import {UserService} from "../services/models/user.service";
 })
 export class AuthGuard implements CanActivate, CanLoad {
 
+  //Guard para comprobar el token
   constructor(private service: UserService,
               private router: Router) {
   }

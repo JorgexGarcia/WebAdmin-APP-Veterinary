@@ -54,7 +54,6 @@ export class AllproductComponent implements OnInit, OnDestroy{
     this._serviceProduct = this.productService.getProduct(this._page, this.active)
       .subscribe((resp:any) => {
         this._total = resp.total;
-        console.log(resp)
         if(resp.data.length !== 0){
           this._products = resp.data
         }
