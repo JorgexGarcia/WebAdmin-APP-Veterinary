@@ -49,7 +49,7 @@ export class CalendarService {
   clickEvent(def: any){
     if(!def.extendedProps.description){
       this.queriesService.newDate = true;
-      this.router.navigateByUrl(`main/queries/${def.publicId}`);
+      this.router.navigateByUrl(`main/model/queries/${def.publicId}`);
     }else{
       Swal.fire('Error', 'No puedes acceder a una consulta ya finalizada', 'info');
     }

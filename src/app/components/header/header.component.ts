@@ -49,4 +49,5 @@ export class HeaderComponent implements OnInit, OnDestroy{
       this.router.navigateByUrl(`/main/search/${value}`);
     }
   }
+
 }
