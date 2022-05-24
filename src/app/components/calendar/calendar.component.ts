@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Calendar} from '@fullcalendar/core';
 import {DateSelectArg, EventInput} from '@fullcalendar/angular';
-import dayGridPlugin from '@fullcalendar/daygrid';
 import esLocale from '@fullcalendar/core/locales/es';
 import {CalendarService} from "../../services/calendar.service";
+import dayGridPlugin from "@fullcalendar/daygrid";
 
 @Component({
   selector: 'app-calendar',
@@ -21,16 +21,13 @@ export class CalendarComponent implements OnInit {
    this.getCalendar();
   }
 
-  /**
-   * Configuración del calendario
-   */
   private async getCalendar() {
     await this.service.getData().pipe()
       .subscribe(resp => {
         this.events = resp;
         if(this.events.length >0){
-          var calendarEl = document.getElementById('calendar');
-          var calendar = new Calendar(calendarEl!,{
+          let calendarEl = document.getElementById('calendar');
+          let calendar = new Calendar(calendarEl!,{
             height: 600,
             plugins: [dayGridPlugin],
             locale: esLocale,

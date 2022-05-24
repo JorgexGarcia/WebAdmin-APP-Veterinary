@@ -426,9 +426,8 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
       mergeMap(res => {
         return this.queriesService.updateQueries(res);
       })).subscribe({
-        next: (resp:any )=> {
+        next: (_:any )=> {
           this._waiting = false;
-          Swal.fire('Actualizado!', resp.msg, 'success');
           this.back();
         },
         error: err => {
@@ -440,6 +439,9 @@ export class OnequeriesComponent implements OnDestroy, OnInit{
   }
 
   private checkEqualDate(date: string) {
+    if(this._id !== 'new'){
+      return
+    }
     return (formGroup: FormGroup) => {
 
       const pass1Control = formGroup.get(date);
